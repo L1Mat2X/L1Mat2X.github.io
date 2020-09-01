@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列-Ch4 Ray Tracing-閲讀筆記 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="4.1 - Ray Tracing算法框架 Basic Ray Tracing分为三个部分： ray generation: 计算光源位置和光线方向； ray intersection: 计算与光路相交的最近的物体； shading: 基于ray inte" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://l1mat2x.github.io/post/2020-08-18-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch4-ray-tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.651e6917abb0239242daa570c2bec9867267bbcd83646da5a850afe573347b44.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列-Ch4 Ray Tracing-閲讀筆記" />
+<meta property="og:description" content="4.1 - Ray Tracing算法框架 Basic Ray Tracing分为三个部分： ray generation: 计算光源位置和光线方向； ray intersection: 计算与光路相交的最近的物体； shading: 基于ray inte" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://l1mat2x.github.io/post/2020-08-18-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch4-ray-tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<meta property="article:published_time" content="2020-08-18T09:56:10+08:00" />
+<meta property="article:modified_time" content="2020-08-18T09:56:10+08:00" />
+<meta itemprop="name" content="圖形學系列-Ch4 Ray Tracing-閲讀筆記">
+<meta itemprop="description" content="4.1 - Ray Tracing算法框架 Basic Ray Tracing分为三个部分： ray generation: 计算光源位置和光线方向； ray intersection: 计算与光路相交的最近的物体； shading: 基于ray inte">
+<meta itemprop="datePublished" content="2020-08-18T09:56:10+08:00" />
+<meta itemprop="dateModified" content="2020-08-18T09:56:10+08:00" />
+<meta itemprop="wordCount" content="4382">
+
+
+
+<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列-Ch4 Ray Tracing-閲讀筆記"/>
+<meta name="twitter:description" content="4.1 - Ray Tracing算法框架 Basic Ray Tracing分为三个部分： ray generation: 计算光源位置和光线方向； ray intersection: 计算与光路相交的最近的物体； shading: 基于ray inte"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列-Ch4 Ray Tracing-閲讀筆記</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-18 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            </div>
+          <span class="more-meta"> 4382 words </span>
+          <span class="more-meta"> 9 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#41---ray-tracing算法框架">4.1 - Ray Tracing算法框架</a></li>
+        <li><a href="#42---投影">4.2 - 投影</a>
+          <ul>
+            <li><a href="#平行投影---parallel-projection">平行投影 - parallel projection</a></li>
+            <li><a href="#透视投影---perspective-projection">透视投影 - perspective projection</a></li>
+          </ul>
+        </li>
+        <li><a href="#43---计算viewing-ray">4.3 - 计算Viewing Ray</a>
+          <ul>
+            <li><a href="#如何表示ray">如何表示Ray</a></li>
+            <li><a href="#正交视图">正交视图</a></li>
+            <li><a href="#透视视图">透视视图</a></li>
+          </ul>
+        </li>
+        <li><a href="#44-ray-object-intersection">4.4 Ray-Object Intersection</a>
+          <ul>
+            <li><a href="#441-ray-sphere相交">4.4.1 Ray-Sphere相交</a></li>
+            <li><a href="#442-ray-triangle相交">4.4.2 Ray-Triangle相交</a></li>
+            <li><a href="#443-ray-polygon相交">4.4.3 Ray-Polygon相交</a></li>
+            <li><a href="#444-與一組物體相交">4.4.4 與一組物體相交</a></li>
+          </ul>
+        </li>
+        <li><a href="#45-shading">4.5 Shading</a>
+          <ul>
+            <li><a href="#451-lambertian-shading">4.5.1 Lambertian Shading</a></li>
+            <li><a href="#452-blinn-phong-shading">4.5.2 Blinn-Phong Shading</a></li>
+            <li><a href="#453-ambient-shading">4.5.3 Ambient Shading</a></li>
+            <li><a href="#454-多個光源">4.5.4 多個光源</a></li>
+          </ul>
+        </li>
+        <li><a href="#46-a-ray-tracing-program">4.6 A Ray-Tracing Program</a></li>
+        <li><a href="#47-shadows">4.7 Shadows</a></li>
+        <li><a href="#48-理想鏡面反射">4.8 理想鏡面反射</a></li>
+        <li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+        <li><a href="#聲明">聲明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="41---ray-tracing算法框架">4.1 - Ray Tracing算法框架</h2>
+<p>Basic Ray Tracing分为三个部分：</p>
+<ol>
+<li>ray generation: 计算光源位置和光线方向；</li>
+<li>ray intersection: 计算与光路相交的最近的物体；</li>
+<li>shading: 基于ray intersection计算每个点的特性，例如颜色等；</li>
+</ol>
+<p>Basic ray tracing program:</p>
+<center><img src="ch4-4.1_algorithm.png"></img></center>
+<h2 id="42---投影">4.2 - 投影</h2>
+<p>在计算机图形学中，基本都采用<strong>线性透视(linear perspective)</strong>，即从三维空间到二维空间过程中，不改变直线形状——直线依旧是直线。</p>
+<h3 id="平行投影---parallel-projection">平行投影 - parallel projection</h3>
+<p>根据成像平面与投影方向是否垂直又分为：正交投影和斜投影。</p>
+<center><img src = "figure4.3.png"></img></center>
+<p>平行投影特点：</p>
+<ol>
+<li>平行线依旧平行；</li>
+<li>保留尺寸和形状；</li>
+</ol>
+<p>平行投影缺点就是<strong>不真实——与现实生活中的现象不吻合</strong>。</p>
+<h3 id="透视投影---perspective-projection">透视投影 - perspective projection</h3>
+<p>与平行投影类似，根据成像平面与投影方向是否垂直，同样也分为：正交和倾斜的投影；</p>
+<center><img src = "figure4.4.png"></img></center>
+<p>透视投影特点：</p>
+<ol>
+<li>所有成像点沿投影方向能汇聚到一点——viewpoint；</li>
+<li>平行线不再平行；</li>
+</ol>
+<h2 id="43---计算viewing-ray">4.3 - 计算Viewing Ray</h2>
+<h3 id="如何表示ray">如何表示Ray</h3>
+<center><img src = "figure4.6.png"></img></center>
+从视点$\mathbf{e}$到三维空间中某平面上的点$\mathbf{s}$的直线表示为：
+$$
+\mathbf{p}(t) = \mathbf{e} + t(\mathbf{s} - \mathbf{e})
+$$
+根据图中可对表达式解释为：``we advance from e along the vector (s − e) a fractional distance t to find the point p``。
+从这个式子可以看出：
+<ol>
+<li>$\mathbf{e}$是射线源点；</li>
+<li>$\mathbf{s}-\mathbf{e}$是射线方向；</li>
+<li>$\mathbf{p}(0) = \mathbf{e}$，$\mathbf{p}(1) = \mathbf{s}$；</li>
+<li>如果$t &lt; 0$，则点$\mathbf{p}(t)$在视点的后方；</li>
+<li>$\mathbf{p}(t)$单调递增，即$0&lt;t_1&lt;t_2$，$\mathbf{p}(t_1)$比$\mathbf{p}(t_2)$离视点近；</li>
+</ol>
+<p>构建相机坐标系(camera frame)：</p>
+<center><img src = "figure4.8.png"></img></center>
+<h3 id="正交视图">正交视图</h3>
+<p>假设图像上下左右边界分别为：$t$、$b$、$l$、$r$。通常$l &lt; 0 &lt; r$、$b &lt; 0 &lt; t$。如下图：</p>
+<center><img src = "figure4.9-1.png"></img></center>
+<p>图像上任意点坐标$(u, v)$可以通过这四个变量计算得到：
+$$
+\begin{split}
+u = l + \frac{(r - l)(i + 0.5)}{n_x} \\[2ex]
+v = b + \frac{(t-b)(j+0.5)}{n_y}
+\end{split}\tag{4.1}
+$$
+其中，$n_x$和$n_y$分别为图像的宽高。</p>
+<p>对于平行投影的Ray可以按如下方法计算：</p>
+<center><img src="ch4-4.3.1.png"></img></center>
+<p>对于斜平行投影，只需要改变$ray.direction = -\mathbf{w}$为斜视图投影方向$ray.direction = \mathbf{d}$即可。计算$\mathbf{u}$和$\mathbf{v}$依然要使用$\mathbf{w}$。</p>
+<h3 id="透视视图">透视视图</h3>
+<p>对于透视视图，所有的rays都会交于视点。视点与图像平面的距离$d$通常也可称为焦长。</p>
+<center><img src = "figure4.9-2.png"></img></center>
+<p>对于透视视图正交的Ray计算，可按如下方式进行：</p>
+<center><img src = "ch4-4.3.2.png"></img></center>
+<p>同样，在进行斜投影时，只需将$ray.direction$中的$-d\mathbf{w}$替换为$d\mathbf{d}$即可。</p>
+<h2 id="44-ray-object-intersection">4.4 Ray-Object Intersection</h2>
+<p>生成Ray方程$\mathbf{e}+t\mathbf{d}$后，需要计算与Ray最先相交的物体在哪里，其中$t &gt; 0$。通常解决这个问题会为$t$设定一个区间$[t_1,t_2]$；若一般化的话，令$t_1 = 0$，$t_2 = +\infty$。</p>
+<h3 id="441-ray-sphere相交">4.4.1 Ray-Sphere相交</h3>
+<p>假設ray函數表達為
+$$
+\mathbf{p}(t) = \mathbf{e} + t\mathbf{d}
+$$
+球面隱式函數為
+$$
+f(\mathbf{p}) = (x - x_c)^2 + (y - y_c)^2 + (z - z_c)^2 - R^2 = 0
+$$
+兩者交點必須滿足以上兩個方程，因此任意一點$\mathbf{p}$滿足以上兩個方程，就説明該點為兩者交點，用向量形式表示為：
+$$
+(\mathbf{p} - \mathbf{c})\cdot (\mathbf{p} - \mathbf{c}) - R^2 = 0 \\<br>
+\Rightarrow (\mathbf{e} + t\mathbf{d} - \mathbf{c})\cdot(\mathbf{e} + t\mathbf{d} - \mathbf{c}) - R^2 = 0 \\<br>
+\Rightarrow (\mathbf{d}\cdot\mathbf{d})t^2 + 2\mathbf{d}\cdot(\mathbf{e} - \mathbf{c})t + (\mathbf{e} - \mathbf{c})\cdot(\mathbf{e} - \mathbf{c}) - R^2 = 0
+$$
+根據一元二次方程的解可知：
+$$
+t = \frac{-\mathbf{d}\cdot(\mathbf{e} - \mathbf{c}) \pm \sqrt{(\mathbf{d}\cdot(\mathbf{e} - \mathbf{c}))^2 - (\mathbf{d}\cdot\mathbf{d})((\mathbf{e} - \mathbf{c})\cdot(\mathbf{e} - \mathbf{c}) - R^2)}}{(\mathbf{d}\cdot \mathbf{d})}
+$$</p>
+<p>在點$\mathbf{p}$処的法向量為$\mathbf{n} = 2(\mathbf{p} - \mathbf{c})$，單位法向量為$(\mathbf{p} - \mathbf{c}) / R$。</p>
+<h3 id="442-ray-triangle相交">4.4.2 Ray-Triangle相交</h3>
+<center><img src = "figure4.10.png"></img></center>
+<p>同樣，由ray函數：
+$$
+\mathbf{p}(t) = \mathbf{e} + t\mathbf{d}
+$$
+和三角形函數：
+$$
+\mathbf{p} = (1 - \beta - \gamma)\mathbf{a} + \beta\mathbf{b} + \gamma\mathbf{c}
+$$
+可得：
+$$
+\mathbf{e} + t\mathbf{d} = \mathbf{a} + \beta(\mathbf{b} - \mathbf{a}) + \gamma (\mathbf{c} - \mathbf{a}) \tag{4.2}
+$$
+其中，$\beta &gt; 0, \gamma &gt; 0 , \beta+\gamma &lt; 1$，不然ray與三角形無交點。</p>
+<p>對於等式(4.2)，三個未知量$t,\beta, \gamma$，三個方程：
+$$
+x_e + tx_d = x_a + \beta(x_b - x_a) + \gamma(x_c - x_a)\\<br>
+y_e + ty_d = y_a + \beta(y_b - y_a) + \gamma(y_c - y_a)\\<br>
+z_e + tz_d = z_a + \beta(z_b - z_a) + \gamma(z_c - z_a)
+$$
+利用Cramer&rsquo;s Rule解方程組：
+$$
+\begin{bmatrix}
+x_a - x_b &amp; x_a - x_c &amp; x_d \\<br>
+y_a - y_b &amp; y_a - y_c &amp; y_d \\<br>
+z_a - z_b &amp; z_a - z_c &amp; z_d
+\end{bmatrix} \begin{bmatrix}
+\beta\\<br>
+\gamma\\<br>
+t
+\end{bmatrix} = \begin{bmatrix}
+x_a - x_e\\<br>
+y_a - y_e\\<br>
+z_a - z_e
+\end{bmatrix}
+$$
+可得：</p>
+<center><img src = "ch4-4.4.2.png"></img></center>
+<p>求解ray與三角形相交的僞代碼如下：</p>
+<center><img src = "ch4-4.4.2_code.png"></img></center>
+<h3 id="443-ray-polygon相交">4.4.3 Ray-Polygon相交</h3>
+<p>給定平面多邊形的$m$個頂點$\mathbf{p}_1$至$\mathbf{p}_m$和表面法向量$\mathbf{n}$，那麽ray與多邊形的交點可以通過以下方式求得：
+$$
+(\mathbf{p} - \mathbf{p}_1)\cdot \mathbf{n} = 0
+$$
+將ray方程$\mathbf{p} = \mathbf{e} + t\mathbf{d}$帶入可解得：
+$$
+t = \frac{(\mathbf{p}_1 - \mathbf{e})\cdot \mathbf{n}}{\mathbf{d}\cdot\mathbf{n}}
+$$
+此時求得的點$\mathbf{p}$不一定在多邊形内，所以還需進一步判斷。
+判斷的方式有很多，例如將點$\mathbf{p}$和多邊形都投影到2D平面xy上，然後從點$\mathbf{p}$出發作射綫，統計該射綫與多邊形的交點個數，若爲奇數，則説明點$\mathbf{p}$在多邊形内，反之則不在。以上這個方法存在多邊形投影可能會是一條直綫，通常做法是在xy，yz或zx平面中選取一個最佳的進行投影。選取方式如下：</p>
+<center><img src = "ch4-4.4.3_code.png"></img></center>
+<font color = red>这部分伪代码没怎么看懂！！！</font>
+<p>另外还有其他判断交点$\mathbf{p}$是否在多边形内的方式，例如将多边形分解成多個三角形，然後判斷點$\mathbf{p}$是否在這些三角形内。</p>
+<h3 id="444-與一組物體相交">4.4.4 與一組物體相交</h3>
+<p>大多數使用場景都不止一個物體，所以，ray的相交計算通常會獲得距離相機最近的那個物體。下面的僞代碼解釋如何在區間$[t_1,t_2]$内進行選取：</p>
+<center><img src = "ch4-4.4.4_code.png"></img></center>
+<p><font color = #27B2E6>注意每次都會更改$t_1$值，讓其距離$t_0$越來越近，最終獲得$t$的最小值</font></p>
+<h2 id="45-shading">4.5 Shading</h2>
+<p>經過上面一系列步驟后，可視表面的像素點就能夠確定，接下來需要利用Shading Model來計算像素值。大多數Shading Model都是描述光纖在物體表面的反射過程，因此定義一個點光源，由反射點指向光源的方向$\mathbf{l}$，觀察方向$\mathbf{v}$，反射點的表面法向量$\mathbf{n}$以及反射表面的各種特性——顔色、光澤度等。
+<font color = #27B2E6>上述所有方向向量均爲單位向量</font></p>
+<h3 id="451-lambertian-shading">4.5.1 Lambertian Shading</h3>
+<p>這個模型非常簡單：來自點光源的能量有多少能夠落在物體表面，與該表面和光纖方向的夾角有關。</p>
+<center><img src = "figure4.12.png"></img></center>
+根據上圖，很容易推出Lambertian shading Model的數學表示：
+$$
+L = k_d\cdot\mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{l})}
+$$
+這裏，$\mathbf{L}$就表示最終該著色點的顔色(像素值)，$k_d$表示diffuse coefficient或是表面顔色；$\mathbf{I}$表示光纖縂强度；而$\max{0, \mathbf{n}\cdot\mathbf{l}}$表示光纖與法向量夾角的$cos$值，因爲$\cos{\theta} \in [-1, 1]$，而$\cos{\theta}$在$[-1,0)$區間内，在實際中沒有意義，所以和$0$比較取最大值。
+<h3 id="452-blinn-phong-shading">4.5.2 Blinn-Phong Shading</h3>
+<p>Lambertian Shading模型是與觀察方向無關的，這會導致使用這個模型時，在某些場景下無法準確描述真實情況，例如某些物體表面的鏡面反光。例如下圖：</p>
+<center><img src = "ch4-4.5.2_sweetfeast.png" style = "zoom:50%"></img></center>
+爲解決這個問題，兩位大神Phong和Blinn提出一個簡單高效的鏡面高光模型。該模型的思想是，如果發生鏡面反射，那麽$\mathbf{v}$會和$\mathbf{l}$關於法向量$\mathbf{n}$對稱的向量$\mathbf{l}'$重合，那麽只要觀測方向$\mathbf{v}$越接近$\mathbf{l}'$，那麽該位置越接近鏡面反射。
+爲了計算方便，大神使用了一個半向量$\mathbf{h}$用於計算，該向量的方向是$\mathbf{l}$和$\mathbf{v}$的角平分綫方向，同樣也是單位向量。那麽，只要$\mathbf{h}$越接近$\mathbf{n}$，那麽該表面就越接近鏡面反射。因此，結合前面的Lambertian Shading模型可得：
+$$
+\mathbf{h} = \frac{\mathbf{v} + \mathbf{l}}{||\mathbf{v} + \mathbf{l}||}\\
+L = k_d\cdot\mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{l})} + k_s\cdot \mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{h})}^p
+$$
+其中$k_s$是鏡面反射係數；這裏還引入一個新的超參數$p$，稱爲Phone exponent，通常取$p > 1$，用於控制鏡面反射衰減，也就是説，$p$值越大，發生鏡面反射的範圍越小，如下圖所示。
+<center><img src = "ch4-4.5.2_phongexponent.png"></img></center>
+<h3 id="453-ambient-shading">4.5.3 Ambient Shading</h3>
+<p>根據上面兩個模型可知：如果物體表面沒有接收到直接光照的話，那麽物體表面是完全黑的。但是實際中并非如此，例如：</p>
+<center><img src = "ch4-4.5.3_perceptualobservations.png"></img></center>
+<p>上圖中Ambient Lighting位置是背光的，理論上應該是完全黑的，但是這裏依然能夠看清物體表面，説明依然有光纖能夠到達這個位置，這類光纖就被稱爲環境光。通常使用一個常量$I_a$來表示，爲了避免物體表面完全黑暗的情況出現。
+$$
+L = k_a \cdot I_a + k_d\cdot\mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{l})} + k_s\cdot \mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{h})}^p
+$$
+其中$k_a$稱爲surface&rsquo;s ambient coefficient，$I_a$稱爲ambient light intensity。</p>
+<h3 id="454-多個光源">4.5.4 多個光源</h3>
+<p>基於光的可叠加性，多個光源作用時只需要簡單叠加即可；
+$$
+L = k_a\cdot I_a + \sum_{i = 1}^{N}[k_d\cdot\mathbf{I}_i\cdot\max{(0,\mathbf{n}\cdot\mathbf{l}_i)} + k_s\cdot \mathbf{I}_i\cdot\max{(0,\mathbf{n}\cdot\mathbf{h}_i)}^p]
+$$</p>
+<h2 id="46-a-ray-tracing-program">4.6 A Ray-Tracing Program</h2>
+<p>以上已介紹了如何生成ray、如何計算和ray相交的最近物體以及如何對物體表面著色。這些流程可以按以下框架進行：</p>
+<center><img src = "ch4-4.6_code.png"></img></center>
+<h2 id="47-shadows">4.7 Shadows</h2>
+<p>如何判斷著色點是否在陰影中？</p>
+<center><img src = "figure4.17.png"></img></center>
+從著色點$\mathbf{p}$沿著光纖方向$\mathbf{l}$看，如果看到物體，則該著色點在陰影中；如果沒有存在物體，則該著色點不在陰影中。這種用於判斷是否存在陰影中的光纖稱爲``shadow rays``。
+結合陰影判斷和等式(4.3)的著色模型，算法僞代碼如下：
+<center><img src = "ch4-4.7_code.png"></img></center>
+僞代碼中，計算陰影時，$\mathbf{p}+s\mathbf{l}$區間選取為$[\epsilon, +\infty)$，其中$\epsilon$是一個非常小的正數，這麽做在數值上避免shadow rays與著色表面接觸。
+<center><img src = "figure4.18.png"></img></center>
+<h2 id="48-理想鏡面反射">4.8 理想鏡面反射</h2>
+<center><img src = "figure4.19.png"></img></center>
+由上圖可知，理想鏡面反射模型中，若已知入射光綫$\mathbf{d}$和入射角度$\theta$，那麽反射光綫$\mathbf{r}$可按如下方式計算得出：
+$$
+\mathbf{r} = \mathbf{d} - 2(\mathbf{d} \cdot \mathbf{n})\mathbf{n}
+$$
+現實中，光綫在反射過程中會有能量損失，并且反射光的顔色也會有所不同，可以在計算顔色時遞歸調用``raycolor``：
+$$
+color \ c = c + k_m \cdot raycolor(\mathbf{p} + s \mathbf{r}, \epsilon, \infty)
+$$
+其中，$k_m$是發生鏡面反射時鏡面RGB顔色係數。另外，$s \in [\epsilon, +\infty)$同樣是爲了避免計算時，反射光綫與起始位置就接觸。
+這種遞歸調用可能會無限制的進行下去，爲了高效需要設定最大遞歸深度。另外可以在$k_m$不爲$0$時在進行該操作。
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<center><img src = "ch4-frequently_asked_questions.png"></img></center>
+<h2 id="聲明">聲明</h2>
+<p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/computer-graphic/">Computer Graphic</a>
+          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
+          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
+          <a href="/tags/games101/">Games101</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch6-transformation-matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">圖形學系列-Ch6 Transformation Matrices-閲讀筆記</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html">
+            <span class="next-text nav-default">利用OpenCV第三方库编译Leptonica</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@email.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://l1mat2x.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

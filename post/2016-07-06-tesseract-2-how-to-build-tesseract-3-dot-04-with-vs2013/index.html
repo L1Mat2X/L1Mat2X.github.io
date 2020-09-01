@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Tesseract系列-How to Build Tesseract 3.04 with VS2013 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="要了解Tesseract OCR除了查阅一些文献，最好能跟跟源码。 由于Google已经开放了Tesseract OCR的源码，通过简单的编译，就" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://l1mat2x.github.io/post/2016-07-06-tesseract-2-how-to-build-tesseract-3-dot-04-with-vs2013/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.651e6917abb0239242daa570c2bec9867267bbcd83646da5a850afe573347b44.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Tesseract系列-How to Build Tesseract 3.04 with VS2013" />
+<meta property="og:description" content="要了解Tesseract OCR除了查阅一些文献，最好能跟跟源码。 由于Google已经开放了Tesseract OCR的源码，通过简单的编译，就" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://l1mat2x.github.io/post/2016-07-06-tesseract-2-how-to-build-tesseract-3-dot-04-with-vs2013/" />
+<meta property="article:published_time" content="2016-07-06T14:08:16+08:00" />
+<meta property="article:modified_time" content="2016-07-06T14:08:16+08:00" />
+<meta itemprop="name" content="Tesseract系列-How to Build Tesseract 3.04 with VS2013">
+<meta itemprop="description" content="要了解Tesseract OCR除了查阅一些文献，最好能跟跟源码。 由于Google已经开放了Tesseract OCR的源码，通过简单的编译，就">
+<meta itemprop="datePublished" content="2016-07-06T14:08:16+08:00" />
+<meta itemprop="dateModified" content="2016-07-06T14:08:16+08:00" />
+<meta itemprop="wordCount" content="1750">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tesseract系列-How to Build Tesseract 3.04 with VS2013"/>
+<meta name="twitter:description" content="要了解Tesseract OCR除了查阅一些文献，最好能跟跟源码。 由于Google已经开放了Tesseract OCR的源码，通过简单的编译，就"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Tesseract系列-How to Build Tesseract 3.04 with VS2013</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-07-06 </span>
+        <div class="post-category">
+            <a href="/categories/tesseract/"> Tesseract </a>
+            <a href="/categories/ocr/"> OCR </a>
+            <a href="/categories/vs2013/"> VS2013 </a>
+            <a href="/categories/build/"> Build </a>
+            <a href="/categories/3.04/"> 3.04 </a>
+            </div>
+          <span class="more-meta"> 1750 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#工具">工具</a></li>
+        <li><a href="#步骤">步骤</a>
+          <ul>
+            <li><a href="#编译leptonica">编译Leptonica</a></li>
+            <li><a href="#编译tesseract">编译Tesseract</a></li>
+            <li><a href="#解决编译tesseract时的错误">解决编译Tesseract时的错误</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>要了解Tesseract OCR除了查阅一些文献，最好能跟跟源码。 由于Google已经开放了Tesseract OCR的源码，通过简单的编译，就能一窥Tesseract OCR的实现；本文是参考了Paul Vorbach的<a href="http://http://vorba.ch/2014/tesseract-3.03-vs2013.html" title="参考了Paul Vorbach的How to build Tesseract 3.03 with Visual Studio 2013">How to build Tesseract 3.03 with Visual Studio 2013</a>以及YangHe&rsquo;s Blog <a href="http://yanghespace.com/2015/09/25/Visual%20Studio%202013%E7%BC%96%E8%AF%91Tesseract%203.04/" title="Visual Studio 2013编译Tesseract 3.04">Visual Studio 2013编译Tesseract 3.04</a>来完成整个编译过程的，并且总结了一些编译过程中遇到的问题。</p>
+<!--More-->
+<h2 id="工具">工具</h2>
+<ol>
+<li><a href="ed2k://%7Cfile%7Cen_visual_studio_ultimate_2013_x86_dvd_3009107.iso%7C3024457728%7C88ABAD28F04D52A45F060BBC48B3DF8A%7C/" title="Visual Studio 2013">Visual Studio 2013</a></li>
+<li><a href="https://git-scm.com" title="Git">Git</a></li>
+<li>SVN，比如<a href="https://sliksvn.com/download/" title="SlikSVN">SlikSVN</a></li>
+</ol>
+<p>PS：写这篇Blog时，Tesseract OCR源码已经更新到了3.05，但是本Blog还是对<strong>3.04</strong>版本进行编译。</p>
+<h2 id="步骤">步骤</h2>
+<h3 id="编译leptonica">编译Leptonica</h3>
+<p>由于Tesseract OCR整个工程是有依赖第三方库的，这个第三方库就是<a href="http://www.leptonica.com" title="Leptonica">Leptonica</a>，因此在编译Tesseract工程前，需要先编译下Leptonica。</p>
+<ol>
+<li>创建用来编译Tesseract的目录。这里我们假设是<code>C:\Tesseract-Build</code></li>
+<li>安装Git后，直接用右键在<code>Tesseract-Build</code>文件夹内选择<code>Git Bash Here</code>；</li>
+<li>从GitHub上拷贝依赖文件到当前目录：  <code>git clone git://github.com/pvorb/tesseract-vs2013.git</code></li>
+<li>打开<code>VS2013 Developer Command Prompt</code><br>
+<strong>（这里与YangHe&rsquo;s Blog里面提到的不同，因为我用他说的工程直接编译出了一堆问题，但是利用Paul Vorbach的方法则顺利完成编译）</strong></li>
+<li>改变路径到<code>\Tesseract-Build\tesseract-vs2013</code>下；</li>
+<li>通过指令<code>msbuild build.proj</code>完成依赖库Leptonica的编译；</li>
+</ol>
+<h3 id="编译tesseract">编译Tesseract</h3>
+<p>YangHe&rsquo;s Blog 和Paul Vorbach都有提供直接从SVN上更新最新版的Tesseract源码，但是我只想要3.04的，所以不得不手动的从GitHub上download了<a href="https://github.com/tesseract-ocr/tesseract/tree/3.04.00" title="3.04.00版本">3.04.00版本</a>的源码。之后需要手动配置依赖文件。<br>
+<strong>(另外再提醒下，两篇博客提供的SVN更新地址都是Tesseract项目还没有移到GitHub的地址，如果想直接从GitHub上更新最新的，需要把地址跟改为<code>https://github.com/tesseract-ocr/tesseract/trunk</code>，而且在天朝最好需要翻墙更新，你懂得)</strong></p>
+<ol>
+<li>将<code>Tesseract-Build\tesseract-vs2013</code>目录中<code>release\</code>文件夹下的<code>include\</code>和<code>lib\</code>两个文件夹Copy至<code>Tesseract-Build\</code>文件夹下<img src="http://i.imgur.com/3MpOXqc.png" alt=""> <br>
+<code>include\</code>中包括所有Leptonica的头文件及部分其他库的头文件。<img src="http://i.imgur.com/ONE0HQ7.png" alt=""></li>
+<li>在<code>Tesseract-Build\</code>目录下新建<code>tesseract-ocr</code>文件夹，将3.04.00版本的所有源码文件Copy至该目录下。</li>
+<li>用VS2013打开<code>tesseract-ocr\vs2010</code>目录下的<code>tesseract.sln</code>工程。</li>
+<li>选择<code>DLL_Debug</code>模式编译下，报了一堆错<img src="http://i.imgur.com/WF5OOKE.png" alt=""><br>
+不用紧张，一个个慢慢解决！</li>
+</ol>
+<h3 id="解决编译tesseract时的错误">解决编译Tesseract时的错误</h3>
+<ol>
+<li>
+<p>error C2146: syntax error : missing &lsquo;}&rsquo; before identifier &lsquo;銆&rsquo;<br>
+解决方法： 打开出现warning的文件，Ctrl+A全选，然后在文件菜单：file-&gt;advanced save options ，在弹出的选项中选择新的编码方式为：Chinese Simplified ，点击确定，重新编译，该Error就解决了；</p>
+</li>
+<li>
+<p>error LNK1104: cannot open file &lsquo;liblept171d.lib&rsquo;<br>
+解决方法：先确认<code>Tesseract-Build\lib\</code>目录下，有如下文件<img src="http://i.imgur.com/7OEsM7e.png" alt=""><br>
+若没有，就从<code>Tesseract-Build\lib\Win32\</code>或<code>Tesseract-Build\lib\x64\</code>目录下将所需.lib文件Copy至lib目录下；重新编译看是否解决问题；</p>
+</li>
+<li>
+<p>在<code>LIB_Debug</code>模式下编译时，遇到如下错误<img src="http://i.imgur.com/FIUmGEw.png" alt="">  解决方法：右键选择工程<code>libtesseract304</code>的<code>Properties</code>，删除在<code>Build Events</code>中<code>Pre-Build Event</code>中的<code>Command Line</code>的内容即可;<img src="http://i.imgur.com/Nln5PUA.png" alt=""></p>
+</li>
+<li>
+<p>error LNK1104: cannot open file &lsquo;zlib125-static-mtdll-debug.lib&rsquo;  解决方法：在<code>Tesseract-Build\tesseract-ocr\vs2010\include\</code>目录下，用编辑器打开<code>leptonica_versionnumbers.props</code>，查找<code>&lt;ZLIB_VERSION&gt;***&lt;/ZLIB_VERSION&gt;</code>，将其中的值改为<code>Tesseract-Build\lib\</code>下对应dll的值，例如<code>128</code></p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2016-07-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">利用OpenCV第三方库编译Leptonica</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+            <span class="next-text nav-default">OpenCV源码环境配置（2.X版及3.X版 &#43; VS2008/VS2013 &#43; win7 x86）</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@email.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://l1mat2x.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

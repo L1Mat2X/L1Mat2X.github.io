@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://l1mat2x.github.io/sitemap.xml
