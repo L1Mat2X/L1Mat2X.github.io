@@ -57,16 +57,7 @@
     </item>
     
     <item>
-      <title>Build</title>
-      <link>https://l1mat2x.github.io/tags/build/</link>
-      <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>
-      
-      <guid>https://l1mat2x.github.io/tags/build/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Leptonica</title>
+      <title>leptonica</title>
       <link>https://l1mat2x.github.io/tags/leptonica/</link>
       <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>
       
@@ -75,7 +66,7 @@
     </item>
     
     <item>
-      <title>OpenCV</title>
+      <title>opencv</title>
       <link>https://l1mat2x.github.io/tags/opencv/</link>
       <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>
       
@@ -93,11 +84,47 @@
     </item>
     
     <item>
-      <title>VS</title>
-      <link>https://l1mat2x.github.io/tags/vs/</link>
-      <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>
+      <title>ocr</title>
+      <link>https://l1mat2x.github.io/tags/ocr/</link>
+      <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
       
-      <guid>https://l1mat2x.github.io/tags/vs/</guid>
+      <guid>https://l1mat2x.github.io/tags/ocr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tesseract</title>
+      <link>https://l1mat2x.github.io/tags/tesseract/</link>
+      <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/tags/tesseract/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>visual studio</title>
+      <link>https://l1mat2x.github.io/tags/visual-studio/</link>
+      <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/tags/visual-studio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>configuration</title>
+      <link>https://l1mat2x.github.io/tags/configuration/</link>
+      <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/tags/configuration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>source code</title>
+      <link>https://l1mat2x.github.io/tags/source-code/</link>
+      <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/tags/source-code/</guid>
       <description></description>
     </item>
     

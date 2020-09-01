@@ -86,7 +86,7 @@
   </url>
   
   <url>
-    <loc>https://l1mat2x.github.io/tags/build/</loc>
+    <loc>https://l1mat2x.github.io/categories/leptonica/</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -94,13 +94,6 @@
   
   <url>
     <loc>https://l1mat2x.github.io/tags/leptonica/</loc>
-    <lastmod>2017-06-17T13:39:59+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://l1mat2x.github.io/categories/leptonica/</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -121,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://l1mat2x.github.io/tags/vs/</loc>
-    <lastmod>2017-06-17T13:39:59+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://l1mat2x.github.io/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -135,21 +121,14 @@
   </url>
   
   <url>
-    <loc>https://l1mat2x.github.io/categories/3.04/</loc>
-    <lastmod>2016-07-06T14:08:16+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://l1mat2x.github.io/categories/build/</loc>
-    <lastmod>2016-07-06T14:08:16+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://l1mat2x.github.io/categories/ocr/</loc>
+    <lastmod>2016-07-06T14:08:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://l1mat2x.github.io/tags/ocr/</loc>
     <lastmod>2016-07-06T14:08:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -163,6 +142,13 @@
   </url>
   
   <url>
+    <loc>https://l1mat2x.github.io/tags/tesseract/</loc>
+    <lastmod>2016-07-06T14:08:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://l1mat2x.github.io/post/2016-07-06-tesseract-2-how-to-build-tesseract-3-dot-04-with-vs2013/</loc>
     <lastmod>2016-07-06T14:08:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -170,8 +156,15 @@
   </url>
   
   <url>
-    <loc>https://l1mat2x.github.io/categories/vs2013/</loc>
+    <loc>https://l1mat2x.github.io/tags/visual-studio/</loc>
     <lastmod>2016-07-06T14:08:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://l1mat2x.github.io/tags/configuration/</loc>
+    <lastmod>2016-03-28T11:40:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -191,21 +184,7 @@
   </url>
   
   <url>
-    <loc>https://l1mat2x.github.io/categories/vs2008/</loc>
-    <lastmod>2016-03-28T11:40:19+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://l1mat2x.github.io/categories/%E6%BA%90%E7%A0%81/</loc>
-    <lastmod>2016-03-28T11:40:19+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://l1mat2x.github.io/categories/%E9%85%8D%E7%BD%AE/</loc>
+    <loc>https://l1mat2x.github.io/tags/source-code/</loc>
     <lastmod>2016-03-28T11:40:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

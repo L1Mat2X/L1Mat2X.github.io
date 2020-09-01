@@ -30,24 +30,6 @@
     </item>
     
     <item>
-      <title>3.04</title>
-      <link>https://l1mat2x.github.io/categories/3.04/</link>
-      <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
-      
-      <guid>https://l1mat2x.github.io/categories/3.04/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Build</title>
-      <link>https://l1mat2x.github.io/categories/build/</link>
-      <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
-      
-      <guid>https://l1mat2x.github.io/categories/build/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>OCR</title>
       <link>https://l1mat2x.github.io/categories/ocr/</link>
       <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
@@ -66,47 +48,11 @@
     </item>
     
     <item>
-      <title>vs2013</title>
-      <link>https://l1mat2x.github.io/categories/vs2013/</link>
-      <pubDate>Wed, 06 Jul 2016 14:08:16 +0800</pubDate>
-      
-      <guid>https://l1mat2x.github.io/categories/vs2013/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>opencv</title>
+      <title>OpenCV</title>
       <link>https://l1mat2x.github.io/categories/opencv/</link>
       <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
       
       <guid>https://l1mat2x.github.io/categories/opencv/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vs2008</title>
-      <link>https://l1mat2x.github.io/categories/vs2008/</link>
-      <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
-      
-      <guid>https://l1mat2x.github.io/categories/vs2008/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>源码</title>
-      <link>https://l1mat2x.github.io/categories/%E6%BA%90%E7%A0%81/</link>
-      <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
-      
-      <guid>https://l1mat2x.github.io/categories/%E6%BA%90%E7%A0%81/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>配置</title>
-      <link>https://l1mat2x.github.io/categories/%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
-      
-      <guid>https://l1mat2x.github.io/categories/%E9%85%8D%E7%BD%AE/</guid>
       <description></description>
     </item>
     
