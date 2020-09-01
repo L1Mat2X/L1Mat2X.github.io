@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Least squares method on L1Mat2X&#39;Blog - 學無止儘</title>
+    <link>https://l1mat2x.github.io/tags/least-squares-method/</link>
+    <description>Recent content in Least squares method on L1Mat2X&#39;Blog - 學無止儘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 20 Aug 2019 10:16:57 +0800</lastBuildDate>
+    
+	<atom:link href="https://l1mat2x.github.io/tags/least-squares-method/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ellipse Fitting</title>
+      <link>https://l1mat2x.github.io/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</link>
+      <pubDate>Tue, 20 Aug 2019 10:16:57 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</guid>
+      <description>橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Ellipse Fitting</title>
+      <link>https://l1mat2x.github.io/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</link>
+      <pubDate>Tue, 20 Aug 2019 10:16:57 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</guid>
+      <description>橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。</description>
+    </item>
+    
+    <item>
       <title>利用OpenCV第三方库编译Leptonica</title>
       <link>https://l1mat2x.github.io/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html</link>
       <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>
