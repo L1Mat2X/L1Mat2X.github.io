@@ -114,6 +114,34 @@
   </url>
   
   <url>
+    <loc>https://l1mat2x.github.io/tags/camera-calibration/</loc>
+    <lastmod>2018-04-27T10:40:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</loc>
+    <lastmod>2018-04-27T10:40:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://l1mat2x.github.io/categories/computer-vision/</loc>
+    <lastmod>2018-04-27T10:40:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://l1mat2x.github.io/tags/distortion-model/</loc>
+    <lastmod>2018-04-27T10:40:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://l1mat2x.github.io/tags/3rdparty/</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
     <changefreq>weekly</changefreq>

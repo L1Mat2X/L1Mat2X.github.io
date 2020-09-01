@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Camera Calibration - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.651e6917abb0239242daa570c2bec9867267bbcd83646da5a850afe573347b44.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Camera Calibration" />
+<meta property="og:description" content="符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html" />
+<meta property="article:published_time" content="2018-04-27T10:40:53+08:00" />
+<meta property="article:modified_time" content="2018-04-27T10:40:53+08:00" />
+<meta itemprop="name" content="Camera Calibration">
+<meta itemprop="description" content="符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点">
+<meta itemprop="datePublished" content="2018-04-27T10:40:53+08:00" />
+<meta itemprop="dateModified" content="2018-04-27T10:40:53+08:00" />
+<meta itemprop="wordCount" content="6204">
+
+
+
+<meta itemprop="keywords" content="Camera Calibration,Distortion Model," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Camera Calibration"/>
+<meta name="twitter:description" content="符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Camera Calibration</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-27 </span>
+        <div class="post-category">
+            <a href="/categories/computer-vision/"> Computer Vision </a>
+            </div>
+          <span class="more-meta"> 6204 words </span>
+          <span class="more-meta"> 13 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#符号约定">符号约定</a></li>
+        <li><a href="#引言">引言</a></li>
+        <li><a href="#面阵摄像机模型">面阵摄像机模型</a></li>
+        <li><a href="#畸变模型">畸变模型</a>
+          <ul>
+            <li><a href="#径向畸变">径向畸变</a></li>
+            <li><a href="#切向畸变">切向畸变</a></li>
+            <li><a href="#division畸变模型">Division畸变模型</a></li>
+            <li><a href="#多项式畸变模型">多项式畸变模型</a></li>
+          </ul>
+        </li>
+        <li><a href="#标定过程">标定过程</a></li>
+        <li><a href="#张氏标定法">张氏标定法</a></li>
+        <li><a href="#相机参数的准确度">相机参数的准确度</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="符号约定">符号约定</h2>
+<ul>
+<li>WCS —— 世界坐标系</li>
+<li>CCS —— 相机坐标系</li>
+<li>IPCS——像平面坐标系</li>
+<li>ICS——图像坐标系</li>
+<li>$(x_w, y_w, z_w)$ ——世界坐标系点坐标</li>
+<li>$(x_c, y_c, z_c)$——相机坐标系点坐标</li>
+<li>$(u,v)$——像平面坐标系点坐标</li>
+<li>$(\tilde{u}, \tilde{v})$——像平面坐标系畸变后点坐标</li>
+<li>$(r,c)$——图像坐标系点坐标</li>
+<li>$f$——相机常量或主距</li>
+<li>$(c_x,c_y)$——图像主点</li>
+</ul>
+<h2 id="引言">引言</h2>
+<p>为了对摄像机进行标定，首先需要构建一个模型，这个模型由镜头、图像传感器(CCD或CMOS)和采集卡(如果使用)组成，利用这个模型可以将世界坐标系中三维空间点投影到二维图像上。</p>
+<p>在机器视觉领域，镜头常用的有两种类型：普通镜头和<a href="https://en.wikipedia.org/wiki/Telecentric_lens">远心镜头</a>。两者区别在于：普通镜头实现世界坐标系到图像坐标系的<strong>透视投影</strong>；而远心镜头则是<strong>平行投影</strong>。我们称图像传感器与普通镜头的组合为<strong>针孔摄像机模型</strong>，而图像传感器与远心镜头的组合称为<strong>远心摄像机模型</strong>。</p>
+<p>模型中另一个组成部分——图像传感器，其可分为：<strong>线阵图像传感器</strong>和<strong>面阵图像传感器</strong>。使用面阵图像传感器时，普通镜头和远心镜头都非常常用；而使用线阵图像传感器时，只有普通镜头比较常用，我们常将这种组合称为<strong>线扫描摄像机</strong>。</p>
+<p>下面重点说明针孔面阵摄像机模型，线扫描摄像机模型以及远心镜头模型不做阐述。
+　　</p>
+<h2 id="面阵摄像机模型">面阵摄像机模型</h2>
+<center><img src = "pinholeCamera.png"></img></center>
+<p>图(1.1)展示了一个针孔相机模型的透视投影关系。世界坐标系中点$P_W$通过镜头投影到像平面上的点$p$。若图像无畸变，则点$p$应在$P_W$与投影中心连线的延长线上；若图像发生畸变，则点$p$的位置将发生偏移，如图中虚线所示。</p>
+<p>现在投影平面与被测物分居镜头两侧，为了便于计算，通常将投影平面移至与被测物同侧。如图(1.2)所示。这样可让图像坐标系与像素坐标系对齐。</p>
+<center><img src = "pinholeCamera_sameside.png"></img></center>
+<p>三维物体向二维平面投影过程可分为两步。首先，由于点$P_W$在世界坐标系(WCS)中，需将其转换到相机坐标系(CCS)中。之后，再由相机坐标系转换到图像坐标系中。下面分别推导这两个过程中的投影关系及可确认的参数。</p>
+<p>通常认为，从世界坐标系到相机坐标系的变换为刚性变换，即由平移和旋转变换组成。那么相机坐标系中点$P_C(x_c,y_c,z_c)$与世界坐标系中点$P_W(x_w,y_w,z_w)$的关系为：</p>
+<div>
+$$
+\begin{equation}
+P_C = R * P_W + T
+\tag{1}
+\end{equation}
+$$
+</div>
+<p>其中，$T=(t_x, t_y,t_z)^T$为平移向量，$R=R(\alpha, \beta, \gamma)$为旋转矩阵。$\alpha$为绕$x$轴旋转角度，$\beta$为绕$y$轴旋转角度， $\gamma$为绕$z$轴旋转角度。其展开表达式如下：</p>
+<div>
+$$
+R(\alpha, \beta,\gamma) = \begin{pmatrix}
+1 & 0 & 0 \\
+0 & \cos{\alpha} & -\sin{\alpha} \\
+0 & \sin{\alpha} & \cos{\alpha}
+\end{pmatrix}\begin{pmatrix}
+\cos{\beta} & 0 & \sin{\beta} \\
+0 & 1 & 0 \\
+-\sin{\beta} & 0 & \cos{\beta}
+\end{pmatrix}\begin{pmatrix}
+\cos{\gamma} & -\sin{\gamma} & 0 \\
+\sin{\gamma} & \cos{\gamma} & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+$$
+</div>
+<p>$(\alpha, \beta, \gamma, t_x, t_y, t_z)$这六个参数称为<strong>摄像机外参</strong>、<strong>外方位参数</strong>或<strong>摄像机位姿</strong>，它们反映了相机坐标系与世界坐标系间相对位置关系。</p>
+<p>之后，将点$P_C$从相机坐标系投影到像平面坐标系(IPCS)中。这个投影通常为透视投影。参考图1.2，此时点$P_W$因已转换到相机坐标系，所以变为点$P_C$。通过相似三角形，可得：</p>
+<div>
+$$
+\begin{equation}
+\begin{pmatrix}
+u \\
+v
+\end{pmatrix} 
+= 
+\frac{f}{z_c}\begin{pmatrix}
+x_c \\
+y_c
+\end{pmatrix}
+\tag{2}
+\end{equation}
+$$
+</div>
+<p>其中$f$表示<strong>相机常量或主距，并不是相机焦距</strong>。</p>
+<p><strong>(PS: 若仍无法理解上式如何得到，参考下图运用相似三角形)</strong></p>
+<center><img src = "pinhole_transform.png"></img></center>
+<p>这里继续，由于镜头的畸变，会导致坐标$(u,v)^T$发生变换。常用畸变模型将在下节简要说明，这里将用Division模型做说明，因为该模型只需考虑一个参数$\kappa$，其为正值，畸变为枕形畸变；若为负值，畸变为桶形畸变。畸变后的坐标为：</p>
+<div>
+$$
+\begin{equation}
+\begin{pmatrix}
+\tilde{u} \\
+\tilde{v}
+\end{pmatrix} = K \begin{pmatrix}
+u \\
+v
+\end{pmatrix}
+\tag{3}
+\end{equation}
+$$
+</div>
+<p>其中， $K$是关于$\kappa$的畸变系数。</p>
+<p>最后将点$(u,v)^T$从像平面坐标系转换到图像坐标系(ICS)中：</p>
+<div>
+$$
+\begin{equation}
+\begin{pmatrix}
+r \\
+c
+\end{pmatrix} = \begin{pmatrix}
+\frac{1}{s_y} & 0 \\
+0 & \frac{1}{s_x}
+\end{pmatrix}
+\begin{pmatrix}
+\tilde{v} \\
+\tilde{u}
+\end{pmatrix} + \begin{pmatrix}
+c_y \\
+c_x
+\end{pmatrix} = \begin{pmatrix}
+\frac{\tilde{v}}{s_y} + c_y\\
+\frac{\tilde{u}}{s_x} + c_x
+\end{pmatrix}
+\tag{4}
+\end{equation}
+$$
+</div>
+<p>式中，$s_x$和$s_y$是缩放比例因子。对于针孔摄像机模型，它们是图像传感器上水平和垂直方向上相邻像素之间的距离。点$(c_x,c_y)^T$是图像的主点。对于针孔摄像机而言，该点是投影中心在像平面上的垂直投影，也就是该点与投影中心连线与像平面垂直。同时这个点也是径向畸变的中心。<strong>至此，针孔相机模型的内参都已确定，其包括$(f,\kappa,s_x,s_y,c_x,c_y)$这六个参数。它们确定了摄像机如何实现三维空间点到二维图像点的投影。</strong></p>
+<p>这里特别说明下，由于畸变模型是选用Division模型，所以内参中的畸变参数只有一个$\kappa$。若选用其它畸变模型，畸变参数将会有不同个数。<strong>因此内参并不是固定六个参数。</strong></p>
+<p>讲了这么多，那么总结下，整个相机模型的建立，就是将从空间点到图像上点的映射提炼成一个函数表示。那这个函数的表示如下：</p>
+<div>
+$$
+\begin{equation}
+z_c \begin{pmatrix}
+u \\
+v \\
+1
+\end{pmatrix} = \underbrace{\begin{pmatrix}
+\frac{f}{s_x} & 0 & c_x \\
+0 & \frac{f}{s_y} & c_y \\
+0 & 0 & 1
+\end{pmatrix}* \underbrace{\begin{bmatrix}
+R  |  T \end{bmatrix} *\begin{pmatrix}
+x_w \\
+y_w \\
+z_w \\
+1
+\end{pmatrix}}_{世界坐标系转换到相机坐标系}
+}_{相机坐标系转换到无畸变像平面坐标系}
+\tag{5}
+\end{equation}
+$$
+</div>
+<h2 id="畸变模型">畸变模型</h2>
+<p>畸变是镜头固有的属性。理论上是存在一种不引入任何畸变的镜头，但是，现实中，由于制造工艺等因素，这种理想镜头又是不存在的。一般对畸变分类可分为：<strong>径向畸变</strong>与<strong>切向畸变</strong>。径向畸变来源于透镜的形状；切向畸变则来自整个摄像机的组装过程<sup>[2]</sup>。</p>
+<p><em>(PS: 本节只是错略介绍畸变模型，具体畸变模型如何构造和推导的，不做深入研究。如有兴趣，请自行查阅相关资料，本节也会给出一些参考文献)</em></p>
+<h3 id="径向畸变">径向畸变</h3>
+<p>这种畸变会使不经过光轴的直线，通过镜头后成的像不再是一条直线。通常根据一个矩形成像后的特征可以定义两种畸变：<strong>枕形畸变</strong>和<strong>桶形畸变</strong>。参考图1.3。</p>
+<center><img src = "lens_distortion_types.png"></img></center>
+<p>对于大多数镜头而言，它们的畸变都可以充分地近似为径向畸变<sup>[3]</sup>。</p>
+<h3 id="切向畸变">切向畸变</h3>
+<p>切向畸变的产生，是由于透镜制造过程中，透镜本身与传感器平面不平行造成的。</p>
+<center><img src = "tangential_distortion.png"></img></center>
+<h3 id="division畸变模型">Division畸变模型</h3>
+<p>Division模型在前面建立面阵摄像机模型时已经简略提到。其完整表达如下：</p>
+<div>
+$$
+\begin{equation}
+\begin{pmatrix}
+\tilde{u} \\
+\tilde{v}
+\end{pmatrix} = \frac{2}{1+\sqrt{1-4\kappa(u^2 + v^2)}} \begin{pmatrix}
+u \\
+v
+\end{pmatrix}
+\tag{6}
+\end{equation}
+$$
+</div>
+<p>该模型几乎可以表示所有在机器视觉应用中常用镜头的畸变(仅支持径向畸变)<sup>[4]</sup>，并且足够准确。其参数$\kappa$表示了径向畸变量级。如果$\kappa$为负值，畸变为桶形畸变；如果$\kappa$为正值，那畸变为枕形畸变。另外与其他模型相比，有一个极大的优点就是，可以通过下式进行畸变校正<sup>[1]</sup>：</p>
+<div>
+$$
+\begin{equation}
+\begin{pmatrix}
+u \\
+v
+\end{pmatrix} = \frac{1}{1+\kappa(\tilde{u}^2 + \tilde{v}^2)} \begin{pmatrix}
+\tilde{u} \\
+\tilde{v}
+\end{pmatrix}
+\tag{7}
+\end{equation}
+$$
+</div>
+该模型也是Halcon中calibrate_cameras()算子的标配。如果想详细了解该模型，参考论文[5]。
+<h3 id="多项式畸变模型">多项式畸变模型</h3>
+<p>该模型利用泰勒级数，将畸变函数在$r=0$处展开为多项式，该多项式的通用形式为：$f(r) = a_0 + a_1r+a_2r^2 + \cdots $，当$r=0$时，$f(r) =0 $，这意味着$a_0 = 0$。又因为函数必须关于$r$径向对称，所以，只有$r$的偶次幂不为0。因此，畸变函数只需要用$r^2$，$r^4$和$r^6$项的系数来描述。该模型也是OpenCV中，标定函数所使用的模型。该模型理论基础和推导可参考文献[6]、[7]。</p>
+<p>多项式畸变模型数学表达如下：</p>
+<div>
+$$
+\begin{equation}
+\begin{matrix}
+u = \tilde{u}\left( 1 + k_1 \tilde{r}^2 + k_2\tilde{r}^4 + k_3 \tilde{r}^6\right) + \left( p_1(\tilde{r}^2 + 2\tilde{u}^2)+2p_2\tilde{u}\tilde{v} \right)\\[2ex]
+v = \tilde{v}\left(1 + k_1 \tilde{r}^2 + k_2\tilde{r}^4 + k_3 \tilde{r}^6 \right) +(2p_1\tilde{u}\tilde{v} + p_2(\tilde{r}^2 + 2\tilde{v}^2))
+\end{matrix}
+\tag{8}
+\end{equation}
+$$
+</div>
+<p>其中$\tilde{r}^2 = \tilde{u}^2 + \tilde{v}^2$，$k_1$、$k_2$、$k_3$、$k_4$、$k_5$和$k_6$为径向畸变参数，$p_1$和$p_2$为切线畸变参数。</p>
+<p>多项式模型虽然能很好地表征径向、切向畸变，但是当从畸变坐标变换为原始坐标过程将变得十分困难，这里需要用到数值寻根算法，这导致该模型要比Division模型来的低效<sup>[4]</sup>。</p>
+<h2 id="标定过程">标定过程</h2>
+<p>至此之前的讨论，已经构建了一套完善的模型。可以看出，整个标定过程就是利用这个模型去确定摄像机内参和外参的过程。这个过程必须已知世界坐标系中足够多的三维空间点的坐标，找到这些空间点在图像中的投影点的二维图像坐标，并建立对应关系。获得世界坐标系中的三维点坐标，往往将容易提取特征的目标物体或标志放置在一个已知位置上。而测量物的绝对坐标一般不重要，只要知道测量物与相机的相对位置已经足够用来精确测量。<strong>因此 ，通常使用已经事先精确测量过的已知尺寸的可移动的标定板来标定相机</strong>。这种方式优势在于，可以在相机固定的情况下进行标定。</p>
+<p>在确定世界坐标系中已知点与它们在图像中投影的对应关系，这个过程较为困难。因此，标定板的结构一般都尽量使确定对应关系的过程更简单。常用的标定板有以下两种：圆点阵列以及棋盘格。</p>
+<center>
+<img src = "circle_calibrate.png"/>			<img src = "Chessboard.png"/>
+</center>
+<p>这种平面标定板的好处在于，首先，它们易于操作；第二，它们的尺寸可以制作的非常精确；最后，它们可以非常方便的应用在背光照明条件下。</p>
+<p>以圆点阵列标定板为例，其外围黑色矩形边界框将标定板的内部区域与背景分开，可以利用这一特性在图像中定位标定板位置。之后通过简单的阈值分割可以找到标定板内部区域。阈值的选取可以自动尝试，直至找到$m \times n$个孔洞为止。一旦确定了内部区域，就可使用亚像素边缘提取方法来提取标定板各个圆点的边缘。因为圆形标定标记的投影为椭圆，可以使用较为强健的椭圆拟合算法对边缘进行拟合。最后，基于提取出椭圆的最小外接四边形，可以非常容易确定标定标记与它们在图像中投影之间的对应关系。在确定了标定标记与它们图像中投影的对应关系后，就可以进行相机标定了。</p>
+<p>而棋盘格标定板提取标定标记的过程也类似。这里不做过多展开。</p>
+<p>下面详细介绍下非常有名的张氏标定法<sup>[8]</sup>。</p>
+<h2 id="张氏标定法">张氏标定法</h2>
+<p>“张氏标定法&quot;是张正友教授于1998年在其论文<sup>[8]</sup>中提出的，利用单平面棋盘格(或圆点阵列)对相机进行标定。该方法不仅灵活，而且具有很高的精度。该方法只需要<strong>至少两张</strong>标定图片即可，同时相机或者标定平面可以随意移动。也是因为有这些优点，该方法已作为工具箱或封装好的函数被广泛使用。</p>
+<p>其从公式出发：</p>
+<div>
+$$
+\begin{equation}
+s \begin{pmatrix}
+u \\
+v \\
+1
+\end{pmatrix} = A* \begin{bmatrix}
+R  |  T \end{bmatrix} *\begin{pmatrix}
+x_w \\
+y_w \\
+z_w \\
+1
+\end{pmatrix}
+\tag{9}
+\end{equation}
+$$
+</div>
+<p>其中， $s=z_c$为任意的缩放因子，</p>
+<div>
+$$
+A = \begin{pmatrix}
+\frac{f}{s_x} & r & c_x \\
+0 & \frac{f}{s_y} & c_y \\
+0 & 0 & 1
+\end{pmatrix} = \begin{pmatrix}
+m & r & c_x \\
+0 & n & c_y \\
+0 & 0 & 1
+\end{pmatrix}
+$$
+</div>
+<p>矩阵$A$与公式(5)中的内参矩阵略为不同，其中参数$r$表示两条图像轴的倾斜因子。模型建立过程为理想情况，所以公式(5)中默认为$0$。为了之后推导的方便，令$\frac{f}{s_x} = m$、$\frac{f}{s_y} = n$。</p>
+<p>假定，物体所在平面为$z_w=0$平面，那么公式(9)可简化为：</p>
+<div>
+$$
+\begin{equation}
+s \begin{pmatrix}
+u \\
+v \\
+1
+\end{pmatrix} = A* \begin{bmatrix}
+r_1 & r_2 & r_3 & t \end{bmatrix} *\begin{pmatrix}
+x_w \\
+y_w \\
+0 \\
+1
+\end{pmatrix} = 
+A * \begin{bmatrix}
+r_1 & r_2 &t
+\end{bmatrix} * \begin{pmatrix}
+x_w \\
+y_w \\
+1
+\end{pmatrix} = H*\begin{pmatrix}
+x_w \\
+y_w \\ 
+1
+\end{pmatrix}
+\tag{10}
+\end{equation}
+$$
+</div>
+<p>其中，</p>
+<div>
+$$
+H = A\begin{bmatrix}
+r_1 & r_2 & t
+\end{bmatrix} 
+$$
+</div>
+<p>$H$为一个$3\times3$的单应性矩阵。再令，</p>
+<div>
+$$
+\begin{equation}
+\begin{bmatrix}
+h_1 & h_2 & h_3
+\end{bmatrix} = \lambda A \begin{bmatrix}
+r_1 & r_2 & t
+\end{bmatrix}
+\tag{11}
+\end{equation}
+$$
+</div>
+<p>$\lambda$为比例因子。由公式(11)可得，</p>
+<div>
+$$
+\lambda = \frac{1}{s} \\
+h_1 = \lambda A r_1 \Rightarrow r_1 =sA^{-1}h_1 \\
+h2 = \lambda A r_2 \Rightarrow r_2 =sA^{-1}h_2
+$$
+</div>
+<p>由于从世界坐标系变换到相机坐标系为刚性变换，所以$r_1$与$r_2$标准正交，那么，</p>
+<div>
+$$
+\begin{equation}
+\begin{matrix}
+r_1^T r_2 = 0 \Rightarrow h_1^TA^{-T}A^{-1}h_2 = 0 \\
+||r_1|| = ||r_2|| = 1 \Rightarrow h_1^TA^{-T}A^{-1}h_1 = h_2^TA^{-T}A^{-1}h_2
+\end{matrix}
+\tag{12}
+\end{equation}
+$$
+</div>
+<p>这里， 令</p>
+<div>
+$$
+B = A^{-T}A^{-1} = \begin{bmatrix}
+B_{11} & B_{12} & B_{13} \\
+B_{21} & B_{22} & B_{23} \\
+B_{31} & B_{32} & B_{33}
+\end{bmatrix} = \begin{bmatrix}
+\frac{1}{m^2} & -\frac{r}{m^2n} & \frac{c_y r - c_xn}{m^2n} \\
+-\frac{r}{m^2n} & \frac{r^2}{m^2n^2}+\frac{1}{n^2} & -\frac{r(c_yr - c_xn)}{m^2n^2}-\frac{c_y}{n^2}\\
+\frac{c_yr-c_xn}{m^2n} & -\frac{r(c_yr-c_xn)}{m^2n^2}-\frac{c_y}{n^2} & \frac{(c_yr-c_xn)^2}{m^2n^2} +\frac{c_y^2}{n^2} + 1
+\end{bmatrix}
+$$
+</div>
+<p>仔细观察可发现，矩阵<strong>$B$</strong>为对称阵，那么可用一个6维向量表示：
+$$
+b = [B_{11},B_{12},B_{22},B_{13},B_{23},B_{33}]^T
+$$</p>
+<p>矩阵<strong>$H$</strong>的第$i$列可表示为:
+$$
+h_i = [h_{i1}, h_{i2}, h_{i3}]^T
+$$</p>
+<p>因此可推导出：
+$$
+h_i^TBh_i = v_{ij}^Tb
+$$</p>
+<p>其中，</p>
+<div>
+$$
+v_{ij} = \begin{bmatrix}
+h_{i1}h_{j1}\\
+h_{i1}h_{j2} + h_{i2}h_{j1} \\
+h_{i2}h_{j2} \\
+h_{i3}h_{j1} + h_{i1}h_{j3} \\
+h_{i3}h_{j2} + h_{i2}h_{j3} \\
+h_{i3}h_{j3}
+\end{bmatrix}
+$$
+</div>
+<p>式(12)的两个约束条件可化为：</p>
+<div>
+$$
+\begin{equation}
+\begin{bmatrix}
+v_{12}^T \\
+(v_{11}-v_{22})^T
+\end{bmatrix}b = 0 \Rightarrow Vb = 0
+\tag{13}
+\end{equation}
+$$
+</div>
+<p>若标定过程中，获取了$n$张标定图像，则矩阵$V$大小为$2n \times 6$。因为未知参数共5个：$m,n,r,c_x,c_y$。为了完全解出，至少需要$n\geq3$幅图像，即$3$个单应矩阵在$2$个约束条件下可有$6$个方程。因此，实际操作中，要获取$3$个单应矩阵，需通过改变相机与标定板的相对位置来获取。若只有$2$张图片，可假定参数$r=0$(图像轴未发生倾斜)同样也能求解。若$n=1$时，只能求解出两个相机内参，例如：假设图像轴未发生倾斜($r=0$)， 主点位置位于图像中心，这样就能求解出内参$m,n$。</p>
+<p>一般的情况下，公式(13)运用<strong>Cholesky分解</strong>，就可得到内参的一般化公式：</p>
+<div>
+$$
+c_y = \frac{(B_{12}B_{13}-B_{11}B_{23})}{B_{11}B_{22} - B_{12}^2} \\
+\lambda = B_{33} - \frac{B_{13}^2 + c_y (B_{12}B_{13}-B_{11}B_{23})}{B_{11}} \\
+m = \sqrt{\frac{\lambda}{B_{11}}} \\
+n = \sqrt{\frac{\lambda B_{11}}{B_{11}B_{22} - B_{12}^2}} \\
+r = -\frac{B_{12}m^2n}{\lambda} \\
+c_x = \frac{rc_y}{m}-B_{13}\frac{m^2}{\lambda}
+$$
+</div>
+<p>一旦内参确定了，那么每张图的外参可以根据下面式得到：</p>
+<div>
+$$
+r_1 = \lambda A^{-1}h_1 \\
+r_2 = \lambda A^{-1}h_2 \\
+r_3 = r_1 \times r_2 \\
+t = \lambda A^{-1} h_3
+$$
+</div>
+<p>其中，$\lambda = \frac{1}{||A^{-1}h_1||} = \frac{1}{||A^{-1}h_2||}$</p>
+<p>由于数据点中存在噪声，旋转矩阵$R = [r_1, r_2, r_3]$并不满足旋转矩阵的特征，如果需要，可通过SVD获取最优旋转矩阵。</p>
+<p>以上的推导结论仅仅是理论上通过最小化代数距离得到的，并没有物理意义。也就是说，因为噪声的存在，理论解与真实解间存在偏差，这个偏差在论文中采用了**最大似然估计(Maximum-Likelihood Esitmation)**进行优化。</p>
+<p>由于张教授略过了中间过程，直接给出公式：</p>
+<div>
+$$
+\begin{equation}
+\sum_{i=1}^{n}\sum_{j=1}^{m}||m_{ij} - \hat{m}(A, R_i, t_i, M_j)||^2
+\tag{14}
+\end{equation}
+$$
+</div>
+<p>其中，$m_{ij}$表示第i张标定图像中的第j个角点；$\hat{m}(A, R_i, t_i, M_j)$表示第i张图像中，世界坐标系下点$M_j$在图像上的投影点。最小化式(14)是一个非线性最小化问题，可通过Levenberg-Marquardt Algorithm<sup>[9]</sup>求解。</p>
+<p><em>PS：因为最大似然估计这部分也还没搞得特别明白，就不多说了。</em></p>
+<h2 id="相机参数的准确度">相机参数的准确度</h2>
+<p>在张氏标定法中，如果要估计出所有内参，只要至少3幅图像就能得到。但是现实的残酷性再次提醒我们，由于标定过程中，标定板的位置摆放不适当的话，将导致简并性配置，即相机参数中的某个参数或某些参数无法得到唯一值。为了得到高准确度的相机参数，就必须避免这种情况的发生。行之有效的办法就是改变标定图像的数量。下图显示了图像数量对标定参数的影响。</p>
+<center><img src = "std_f.png"></img></center>
+<center><img src = "std_c.png"></img></center>
+<p>图中分别显示了主距$f_x,f_y$和主点$c_x,c_y$的标准差。改数据来源于拍摄了52幅标定板图像。然后使用这52幅图像中包含$k$幅图像$(k = 5,10,15,30,45,50)$的子集来标定摄像机，每个子集随机抽样$n$次(n=20)。(PS: 这种数据分析的方式还比较粗糙，后期会找时间改改，但是总体趋势还是正确的)。可以看出，<strong>相机参数的准确度随着使用图像数量的增加而明显增加</strong>。因此，为了得到更精确的相机参数，就需要更多的标定图像。我一般会选取<strong>20张</strong>。<strong>而且，标定板在标定图像中最好能够覆盖整个视野并尽可能覆盖相机外参的范围</strong>。如果标定板能够在标定图像中覆盖图像的每个角落，可以使得计算得到的畸变系数更准确。如果标定板可以覆盖较大的深度范围，那么所有的相机参数都会更准确。可以通过将标定板绕它的$x$轴和$y$轴旋转或者将标定板放置在与相机不同距离的位置上使标定板覆盖较大的深度范围。<sup>[1]</sup></p>
+<p>另外，文献[1]中，作者同样通过实验的方式得出，<strong>调节相机镜头的$f$值后，需要对相机进行重新标定，至少对某些镜头而言是必须的</strong>。这里就不展开说明了，记住结论就好！</p>
+<h2 id="参考文献">参考文献</h2>
+<p>[1] 《机器视觉算法与应用》<br></br>
+[2] 《Learning OpenCV》<br></br>
+[3]  Lenz R, Fritsch D. Accuracy of videometry with CCD sensors[J]. ISPRS Journal of Photogrammetry and Remote Sensing, 1990, 45(2): 90-110.<br></br>
+[4]  Steger C. A comprehensive and versatile camera model for cameras with tilt lenses[J]. International Journal of Computer Vision, 2017, 123(2): 121-159.<br></br>
+[5]  Fitzgibbon A W. Simultaneous linear estimation of multiple view geometry and lens distortion[C]//Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on. IEEE, 2001, 1: I-I.<br></br>
+[6] Duane C B. Close-range camera calibration[J]. Photogramm. Eng, 1971, 37(8): 855-866.<br></br>
+[7] Brown D C. Decentering distortion of lenses[J]. Photogrammetric Engineering and Remote Sensing, 1966.<br></br>
+[8] Zhang Z. A flexible new technique for camera calibration[J]. IEEE Transactions on pattern analysis and machine intelligence, 2000, 22(11): 1330-1334.<br></br>
+[9] Moré J J. The Levenberg-Marquardt algorithm: implementation and theory[M]//Numerical analysis. Springer, Berlin, Heidelberg, 1978: 105-116.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2018-04-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/camera-calibration/">Camera Calibration</a>
+          <a href="/tags/distortion-model/">Distortion Model</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2019-08-20_ellipse_fitting/ellipse-fitting.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Ellipse Fitting</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html">
+            <span class="next-text nav-default">利用OpenCV第三方库编译Leptonica</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@email.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://l1mat2x.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

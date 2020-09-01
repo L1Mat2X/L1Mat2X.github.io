@@ -39,6 +39,15 @@
     </item>
     
     <item>
+      <title>Camera Calibration</title>
+      <link>https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</link>
+      <pubDate>Fri, 27 Apr 2018 10:40:53 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</guid>
+      <description>符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点</description>
+    </item>
+    
+    <item>
       <title>利用OpenCV第三方库编译Leptonica</title>
       <link>https://l1mat2x.github.io/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html</link>
       <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Camera Calibration on L1Mat2X&#39;Blog - 學無止儘</title>
+    <link>https://l1mat2x.github.io/tags/camera-calibration/</link>
+    <description>Recent content in Camera Calibration on L1Mat2X&#39;Blog - 學無止儘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 27 Apr 2018 10:40:53 +0800</lastBuildDate>
+    
+	<atom:link href="https://l1mat2x.github.io/tags/camera-calibration/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Camera Calibration</title>
+      <link>https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</link>
+      <pubDate>Fri, 27 Apr 2018 10:40:53 +0800</pubDate>
+      
+      <guid>https://l1mat2x.github.io/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</guid>
+      <description>符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点</description>
+    </item>
+    
+  </channel>
+</rss>
