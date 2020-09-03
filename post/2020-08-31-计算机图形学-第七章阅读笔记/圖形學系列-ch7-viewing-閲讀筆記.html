@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列-Ch7 Viewing-閲讀筆記 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch7-viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.651e6917abb0239242daa570c2bec9867267bbcd83646da5a850afe573347b44.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列-Ch7 Viewing-閲讀筆記" />
+<meta property="og:description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch7-viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<meta property="article:published_time" content="2020-08-31T14:41:33+08:00" />
+<meta property="article:modified_time" content="2020-08-31T14:41:33+08:00" />
+<meta itemprop="name" content="圖形學系列-Ch7 Viewing-閲讀筆記">
+<meta itemprop="description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。">
+<meta itemprop="datePublished" content="2020-08-31T14:41:33+08:00" />
+<meta itemprop="dateModified" content="2020-08-31T14:41:33+08:00" />
+<meta itemprop="wordCount" content="3822">
+
+
+
+<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列-Ch7 Viewing-閲讀筆記"/>
+<meta name="twitter:description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列-Ch7 Viewing-閲讀筆記</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-31 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            </div>
+          <span class="more-meta"> 3822 words </span>
+          <span class="more-meta"> 8 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#71-viewing-transformations">7.1 Viewing Transformations</a>
+          <ul>
+            <li><a href="#711-the-viewport-transformation">7.1.1 The Viewport Transformation</a></li>
+            <li><a href="#712-the-orthographic-projection-transformation">7.1.2 The Orthographic Projection Transformation</a></li>
+            <li><a href="#713-the-camera-transformation">7.1.3 The Camera Transformation</a></li>
+          </ul>
+        </li>
+        <li><a href="#72-projective-transformation">7.2 Projective Transformation</a></li>
+        <li><a href="#73-perspective-projection">7.3 Perspective Projection</a></li>
+        <li><a href="#74-透視投影變換的一些特點">7.4 透視投影變換的一些特點</a></li>
+        <li><a href="#75-field-of-view">7.5 Field-of-View</a></li>
+        <li><a href="#fqa">FQA</a></li>
+        <li><a href="#聲明">聲明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>從3D空間到2D空間中的映射稱爲<code>viewing transformation</code>。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。</p>
+<h2 id="71-viewing-transformations">7.1 Viewing Transformations</h2>
+<p><code>viewing transformations</code>是一系列操作的總稱，這些操作主要完成從3D空間的位置（笛卡爾坐標系下的$(x,y,z)$）到圖像坐標（$(u,v)$）的變換。這一系列操作通常可分爲三個變換：</p>
+<blockquote>
+<ol>
+<li><code>camera transformation</code>或<code>eye transformation</code>：用於調整相機位置和位姿；</li>
+<li><code>projection transformation</code>：根據投影類型，將物體從相機空間中映射到$x
+\in [-1,1]$和$y \in [-1,1]$的區間中，這個區間圖像稱爲<code>unit image</code>。</li>
+<li><code>viewport transformation</code>或<code>windowing transformation</code>：將<code>unit image</code>變換成所需的圖像尺寸。</li>
+</ol>
+</blockquote>
+<center><img src = "figure7.2.png"></img></center>
+<p><code>camera transformation</code>將點的空間坐標轉換到相機坐標系下，也稱爲相機空間；<code>projection transformation</code>將點從相機空間中變換到標準視圖躰中，也就是$(x,y,z) \in [-1,1]^3$的立方體中；<code>viewport transformation</code>將標準視圖躰變換到屏幕空間，也就是最後成像。</p>
+<h3 id="711-the-viewport-transformation">7.1.1 The Viewport Transformation</h3>
+<p>假設所有希望看到的物體都在標準視圖躰($(x,y,z) \in [-1,1]^3$)内，相機觀察方向為$-z$，正交于標準視圖躰。縣規定$x = -1$對應圖像左邊界，$x = +1$對應圖像右邊界，$y = -1$對應圖像下邊界，$y = +1$對應圖像上邊界。假設圖像寬高為$n_x$和$n_y$，<code>viewport transformation</code>就是將平面$[-1,1]^2$變換到矩形$[-0.5, n_x - 0.5] \times [-0.5, n_y - 0.5]$中。</p>
+<p>這裏忽略了$z$軸坐標的原因是，點在空間中的投影距離，并不影響它在像平面中的位置。所以可得到<code>viewport matrix</code>。</p>
+<div>
+$$
+\mathbf{M}_{vp} = \begin{bmatrix}
+\frac{n_x}{2} & 0 & 0 & \frac{n_x - 1}{2}\\
+0 & \frac{n_y}{2} & 0 & \frac{n_y - 1}{2}\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix} \tag{7.2}
+$$
+</div>
+<h3 id="712-the-orthographic-projection-transformation">7.1.2 The Orthographic Projection Transformation</h3>
+<p>通常我們并不只希望獲取標準視圖體内的幾何體，而希望在觀察方向和角度固定（沿$-z$且$+y$正立）情況下，能獲得任意矩形體内的幾何體。我們在<code>viewport matrix</code>右側再乘上一個矩陣來獲得所希望的結果，而不是去修改<code>viewport matrix</code>。</p>
+<p>先定義任意矩形體為$[l,r] \times [b,t] \times [f,n]$，如下圖所示：</p>
+<center><img src = "figure7.4.png"></img></center>
+通常稱這樣的矩形骵為``orthographic view volume``，其中：
+<center><img src = "ch7-7.1_orthographic_view_volume.png"></img></center>
+<p>注意，通常觀察方向都是沿著$-z$方向，正立方向都是沿著$+y$軸，對於近平面$n$的值就始終大於遠平面$f$的值，即$n &gt; f$。如下圖所示：</p>
+<center><img src = "figure7.5.png"></img></center>
+<p>現在只要將<code>orthographic view volume</code>變換到<code>canonical view volume</code>，之後在利用<code>viewport matrix</code>變換即可。</p>
+<div>
+$$
+\mathbf{M}_{orth} = \begin{bmatrix}
+\frac{2}{r-l} & 0 & 0 & -\frac{r+l}{r-l}\\
+0 & \frac{2}{t-b} & 0 & -\frac{t+b}{t-b}\\
+0 & 0 & -\frac{2}{n-f} & -\frac{n+f}{n-f}\\
+0 & 0 & 0 & 1
+\end{bmatrix} \tag{7.3}
+$$
+</div>
+<p>繪製<code>orthographic view volume</code>的3D綫段時，就可以結合矩陣(7.2)和矩陣(7.3)來獲取兩個端點在圖像中的位置坐標。</p>
+<div>
+$$
+\begin{bmatrix}
+x_{pixel}\\
+y_{pixel}\\
+z_{canonical}\\
+1
+\end{bmatrix} = (M_{vp}M_{orth})\begin{bmatrix}
+x \\
+y \\
+z \\
+1
+\end{bmatrix}
+$$
+</div>
+<p>算法框架如下：</p>
+<center><img src  = "ch7-7.1_line_segment_transformation_framework_1.png"></img></center>
+<h3 id="713-the-camera-transformation">7.1.3 The Camera Transformation</h3>
+<p>在3D空間中，我們視點位置和觀察角度通常都是任意的，因此，常用以下三個量來定義視點：</p>
+<blockquote>
+<ol>
+<li>“眼睛”的位置$\mathbf{e}$；</li>
+<li>視綫方向$\mathbf{g}$;</li>
+<li>正立方向$\mathbf{t}$</li>
+</ol>
+</blockquote>
+<p>如下圖所示</p>
+<center><img src = "figure7.6.png"></img></center>
+<p>有了這三個信息，就能夠在視點位置構造一個坐標系$\mathbf{uvw}$，也是用於描述相機空間的坐標系。</p>
+<div>
+$$
+\mathbf{w} = -\frac{\mathbf{g}}{||\mathbf{g}||}\\[4ex]
+\mathbf{u} = \frac{\mathbf{t}\times\mathbf{w}}{||\mathbf{t}\times\mathbf{w}||}\\[4ex]
+\mathbf{v} = \mathbf{w} \times \mathbf{u}
+$$
+</div>
+<p>被觀察物體改用坐標系$\mathbf{uvw}$表示，這樣，只需要變換視點位置$\mathbf{e}$和基坐標$、mathbf{uvw}$，就能將視點和被觀察物體從世界坐標系$\mathbf{o-xyz}$變換到相機坐標系$\mathbf{e-uvw}$中。</p>
+<center><img src = "figure7.7.png"></img></center>
+<p>坐標系閒的變換在第六章中做了詳細説明，這裏就不多説，直接上公式：</p>
+<div>
+$$
+\mathbf{M}_{cam} = \begin{bmatrix}
+\mathbf{u} & \mathbf{v} & \mathbf{w} & \mathbf{e}\\
+0 & 0 & 0 & 1
+\end{bmatrix}^{-1} = \begin{bmatrix}
+x_u & y_u & z_u & 0 \\
+x_v & y_v & z_v & 0 \\
+x_w & y_w & z_w & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix} \begin{bmatrix}
+1 & 0 & 0 & -x_e \\
+0 & 1 & 0 & -y_e \\
+0 & 0 & 1 & -z_e \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+</div>
+<p>結合前面的變換，整個<code>viewing transformation</code>的框架如下所示：</p>
+<center><img src = "ch7-7.1_line_segment_transformation_framework_2.png"></img></center>
+<p>總結下，整個<code>viewing transformation</code>過程可以想像成拍照過程，先選好鏡頭和設置相片尺寸（<code>viewport transformation</code>）；擺放好相機和被拍攝物體（<code>camera transformation</code>）；按下快門（<code>projection transformation</code>）。</p>
+<h2 id="72-projective-transformation">7.2 Projective Transformation</h2>
+<p>射影變換是在相機空間中進行的，通過<code>camera transformation</code>后，視點位置位於相機空間的原點，觀察方向沿著$-z$軸。</p>
+<p>在透視投影中，物體在像平面的尺寸，與物體離視點距離的倒數($1/z$)成正比。如下圖：</p>
+<center><img src = "figure7.8.png"></img></center>
+<center style="font-size:14px;color:#707070">figure7.8</center> 
+<p>圖中，$d$表示視平面離視點的距離，$y_s$表示物體在視平面上$y$軸上的成像位置。利用相似三角形，很容易得到：
+$$
+y_s = \frac{d}{z}y
+$$</p>
+<p>一般的仿射變換為：
+$$
+x&rsquo; = ax + by + cz + d
+$$</p>
+<p>這裏約束齊次坐標系最後一維$w = 1$；若取消這個約束，那麽可以擴展出更多變換，變換形式變化成如下形式：
+$$
+x&rsquo; = \frac{ax+by+cz+d}{ex+fy+gz+h}
+$$</p>
+<p>這樣就可獲得關於$x$、$y$和$z$的三個變換函數：</p>
+<div>
+$$
+x' = \frac{a_1x + b_1y + c_1z + d_1}{ex+fy+gz+h}\\[4ex]
+y' = \frac{a_2x + b_2y + c_2z + d_2}{ex+fy+gz+h}\\[4ex]
+z' = \frac{a_3x + b_3y + c_3z + d_3}{ex+fy+gz+h}
+$$
+</div>
+<p>這三個變換函數的唯一約束就是分母是相同的。同樣也可使用矩陣形式表示：</p>
+<div>
+$$
+\begin{bmatrix}
+\tilde{x}\\
+\tilde{y}\\
+\tilde{z}\\
+\tilde{w}
+\end{bmatrix} = \begin{bmatrix}
+a_1 & b_1 & c_1 & d_1\\
+a_2 & b_2 & c_2 & d_2\\
+a_3 & b_3 & c_3 & d_3\\
+e & f & g & h
+\end{bmatrix}\begin{bmatrix}
+x\\
+y\\
+z\\
+1
+\end{bmatrix} \\[7ex]
+\Rightarrow (x',y',z') = (\tilde{x}/\tilde{w}, \tilde{y}/\tilde{w},\tilde{z}/\tilde{w})
+$$
+</div>
+<p>可用這種形式表示的變換都可稱爲<strong>射影變換(projective transformation)<strong>或</strong>單應性</strong>。</p>
+<h2 id="73-perspective-projection">7.3 Perspective Projection</h2>
+<p>假設，在3D空間中，視點位於原點，觀測方向沿$-z$軸，可是距離由遠近平面限制。 在透視變換中，將近平面作爲像平面，這樣可簡化推導。更簡單的理解是，先將物體透視投影到一個矩形體上，再利用正交投影進行後續操作。如下面兩圖所示：</p>
+<center><img src = "figure7.12.png"></img></center>
+<center><img src = "figure7.13.png"></img></center>
+<p>這裏先回顧圖(7.8)，將圖中$y_s$的計算用矩陣可表示爲：</p>
+<div>
+$$
+\begin{bmatrix}
+y_s\\
+1
+\end{bmatrix} \sim \begin{bmatrix}
+d & 0 & 0 \\
+0 & 1 & 0
+\end{bmatrix} \begin{bmatrix}
+y\\
+z \\
+1
+\end{bmatrix}
+$$
+</div>
+<p>類似的，在3D空間中，$x$和$y$均可按上面的方式處理，得到變換矩陣：</p>
+<div>
+$$
+\mathbf{P} = \begin{bmatrix}
+n & 0 & 0 & 0\\
+0 & n & 0 & 0\\
+? & ? & ? & ?\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+$$
+</div>
+<p>這個矩陣中的第1、2、4行已實現了透視方程，而第3行是與$z$坐標有關，這行的計算值會在之後物體遮擋部分使用到（<code>z-buffer</code>算法）。那第3行的參數是什麽呢？這裏可做如下假設來獲取第3行的參數：</p>
+<blockquote>
+<ol>
+<li>齊次坐標係中，坐標$(x,y,z,1)$和$(kx,ky,kz,k)$是表示同一個點；</li>
+<li>位於近平面上的點，經過投影后仍在近平面上；</li>
+<li>位於遠平面上的點，經過投影后仍在遠平面上；</li>
+</ol>
+</blockquote>
+<p>根據這以上的假設，可知：</p>
+<div>
+$$
+\mathbf{P}\begin{bmatrix}
+x\\
+y\\
+z\\
+1
+\end{bmatrix} = \begin{bmatrix}
+nx\\
+ny\\
+?\\
+z
+\end{bmatrix} \tag{1}
+$$
+</div>
+<p>對於近平面上的點變換前後始終是：</p>
+<div>
+$$
+\begin{bmatrix}
+x\\
+y\\
+n\\
+1
+\end{bmatrix} \Rightarrow \begin{bmatrix}
+x\\
+y\\
+n\\
+1
+\end{bmatrix} = \begin{bmatrix}
+nx\\
+ny\\
+n^2\\
+n
+\end{bmatrix}
+$$
+</div>
+<p>與公式(1)對比可知，第3行的計算方式如下：</p>
+<div>
+$$
+\begin{bmatrix}
+0 & 0 & A & B
+\end{bmatrix}\begin{bmatrix}
+x\\
+y\\
+n\\
+1
+\end{bmatrix} = n^2 \\[4ex]
+\Rightarrow An + B = n^2 \tag{2}
+$$
+</div>
+<p>同理，對於遠平面可得：
+$$
+Af + B = f^2 \tag{3}
+$$</p>
+<p>聯立等式(2)、(3)，求解方程組可得：</p>
+<div>
+$$
+\begin{cases}
+An+B = n^2\\
+Af+B = f^2
+\end{cases} \Rightarrow \begin{cases}
+A = n+f\\
+B = -nf
+\end{cases}
+$$
+</div>
+<p>這樣，就能獲得完整的透視變換矩陣：</p>
+<div>
+$$
+\mathbf{P} = \begin{bmatrix}
+n & 0 & 0 & 0\\
+0 & n & 0 & 0\\
+0 & 0 & n+f & -nf\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+$$
+</div>
+<p>對於<code>view volume</code>中任一點進行透視變換可得：</p>
+<div>
+$$
+\mathbf{P}\begin{bmatrix}
+x\\
+y\\
+z\\
+1
+\end{bmatrix} = \begin{bmatrix}
+nx\\
+ny\\
+(n+f)z-fn\\
+z
+\end{bmatrix} \sim \begin{bmatrix}
+\frac{nx}{z}\\
+\frac{ny}{z}\\
+n+f-\frac{nf}{z}\\
+1
+\end{bmatrix}
+$$
+</div>
+<p>而對於矩陣$\mathbf{P}$的逆變換同樣非常簡單：</p>
+<div>
+$$
+\mathbf{P}^{-1} = \begin{bmatrix}
+\frac{1}{n} & 0 & 0 & 0\\
+0 & \frac{1}{n} & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & -\frac{1}{nf} & \frac{n+f}{nf}
+\end{bmatrix} \\[4ex]
+\Rightarrow \mathbf{P}^{-1} = \begin{bmatrix}
+f & 0 & 0 & 0\\
+0 & f & 0 & 0\\
+0 & 0 & 0 & nf\\
+0 & 0 & -1 & n+f
+\end{bmatrix}
+$$
+</div>
+<p>至此，將透視變換矩陣和之前的正交投影矩陣結合，就能得到完整的透視投影矩陣：</p>
+<div>
+$$
+\mathbf{M}_{per} = \mathbf{M}_{orth}\mathbf{P} = \begin{bmatrix}
+\frac{2n}{r-l} & 0 & \frac{l+r}{l-r} & 0\\
+0 & \frac{2n}{t-b} & \frac{t+b}{b-t} & 0\\
+0 & 0 & \frac{f+n}{n-f} & \frac{2fn}{f-n}\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+$$
+</div>
+<p>這樣使用透視投影變換的<code>viewing transformation</code>矩陣可變爲：
+$$
+\mathbf{M} = \mathbf{M}<em>{vp}\mathbf{M}</em>{orth}\mathbf{P}\mathbf{M}_{cam}
+$$</p>
+<p>算法框架為：</p>
+<center><img src = "ch7-7.1_line_segment_transformation_framework_3.png"></img></center>
+<h2 id="74-透視投影變換的一些特點">7.4 透視投影變換的一些特點</h2>
+<p>投影前後，直綫依然是直綫，平面依然是平面；以綫段爲例，假設原綫段為：
+$$
+\mathbf{q} + t(\mathbf{Q}-\mathbf{q})
+$$</p>
+<p>經過變換矩陣$\mathbf{M}$后：
+$$
+\mathbf{M}\mathbf{q}  + t(\mathbf{M}\mathbf{Q}-\mathbf{M}\mathbf{q}) \equiv \mathbf{r} + t(\mathbf{R}-\mathbf{r})
+$$</p>
+<p>對於3D綫段可變爲：</p>
+<div>
+$$
+\frac{\mathbf{r} + t(\mathbf{R}-\mathbf{r})}{w_r + t(w_R - w_r)} \\[4ex]
+\Rightarrow \frac{\mathbf{r}}{w_r} + f(t)\left(\frac{\mathbf{R}}{w_R} - \frac{\mathbf{r}}{w_r}\right)
+$$
+</div>
+<p>其中，$f(t) = \frac{w_Rt}{w_r + t(w_R-w_r)}$。這一系列變換過程并未改變點的順序，所以從綫段依然變換爲綫段，平面依然變換爲平面。</p>
+<h2 id="75-field-of-view">7.5 Field-of-View</h2>
+<p>通常，我們會使用$(l,r,b,t)$和$n$來定義可視窗口，其中：</p>
+<div>
+$$
+l = -r,\\
+b = -t
+$$
+</div>
+<p>如果成像尺寸(像素)為$n_x \times n_y$，那麽：
+$$
+\frac{n_x}{n_y} = \frac{r}{t}
+$$</p>
+<p>這個比例可稱爲<code>aspect ratio</code>。如果按下圖中所示，在定義$\theta$角度，就能夠簡化可視窗口模型。</p>
+<center><img src = "figure7.14.png"></img></center>
+<p>其中：
+$$
+\tan{\frac{\theta}{2}} = \frac{t}{|n|} \tag{4}
+$$</p>
+<p>該$\theta$就稱爲<code>field-of-view</code>，等式(4)中定義了垂直方向的<code>field-of-view</code>，同理也可定義水平方向<code>field-of-view</code>。這樣就能將可視窗口模型簡化爲$(n, \theta_x, \theta_y, aspect-ratio)$即可。</p>
+<h2 id="fqa">FQA</h2>
+<center><img src = "ch7-frequently_asked_questions.png"></img></center>
+<h2 id="聲明">聲明</h2>
+<p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-31
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/wechat.jpg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/alipay.jpg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/computer-graphic/">Computer Graphic</a>
+          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
+          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
+          <a href="/tags/games101/">Games101</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch6-transformation-matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列-Ch6 Transformation Matrices-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@email.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
