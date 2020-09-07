@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Blob特征提取介紹 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="原点矩、中心距、Hu矩 最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义： 设$X$为随机变量，$c$为常数，$k$为正整数。则" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2019-02-19_blog_analysis/blog-analysis.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.651e6917abb0239242daa570c2bec9867267bbcd83646da5a850afe573347b44.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Blob特征提取介紹" />
+<meta property="og:description" content="原点矩、中心距、Hu矩 最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义： 设$X$为随机变量，$c$为常数，$k$为正整数。则" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2019-02-19_blog_analysis/blog-analysis.html" />
+<meta property="article:published_time" content="2019-02-14T10:07:06+08:00" />
+<meta property="article:modified_time" content="2019-02-14T10:07:06+08:00" />
+<meta itemprop="name" content="Blob特征提取介紹">
+<meta itemprop="description" content="原点矩、中心距、Hu矩 最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义： 设$X$为随机变量，$c$为常数，$k$为正整数。则">
+<meta itemprop="datePublished" content="2019-02-14T10:07:06+08:00" />
+<meta itemprop="dateModified" content="2019-02-14T10:07:06+08:00" />
+<meta itemprop="wordCount" content="2228">
+
+
+
+<meta itemprop="keywords" content="Blob-Analysis,moment,features," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Blob特征提取介紹"/>
+<meta name="twitter:description" content="原点矩、中心距、Hu矩 最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义： 设$X$为随机变量，$c$为常数，$k$为正整数。则"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Blob特征提取介紹</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-02-14 </span>
+        <div class="post-category">
+            <a href="/categories/computer-vision/"> Computer Vision </a>
+            </div>
+          <span class="more-meta"> 2228 words </span>
+          <span class="more-meta"> 5 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#原点矩中心距hu矩">原点矩、中心距、Hu矩</a></li>
+        <li><a href="#区域特征">区域特征</a></li>
+        <li><a href="#灰度值特征">灰度值特征</a></li>
+        <li><a href="#轮廓特征">轮廓特征</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="原点矩中心距hu矩">原点矩、中心距、Hu矩</h2>
+<p>最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义：</p>
+<blockquote>
+<p>设$X$为随机变量，$c$为常数，$k$为正整数。则量$E[(X - c)^k]$称为$X$关于$c$点的$k$阶矩。</p>
+</blockquote>
+<p>有两种特殊的情况：</p>
+<blockquote>
+<p>(1). 当$c= 0$时，$\alpha_{k} = E(X^k)$称为$X$的$k$阶原点矩；</p>
+<p>(2). 当$c = E(X)$时，$\mu_{k} = E[(X-EX)^k]$称为$X$的$k$阶中心矩。</p>
+</blockquote>
+<p>明显，一阶原点矩为期望，一阶中心距$\mu_1 = 0$，二阶中心矩$\mu_2$为随机变量$X$的方差$Var(X)$。</p>
+<p>在统计学上，高于四阶的矩极少使用，三、四阶矩有些应用，但也不多。$\mu_3$可用于衡量分布是否有偏，$\mu_4$用于衡量分布（密度）在均值附近的陡峭程度。</p>
+<p>在图像处理中，无论是原点矩还是中心矩，不能同时具备尺度、旋转和平移不变性，中心矩仅具备平移不变性，而归一化中心矩不仅具备平移不变性，还具有尺度不变性。而<strong>Hu矩</strong>是利用二阶和三阶归一化中心矩构造出的7个不变矩，在1962年，Hu.M.K证明了它们的旋转、尺寸和平移不变性。</p>
+<p>下面给出图像中，各类矩的计算方式：</p>
+<p>(p+q)阶原点矩定义为:
+$$
+\alpha_{pq} = \iint{x^p y^q f(x,y)dxdy}
+$$</p>
+<p>(p+q)阶中心距定义为:
+$$
+\mu_{pq} = \iint{(x-\bar{x})^p (y - \bar{y})^q f(x,y)dxdy}
+$$</p>
+<p>(p+q)阶归一化原点矩定义为:
+$$
+\xi_{pq} = \frac{\alpha_{pq}}{\alpha_{00}}
+$$</p>
+<p>(p+q)阶归一化中心矩定义为:
+$$
+\eta_{pq} = \frac{\mu_{pq}}{\alpha_{00}}
+$$</p>
+<p>Hu矩定义为：</p>
+<div>
+$$
+\begin{array}{l}
+\phi_1 = \eta_{20} + \eta_{02} \\
+\phi_2 = (\eta_{20} - \eta_{02})^2 + 4\eta_{11}^2 \\
+\phi_3 = (\eta_{20} - 3 \eta{12})^2 + 3(\eta_{21} - \eta_{03})^2 \\
+\phi_4 = (\eta_{30} + \eta_{12})^2 + (\eta_{21} + \eta_{03})^2 \\
+\phi_5 = (\eta_{30} + 3\eta_{12})(\eta_{30} + \eta_{12})[(\eta_{30} + \eta_{12})^2 - 3(\eta_{21}+\eta_{03})^2] + (3\eta_{21}-\eta_{03})(\eta_{21} + \eta_{03})[3(\eta_{30}+\eta_{12})^2 - (\eta_{21}+\eta_{03})^2] \\
+\phi_6 = (\eta_{20} - \eta_{02})[(\eta_{30}+\eta_{12})^2 - (\eta_{21} + \eta_{03})^2] + 4\eta_{11}(\eta_{30} + \eta_{12})(\eta_{21} + \eta_{03}) \\
+\phi_7 = (3\eta_{21}-\eta_{03}) (\eta_{30} + \eta_{12})[(\eta_{30}+\eta_{12})^2 - 3(\eta_{21}+\eta_{30})^2] + (3\eta_{21}-\eta_{30})(\eta_{21}+\eta_{30})[3(\eta_{30}+\eta_{12})^2 - (\eta_{21}+\eta_{30})^2]
+\end{array}
+$$
+</div>
+<h2 id="区域特征">区域特征</h2>
+<p>这里所谓的区域广义上指二值图像中的前景部分。</p>
+<p>最简单的特征是区域的面积，可用零阶原点矩表示：
+$$
+\alpha_{00} = A = \sum_{(x,y) \in R} 1 = \sum_{i = 1}^{n}(ce_i - cs_i + 1)
+$$</p>
+<p>其中，$n$表示行程数，$cs_i$、$ce_i$表示第$i$个行程的开始和结束列位置。</p>
+<p>而要获得区域的重心位置，则需要使用到归一化原点矩:
+$$
+(x_g, y_g) = (\xi_{10}, \xi_{01}) = \left( \frac{\sum_{R}x}{\alpha_{00}}, \frac{\sum_{R}y}{\alpha_{00}} \right)
+$$</p>
+<p>值得注意的是，虽然重心计算过程都是使用像素精度的数据，但是它是一个亚像素精度的特征。</p>
+<p>二阶中心矩的使用可以确定区域的方位和范围。例如区域的椭圆参数：长轴$r_1$，短轴$r_2$以及相对于横轴的夹角$\theta$。</p>
+<div>
+$$
+\begin{array}{l}
+r_1 = \sqrt{2(\eta_{20} + \eta_{02} + \sqrt{(\eta_{20}-\eta_{02})^2 + 4\eta_{11}^2})} \\[2ex]
+r_2 = \sqrt{2(\eta_{20} + \eta_{02} - \sqrt{(\eta_{20}-\eta_{02})^2 + 4\eta_{11}^2})}\\[2ex]
+\theta = -\frac{1}{2}\arctan{\frac{2\eta_{11}}{\eta_{02}-\eta_{20}}}
+\end{array}
+$$
+</div>
+<p>通过椭圆特征可以推导出一个非常有用的特征——<strong>各向异性</strong>，它可用来描述区域细长程度：
+$$
+anisometry = \frac{r_1}{r_2}
+$$</p>
+<p>与此相关的还有<strong>蓬松度(Bulkiness)<strong>和</strong>结构因子(Structure Factor)</strong>：</p>
+<div>
+$$
+bulkiness = \frac{\pi * r_1 * r_2}{\alpha_{00}}\\
+sturcturefactor = anisometry * bulkiness - 1
+$$
+</div>
+<p>另外，还有的区域特征如下:</p>
+<ol>
+<li>
+<p><strong>凸性(convexity)</strong>，区域面积和该区域凸包面积的比值，用于描述区域的紧凑程度，取值在$0$和$1$之间:
+$$
+convexity = \frac{\alpha_{00}}{S_{convex hull}}
+$$</p>
+</li>
+<li>
+<p><strong>轮廓长度(L)</strong>， 区域轮廓线段的欧几里得距离和;</p>
+</li>
+<li>
+<p><strong>紧性(compactness)</strong>，与凸性意义类似。所有圆形区域的紧性特征值都为1，其他区域紧性特征值更大。
+$$
+compactness = \frac{L^2}{4*\pi*\alpha_{00}}
+$$</p>
+</li>
+<li>
+<p><strong>圆度(circularity)</strong>，描述区域近视于圆形的程度</p>
+</li>
+</ol>
+<div>
+$$
+circularity = \min(1, \frac{\alpha_{00}}{{max\_dist}^2 * \pi})
+$$
+</div>
+<p>其中， <strong>max_dist</strong>为轮廓上到中心的最远距离。这个特征值对于越小的区域近视误差越大。该特征对于大的凸起、孔及未连接区域的响应较大。</p>
+<ol start="5">
+<li><strong>轮廓点到中心点平均距离及方差</strong></li>
+</ol>
+<div>
+$$
+m_R = \frac{1}{K}\sum_{k= 0}^{K-1}||(x_k, y_k) - (\bar{x}, \bar{y})|| \\
+\sigma_R^2 = \frac{1}{K}\sum_{k=0}^{K-1}[||(x_k, y_k) - (\bar{x}, \bar{y})|| - m_R]^2
+$$
+</div>
+<p>其中，$K$表示轮廓点个数；</p>
+<p>通过这两个属性能推出以下特征：</p>
+<div>
+$$
+roundness = 1 - \frac{\sigma_R}{m_R} \\[2ex]
+sides = 1.4111 * \left( \frac{m_R}{\sigma_R}\right)^{0.4724}
+$$
+</div>
+<p>另外， $\frac{m_R}{\sigma_R}$有以下三个性质：</p>
+<p>(1). 数值越大，形状越趋于圆形；</p>
+<p>(2). 从数字图像获得的值与连续图像中获得的值一致；</p>
+<p>(3). 与方向和面积无关。</p>
+<h2 id="灰度值特征">灰度值特征</h2>
+<p>有了区域R后，可以结合原始图像直接提取到区域R中的灰度信息；例如，<strong>最大灰度值</strong>和<strong>最小灰度值</strong>：</p>
+<div>
+$$
+g_{min} = \min_{(x,y) \in R}f(x,y)\\
+g_{max} = \max_{(x,y) \in R}f(x,y)
+$$
+</div>
+<p>这两个值方便后续对每个单独区域进行归一化处理操作。</p>
+<p><strong>平均灰度值</strong>可以对区域内的亮度进行一个度量，结合<strong>灰度值方差</strong>，可以对区域内的灰度值进行变换：</p>
+<div>
+$$
+\bar{g_i} = \frac{1}{\alpha_{00}^i}\sum_{(x,y) \in R_i}f(x,y)\\
+s^2 = \frac{1}{\alpha_{00}^i - 1}\sum_{(x,y) \in R_i}[f(x,y) - \bar{g_i}]^2
+$$
+</div>
+<p>这里$\alpha_{00}^i$是指第$i$个区域的面积。</p>
+<p>而<strong>灰度直方图</strong>和<strong>累计直方图</strong>也属于灰度值特征。基于直方图可计算出<strong>中值灰度值</strong>、<strong>熵</strong>和<strong>灰度各向异性</strong>:</p>
+<div>
+$$
+g_{median} = \min{\{g:c_g \geq 0.5\}} \\[4ex]
+entropy = -\sum_{0}^{255}p_i * \log_2{(p_i)} \\[4ex]
+gray\_anisotropy = \frac{\sum_{0}^{g_{median}}p_i * \log_2{(p_i)}}{entropy}
+$$
+</div>
+<p>与区域矩类似，灰度值矩同样能计算出灰度值面积、重心以及椭圆参数等；不同的在于，使用灰度值特征，可以将图像视作一个模糊集合，不必对每个像素是否属于某个物体做硬性判断，而是用模糊隶属关系值确定此像素属于此物体的百分比程度。模糊集理论可参考《数字图像处理》一书中的介绍。下面给出两个基于模糊集计算的特征：<strong>fuzzy_perimeter</strong>和<strong>fuzzy_entropy</strong>。</p>
+<blockquote>
+<p><strong>fuzzy_perimeter</strong>用于确定像素点与其相邻像素点隶属程度差异；</p>
+<p><strong>fuzzy_entropy</strong>用于度量与白色图像或者黑色图像近视程度。</p>
+</blockquote>
+<div>
+$$
+\begin{array}{l}
+\begin{aligned}
+fuzzy_{perimeter} = \sum_{x = 1}^{M-1}\sum_{y =1}^{N-1}|u_X(f(x,y))-u_X(f(x,y+1))| \\
++ \sum_{x = 1}^{M-1}\sum_{y =1}^{N-1}|u_X(f(x,y))-u_X(f(x+1,y))| 
+\end{aligned} \\[4ex]
+fuzzy_{entropy}  = \frac{1}{MN\ln2}\sum_{l}T_e(l)h(l)
+\end{array}
+$$
+</div>
+<p>其中：</p>
+<div>
+$$
+\begin{array}{l}
+u_X(x) = 
+\begin{cases}
+0 , & x \leq a \\
+2\left(\frac{x-a}{c-a}\right)^2, & a < x < b \\
+1-2\left(\frac{x-a}{c-a}\right)^2, & b< x \leq c \\
+1, & c \leq x
+\end{cases} \\[2ex]
+T_e(l) = -u(l)\ln u(l) - (1 - u(l))\ln(1-u(l)) \\[2ex]
+h(l)\text{为图像直方图取值}
+\end{array}
+$$
+</div>
+<h2 id="轮廓特征">轮廓特征</h2>
+<p>Blob除了使用行程编码的区域描述，还可以使用轮廓控制点进行描述。而基于轮廓控制点则可快速的获得凸包、最小外接圆和任意方向的最小外接矩形等。当然，利用轮廓控制点计算矩也是我们关心的问题，而其中最为关心的问题就是<strong>轮廓是否存在面积</strong>，显然面积必须是围绕一个区域的轮廓才存在这些矩特征，也就是说<strong>轮廓必须是闭合的且不能自相交</strong>。基于轮廓控制点计算矩的方式如下：</p>
+<div>
+$$
+\begin{array}{l}
+\alpha_{00} = \frac{1}{2}\sum_{i=1}^{n}(x_{i-1}y_i-x_iy_{i-1})\\
+\alpha_{10} = \frac{1}{6\alpha_{00}}\sum_{i=1}^{n}(x_{i-1}y_i-x_iy_{i-1})(x_{i-1}+x_i)\\
+\alpha_{01} = \frac{1}{6\alpha_{00}}\sum_{i=1}^{n}(x_{i-1}y_i - x_iy_{i-1})(y_{i-1}+y_i) \\
+\alpha_{20} = \frac{1}{12\alpha_{00}}\sum_{i=1}^{n}(x_{i-1}y_i-x_iy_{i-1})(x_{i-1}^2 + x_{i-1}x_i+x_i^2)\\
+\alpha_{02} = \frac{1}{12\alpha_{00}}\sum_{i=1}^{n}(x_{i-1}y_i-x_iy_{i-1})(y_{i-1}^2+y_{i-1}y_i+y_i^2)\\
+\alpha_{11} = \frac{1}{24\alpha_{00}}\sum_{i=1}^{n}(x_{i-1}y_i-x_iy_{i-1})(2x_{i-1}y_{i-1}+x_{i-1}y_i+x_iy_{i-1}+2x_iy_i)
+\end{array}
+$$
+</div>
+<p>基于轮廓矩，同样可以获得轮廓面积、重心以及椭圆属性等其他特征。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-02-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/wechat.jpg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/alipay.jpg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/blob-analysis/">Blob-Analysis</a>
+          <a href="/tags/moment/">moment</a>
+          <a href="/tags/features/">features</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2019-08-20_ellipse_fitting/ellipse-fitting.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Ellipse Fitting</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html">
+            <span class="next-text nav-default">Camera Calibration</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@email.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
