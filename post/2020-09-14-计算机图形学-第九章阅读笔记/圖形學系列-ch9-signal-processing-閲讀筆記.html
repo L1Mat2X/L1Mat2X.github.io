@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列 Ch9-Signal Processing-閲讀筆記 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="在圖形學中，經常需要處理連續函數，但是，計算機只能處理離散的數據，通常的做法就是將連續函數離散化后交給計算機處理，之後在重建出連續函數。生活中也有許多離散化的例子，例如數碼相機拍照、手寫數位板以及CT掃描等。
+本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch9-signal-processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列 Ch9-Signal Processing-閲讀筆記" />
+<meta property="og:description" content="在圖形學中，經常需要處理連續函數，但是，計算機只能處理離散的數據，通常的做法就是將連續函數離散化后交給計算機處理，之後在重建出連續函數。生活中也有許多離散化的例子，例如數碼相機拍照、手寫數位板以及CT掃描等。
+本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch9-signal-processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<meta property="article:published_time" content="2020-09-25T08:10:58+08:00" />
+<meta property="article:modified_time" content="2020-09-25T08:10:58+08:00" />
+<meta itemprop="name" content="圖形學系列 Ch9-Signal Processing-閲讀筆記">
+<meta itemprop="description" content="在圖形學中，經常需要處理連續函數，但是，計算機只能處理離散的數據，通常的做法就是將連續函數離散化后交給計算機處理，之後在重建出連續函數。生活中也有許多離散化的例子，例如數碼相機拍照、手寫數位板以及CT掃描等。
+本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。">
+<meta itemprop="datePublished" content="2020-09-25T08:10:58+08:00" />
+<meta itemprop="dateModified" content="2020-09-25T08:10:58+08:00" />
+<meta itemprop="wordCount" content="7611">
+
+
+
+<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列 Ch9-Signal Processing-閲讀筆記"/>
+<meta name="twitter:description" content="在圖形學中，經常需要處理連續函數，但是，計算機只能處理離散的數據，通常的做法就是將連續函數離散化后交給計算機處理，之後在重建出連續函數。生活中也有許多離散化的例子，例如數碼相機拍照、手寫數位板以及CT掃描等。
+本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列 Ch9-Signal Processing-閲讀筆記</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-25 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            </div>
+          <span class="more-meta"> 7611 words </span>
+          <span class="more-meta"> 16 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#91-digital-audio-sampling-in-1d">9.1 Digital Audio: Sampling in 1D:</a>
+          <ul>
+            <li><a href="#911-sampling-artifacts-and-aliasing">9.1.1 Sampling Artifacts and Aliasing</a></li>
+          </ul>
+        </li>
+        <li><a href="#92-convolution">9.2 Convolution</a>
+          <ul>
+            <li><a href="#921-moving-averages">9.2.1 Moving Averages</a></li>
+            <li><a href="#922-discrete-convolution">9.2.2 Discrete Convolution</a></li>
+            <li><a href="#923-convolution-as-a-sum-of-shifted-filters">9.2.3 Convolution as a Sum of Shifted Filters</a></li>
+            <li><a href="#924-convolution-with-continuous-functions">9.2.4 Convolution with Continuous Functions</a></li>
+            <li><a href="#925-discrete-continuous-convolution">9.2.5 Discrete-Continuous Convolution</a></li>
+            <li><a href="#926-convolution-in-more-than-one-dimension">9.2.6 Convolution in More than One Dimension</a></li>
+          </ul>
+        </li>
+        <li><a href="#93-convolution-filters">9.3 Convolution Filters</a>
+          <ul>
+            <li><a href="#931-a-gallery-of-convolution-filters">9.3.1 A Gallery of Convolution Filters</a></li>
+            <li><a href="#932-properties-of-filters">9.3.2 Properties of Filters</a></li>
+          </ul>
+        </li>
+        <li><a href="#94-signal-processing-for-image">9.4 Signal Processing for Image</a>
+          <ul>
+            <li><a href="#941-image-filtering-using-discrete-filters">9.4.1 Image Filtering Using Discrete Filters</a></li>
+            <li><a href="#942-antialiasing-in-image-sampling">9.4.2 Antialiasing in Image Sampling</a></li>
+            <li><a href="#943-reconstruction-and-resampling">9.4.3 Reconstruction and Resampling</a></li>
+          </ul>
+        </li>
+        <li><a href="#95-sampling-theory">9.5 Sampling Theory</a></li>
+        <li><a href="#聲明">聲明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>在圖形學中，經常需要處理連續函數，但是，計算機只能處理離散的數據，通常的做法就是將連續函數離散化后交給計算機處理，之後在重建出連續函數。生活中也有許多離散化的例子，例如數碼相機拍照、手寫數位板以及CT掃描等。</p>
+<p>本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。</p>
+<h2 id="91-digital-audio-sampling-in-1d">9.1 Digital Audio: Sampling in 1D:</h2>
+<p>先來看個有關聲音的例子：</p>
+<center><img src = "figure9.1.png"></img></center>
+<p>從麥克風中產生連續的聲音信號，經過A/D轉換器(<code>analog-to-digital converter</code>)后，成爲離散信號記錄在存儲裝置内。之後想從存儲裝置中復原聲音，需要利用D/A轉換器(<code>digital-to-analog converter</code>)，將離散信號恢復成連續信號，交給喇叭播放出來。</p>
+<p>事實證明，A/D轉換過程中采樣率往往由高音決定；較低的頻率在再現高頻聲音時會出現降采樣失真（<code>undersampling artifacts</code>）現象。爲了消除這個現象，在將信號進行A/D轉換前，需要進行濾波操作，消除可能引起問題的高頻信號。</p>
+<p>另一個現象是，D/A轉換器輸出的電信號在不處理前是呈現階梯狀的，這種階梯信號會引入嗡嗡的噪聲，這是所謂的（<code>reconstruction artifact</code>）。爲了消除這個現象，播放器在接受到D/A轉換的信號后，同樣需要進行濾波，用以平滑波形，消除階梯。</p>
+<h3 id="911-sampling-artifacts-and-aliasing">9.1.1 Sampling Artifacts and Aliasing</h3>
+<p>上面提到的聲音的兩種失真現象同樣會出現在圖像和圖形學中其他和采樣相關的地方。而解決方案也和聲音信號處理一樣：<strong>采樣前進行濾波以及重建信號時再進行濾波</strong>。</p>
+<p>這節重點看看采樣過程中的失真(走樣)現象。如下圖所示：</p>
+<center><img src = "figure9.2.png"></img></center>
+<p>對比圖中上下兩種采樣頻率結果，上面的采樣頻率是每個周期采樣$10.8$次，下面的是每個周期采樣$1.2$次。顯然是采樣頻率高的更能反映原始信號的樣子，而較低的采樣頻率已經無法反映原始信號。這種無法如實反映原始信號的采樣結果就稱爲<strong>走樣(alias)</strong>。</p>
+<p>圖像中的走樣現象，通常會表現出“摩爾紋”(<code>moire pattern</code>)，另一個現象就是直綫上出現“鋸齒”。如下圖所示：</p>
+<center><img src = "figure9.34.png"></img></center>
+<p>采樣和重建的一些定量問題現在還非常難回答，比如：</p>
+<blockquote>
+<ol>
+<li>采樣頻率多高才能保證獲得較好的結果？</li>
+<li>哪些濾波器適合采樣和重建？</li>
+<li>多少程度的平滑才能消除走樣現象？</li>
+</ol>
+</blockquote>
+<p>這些問題的回到需要到9.5節后才能給出。</p>
+<h2 id="92-convolution">9.2 Convolution</h2>
+<p>在介绍后面内容前，先介绍一个数学工具——卷积（convolution），并约定符号 <strong>$ \star $</strong> 表示卷积运算，例如 $ f \star g$ 表示函数$f$与函数$g$进行卷积运算。</p>
+<p>卷积运算可以运用于连续函数，也可以运用于离散函数；可以用于一维、二维，也可以用于高维。所以这个运算<strong>非常重要</strong>（务必掌握）。这里先从离散一维情况开始，再到一维连续函数，最后拓展到二维或三维情况。</p>
+<h3 id="921-moving-averages">9.2.1 Moving Averages</h3>
+<center><img src = "figure9.3.png"></img></center>
+<p><code>moving averages</code>操作如下：计算函数在点$x$处，半径为$r$的范围内的均值。该操作能够对数据起到平滑作用，而半径$r$则是控制平滑程度的超参数。用数学表示<code>moving averages</code>如下：
+$$
+h(x) = \frac{1}{2r}\int_{x-r}^{x+r}g(t)dt
+$$</p>
+<p>对于离散情况：
+$$
+c[i] = \frac{1}{2r + 1}\sum_{j=i-r}^{i+r}a[j] \tag{9.1}
+$$</p>
+<p>从数学表示中可以看出，如果是对一个常数函数进行该操作，那么结果依然是原常数函数（定义域为$(-\infty, +\infty)$）。另外，<code>moving average</code>就是一个简单的卷积，两者不同的是，卷积是一种带权的移动平均。</p>
+<h3 id="922-discrete-convolution">9.2.2 Discrete Convolution</h3>
+<p>假设一个离散序列$a[i]$与另一个离散序列$b[i]$进行卷积运算，结果用$(a\star b)[i]$表示。
+$$
+(a \star b)[i] = \sum_{j}a[j]b[i-j]	\tag{9.2}
+$$</p>
+<p>结合图片：</p>
+<center><img src = "figure9.4.png"></img></center>
+<p><font color = #0946A4>公式(9.2)中，需要将$a$序列当作权重序列，而$b$序列当作源序列。这里还要注意，卷积运算其实有对源序列进行一个倒序的操作，而相对的没有倒序的类似运算叫做<strong>相关</strong>。下面给出冈萨雷斯《Digital Image Processing》一书中两者运算对比图。</font></p>
+<center><img src = "ch9-9.2_convolution_correlation.png"></img></center>
+<p>通常，$a$、$b$序列都不是无穷区间的，这里假设序列$b$在$|k| &gt; r$时，$b[k] = 0$。这样公式(9.2)就可以在有限区间上表示：
+$$
+(a \star b)[i] = \sum_{j=i-r}^{i+r}a[j]b[i-j]
+$$</p>
+<p>这样，卷积的算法框架就很清晰了：</p>
+<center><img src = "ch9-9.2_convolve_function.png"></img></center>
+<h4 id="convolution-filters">Convolution Filters</h4>
+<p>以之前的<code>moving average</code>操作爲例，其使用的濾波器為<code>box filter</code>，“盒”滤波器——在確定的區間内，每個點權重一樣，而在區間外權重均爲零。</p>
+<div>
+$$
+b[k] = \begin{cases}
+\frac{1}{2r+1} & -r \leq k \leq r \\[2ex]
+0 & \text{otherwise}
+\end{cases}
+$$
+</div>
+<p>將<code>box filter</code>帶入等式(9.2)，化簡后就可得到<code>moving average</code>的等式(9.1)。</p>
+<p>濾波器捲積核通常是需要精心設計的，例如本例中，濾波器捲積核的縂權重為$1$，這樣就不會影響信號的整體水平。</p>
+<p>舉例，假設有一個階躍函數$a[i]$和盒濾波器$b[k]$：</p>
+<div>
+$$
+a[i] = \begin{cases}
+1 & i \geq 0, \\
+0 & i < 0,
+\end{cases} \\[2ex]
+b[k] = \frac{1}{5}\begin{cases}
+1 & -2 \leq k \leq 2, \\
+0 & \text{otherwise}.
+\end{cases}
+$$
+</div>
+<p>兩者之間做捲積的結果如下：</p>
+<center><img src = "figure9.6.png"></img></center>
+<h4 id="properties-of-convolution">Properties of Convolution</h4>
+<ol>
+<li>捲積運算滿足交換律</li>
+</ol>
+<div>
+$$
+(a \star b)[i] =\sum_{j}a[j]b[i-j] =  \sum_{k}b[k]a[i-k] = (b \star a)[i]
+$$
+</div>
+<ol start="2">
+<li>
+<p>捲積運算滿足結合律：
+$$
+(a \star (b \star c))[i] = ((a \star b) \star c)[i]
+$$</p>
+</li>
+<li>
+<p>捲積運算滿足分配律：
+$$
+(a \star (b + c))[i] = (a \star b + a \star c)[i]
+$$</p>
+</li>
+</ol>
+<p>因爲有這些特性，捲積運算可以先將捲積核閒先進行運算，之後再與源數據進行捲積，這種操作可以大大提高運算效率。例如：$((a \star b_1) \star b_2) \star b_3 = a \star (b_1 \star b_2 \star b_3)$</p>
+<p>此外，還有一個簡單又特別的捲積核，<code>identity filter</code>，其定義如下：</p>
+<div>
+$$
+d[i] = \begin{cases}
+1, & i = 0 \\
+0, & \text{otherwise}.
+\end{cases}
+$$
+</div>
+<center><img src = "figure9.7.png"></img></center>
+<p>這個捲積核的作用與單位矩陣$\mathbf{I}$類似：
+$$
+(a \star d)[i] = \sum_{j = i}^{j = i}a[j]d[i-j] = a[i]
+$$</p>
+<p>因此，這個捲積核在簡化一系列捲積運算時，起到非常重要的作用。例如：
+$$
+c = a - a \star b = a \star d - a \star b = a \star (d - b)
+$$</p>
+<h3 id="923-convolution-as-a-sum-of-shifted-filters">9.2.3 Convolution as a Sum of Shifted Filters</h3>
+<p>前面利用帶權重的<code>moving average</code>來解釋捲積運算，現在換個解釋方式。假設忽略$[i]$，將$b[i-j]$表示為平移形式$b_{\rightarrow j}[i] = b[i - j]$，那麽公式(9.2)可改寫爲：
+$$
+(a \star b) = \sum_{j}a[j]b_{\rightarrow j}
+$$</p>
+<p>舉個例子來理解這個表示形式（書上的例子非常不直觀，反正一開始是沒看懂）。</p>
+<center><img src = "ch9-9.2_convolution_shift_explansion.png"></img></center>
+<h3 id="924-convolution-with-continuous-functions">9.2.4 Convolution with Continuous Functions</h3>
+<p>連續函數的數學定義：
+$$
+(f \star g)(x) = \int_{-\infty}^{+\infty}f(t)g(x - t) dt \tag{9.3}
+$$</p>
+<p>連續函數$f$和$g$的捲積是兩函數乘積曲綫下所圍的面積，如下圖所示。</p>
+<center><img src = "figure9.10.png"></img></center>
+<p>同離散捲積一樣，連續函數的捲積同樣滿足<strong>交換律</strong>和<strong>分配律</strong>；同樣也能用<code>shift</code>的形式表示：
+$$
+(f \star g) = \int_{-\infty}^{+\infty}f(t)g_{\rightarrow t}dt
+$$</p>
+<p>下面列舉幾個常用的捲積函數。例如<code>box function</code></p>
+<div>
+$$
+f(x) = \begin{cases}
+1, & -\frac{1}{2} \leq x < \frac{1}{2} \\
+0, & \text{otherwise}
+\end{cases}
+$$
+</div>
+<p>將兩個<code>box function</code>做捲積會得到另一個常用的<code>tent function</code>。</p>
+<center><img src = "figure9.11.png"></img></center>
+<div>
+$$
+(f \star f)(x) = \begin{cases}
+1 - |x|, & -1 < x < 1\\
+0,& \text{otherwise}
+\end{cases}
+$$
+</div>
+<p>最後是一個非常常用的函數，其作用類似矩陣中的單位矩陣$\mathbf{I}$，這個函數就是<code>Dirac Delta Function</code>，用符號$\delta(x)$表示，其圖像如下。</p>
+<center><img src = "figure9.12.png"></img></center>
+<p>該函數的特點是：只在$x = 0$有值（該值可以認爲是$+\infty$），且有無窮小的寬度，但其面積始終為$1$。因此利用該函數與其他函數做捲積運算可得：
+$$
+\int_{-\infty}^{+\infty}\delta{(x)}f(x)dx = f(0)
+$$</p>
+<p>在看個<code>Delta</code>函數與其他函數捲積的效果：</p>
+<center><img src = "figure9.13.png"></img></center>
+<p>這個例子可得出：
+$$
+(\delta \star f)(x) = \int_{-\infty}^{+\infty}\delta{(t)}f(x-t)dt = f(x)
+$$</p>
+<p>即，$(\delta \star f) = f$。</p>
+<h3 id="925-discrete-continuous-convolution">9.2.5 Discrete-Continuous Convolution</h3>
+<p>連接離散空間和連續空間的方式有兩種，其中一種是<strong>采樣</strong>，將連續函數離散化，就是取出連續函數中所有整數位置的值即可。
+$$
+a[i] = f(i)
+$$</p>
+<p>另一种方式是<strong>重建</strong>，從離散序列中恢復出連續函數。采用的方法是，利用連續濾波器$f(x)$對離散序列$a[i]$進行濾波操作。
+$$
+(a \star f)(x) = \sum_{i}a[i]f(x-i)
+$$</p>
+<center><img src = "figure9.14.png"></img></center>
+<p>若知道了濾波器的半徑$r$，就能對離散捲積運算定界，因此上式可表示爲：
+$$
+(a \star f)(x) = \sum_{i = |x -r|}^{|x + r|}a[i]f(x - i)
+$$</p>
+<p><strong>重建</strong>過程的代碼架構如下：</p>
+<center><img src = "ch9-9.2_reconstruct.png"></img></center>
+<p>離散-連續捲積與樣條曲綫緊密相關。對於均匀樣條曲綫（例如，B樣條曲綫），其參數化曲綫恰好是樣條曲綫的基函數與控制點序列的捲積。</p>
+<h3 id="926-convolution-in-more-than-one-dimension">9.2.6 Convolution in More than One Dimension</h3>
+<p>之前的介紹都是在一維空間下進行，現在拓展到二維空間，離散捲積表示如下：
+$$
+(a \star b)[i,j] = \sum_{i&rsquo;}\sum_{j&rsquo;}a[i&rsquo;,j&rsquo;]b[i-i&rsquo;, j-j&rsquo;]
+$$</p>
+<p>若$b$是半徑爲$r$的濾波核（其有$(2r+1)^2$個值）。可用如下形式表示：
+$$
+(a \star b)[i,j] = \sum_{i&rsquo; = i - r}^{i+r}\sum_{j'= j-r}^{j+r}a[i&rsquo;,j&rsquo;]b[i-i&rsquo;, j-j&rsquo;]
+$$</p>
+<center><img src = "figure9.16.png"></img></center>
+<p>二維離散捲積框架如下：</p>
+<center><img src = "ch9-9.2_convolve2d.png"></img></center>
+<p>對於連續函數的二維捲積與離散-連續函數的二維捲積表達如下：</p>
+<div>
+$$
+(f \star g)(x,y) = \iint f(x', y')g(x - x', y-y')dx'dy' \\[2ex]
+(a \star f)(x, y) = \sum_{i}\sum_{j}a[i,j]f(x - i, y - j)
+$$
+</div>
+<p>對於更高維的捲積，可做類似拓展。</p>
+<h2 id="93-convolution-filters">9.3 Convolution Filters</h2>
+<p>本節介紹一些圖形學中常用的捲積濾波器，以及這些濾波器的性質。</p>
+<p>本節所定義的濾波器均有一個<code>natural radius</code>，所謂<code>natural radius</code>就是濾波器函數在<code>natural radius</code>内的圖像與坐標軸所圍成的面積始終為$1$。例如，<code>box filter</code>的<code>natural radius</code>為$\frac{1}{2}$；<code>cubic filter</code>的<code>natural radius</code>為$2$。這麽設定是爲了保證在采樣或重建過程中不改變信號的平均值。</p>
+<p>這裏對於基濾波器再定義一個縮放比率$s$，這樣就能獲得不同形狀的濾波器：
+$$
+f_s(x) = \frac{f(x/s)}{s}
+$$</p>
+<p>儅濾波器經過縮放比率處理，其<code>natural radius</code>也由原先$r$變爲$sr$。例如下圖中的<code>tent filter</code>。</p>
+<center><img src = "figure9.20.png"></img></center>
+<h3 id="931-a-gallery-of-convolution-filters">9.3.1 A Gallery of Convolution Filters</h3>
+<h4 id="the-box-filter">The Box Filter</h4>
+<div>
+$$
+a_{box,r}[i] = \begin{cases}
+1/(2r+1), & |i| \leq r \\
+0, & \text{otherwise}
+\end{cases}
+$$
+</div>
+<div>
+$$
+f_{box,r}(x) = \begin{cases}
+1/(2r), & -r \leq x < r \\
+0, & \text{otherwise}
+\end{cases}
+$$
+</div>
+<p>該濾波器圖像</p>
+<center><img src = "figure9.19.png"></img></center>
+<p>注意：對於連續形式的<code>box filter</code>，區間端點只包含了一側，這是爲了其能作爲重建濾波器使用，由於<code>box filter</code>是不連續的，所以在邊界處理要格外注意。</p>
+<h4 id="the-tent-filter">The Tent Filter</h4>
+<div>
+$$
+f_{tent}(x) = \begin{cases}
+1 - |x|, & |x| < 1 \\
+0, & \text{otherwise}
+\end{cases}
+$$
+</div>
+<p>這個濾波器的離散形式就是在其連續形式下取整數位置的值即可，這裏就不單獨列出。<code>tent filter</code>的圖像如下：</p>
+<center><img src = "figure9.20.png"></img></center>
+<h4 id="the-gaussian-filter">The Gaussian Filter</h4>
+<p>$$
+f_{g,\sigma}(x) = \frac{1}{\sigma \sqrt{2\pi}}e^{-x^2/2\sigma^2}
+$$</p>
+<center><img src = "figure9.21.png"></img></center>
+這個濾波器函數就是著名的``正態分佈``函數，其中$\sigma$表示標準差，該濾波器有非常好的采樣效果，因爲它非常平滑。但是它沒有特定的``natural radius``，它作用于$\sigma$的範圍内。通常使用過程中，會將高斯核的尾部進行裁剪（即某個半徑$r$外的值設爲零），這意味著濾波器的寬度和``natural radius``會隨著實際應用而變化。另外，按縮放比率$s$處理后裁剪的高斯核，與標準偏差為$s\sigma$和半徑為$sr$的未裁剪的高斯核是等價的。因此，在實際應用中，通常將$\sigma$和$r$設置為高斯濾波器的配置屬性。
+<h4 id="the-b-spline-cubic-filter">The B-Spline Cubic Filter</h4>
+<p>B-Spline濾波器由分段函數表示，<code>natural radius</code>為$2$，具有二階連續性$\mathcal{C}^2$，通常用於重建。</p>
+<div>
+$$
+f_B(x) = \frac{1}{6}\begin{cases}
+-3(1-|x|)^3 + 3(1-|x|)^2 + 3(1-|x|) + 1, & -1 \leq x \leq 1 \\
+(2 - |x|)^3, & 1 \leq |x| \leq 2 \\
+0,& \text{otherwise}
+\end{cases}
+$$
+</div>
+<center><img src = "figure9.22.png"></img></center>
+<p>另外，B-Spline濾波器可以表示為多個<code>Box Filter</code>的捲積：
+$$
+f_B = f_{box} \star f_{box} \star f_{box} \star f_{box}
+$$</p>
+<h4 id="the-catmull-rom-cubic-filter">The Catmull-Rom Cubic Filter</h4>
+<p>該濾波器在$x = -2, -1, 1, 2$處取$0$值。</p>
+<div>
+$$
+f_C(x) = \frac{1}{2}\begin{cases}
+-3(1-|x|)^3 + 4(1-|x|)^2 + (1-|x|), & -1 \leq x \leq 1 \\
+(2 - |x|)^3 - (2 - |x|)^2, & 1 \leq |x| \leq 2 \\
+0, & \text{otherwise}
+\end{cases}
+$$
+</div>
+<center><img src = "figure9.23.png"></img></center>
+<h4 id="the-mitchell-netravali-cubic-filter">The Mitchell-Netravali Cubic Filter</h4>
+<p>該濾波器是前面兩個樣條濾波器的加權組合，該濾波器在圖像重采樣中有重要作用。</p>
+<div>
+$$
+\begin{align}
+f_M(x)  & = \frac{1}{3}f_B(x) + \frac{2}{3}f_C(x)\\
+& = \frac{1}{18}\begin{cases}
+-21(1-|x|)^3 + 27(1-|x|)^2 + 9(1-|x|) + 1, & -1 \leq x \leq 1,\\
+7(2-|x|)^3 - 6(2-|x|)^2, & 1 \leq |x| \leq 2,\\
+0,& \text{otherwise}.
+\end{cases}
+\end{align}
+$$
+</div>
+<center><img src = "figure9.24.png"></img></center>
+<h3 id="932-properties-of-filters">9.3.2 Properties of Filters</h3>
+<p>一些滤波器有一些传统术语用于描述。</p>
+<blockquote>
+<p>滤波器的<code>脉冲响应（impluse response）</code>，它只是滤波器对仅包含一个脉冲信号的响应；</p>
+<p>连续滤波器就是<code>插值(interpolating)</code>。例如用连续函数滤波器对离散点进行重建时，重建出的曲线会连接所有离散点，而不是在离散点附近拟合一条曲线；</p>
+<p>带有负值的滤波器存在<code>振鈴</code>或<code>過冲</code>現象，儅這種濾波器作用於劇烈變換的地方時，會引入額外的振蕩。下圖是<code>Catmull-Rom</code>濾波器對階躍信號進行濾波器的結果，可以很明顯的看到其最小(大)值，要比理想值來的小(大)。</p>
+</blockquote>
+<center><img src = "figure9.26.png"></img></center>
+<blockquote>
+<p>儅連續函數濾波器用作重建時，如果它將恆定序列構建為常數函數（要求在所有整數位置的和為1，$\sum_if(x + i) = 1, \text{for all x}$），則説明該濾波器是<code>ripple free</code>的，在9.3.1節中除了<code>Gaussian filter</code>，其他濾波器在它們的<code>natural radius</code>中都是<code>ripple free</code>的（但在非整數範圍内時就不一定了）。如下圖所示。</p>
+</blockquote>
+<center><img src = "figure9.27.png"></img></center>
+<blockquote>
+<p>如果要消除離散-連續捲積中的<code>ripple</code>，方法也很簡單，只要將每個采樣位置的值除以權重和即可：
+$$
+\overline{(a \star f)}(x) = \frac{\sum_ia[i]f(x-i)}{\sum_ia[i]}
+$$</p>
+</blockquote>
+<blockquote>
+<p>連續函數濾波器還有一個連續度的概念，<code>degree of continuity</code>，即最高可導次數。用符號$C^n$表示，例如<code>box filter</code>是不連續的，<code>tent filter</code>一階導數不連續，所以稱爲零階連續，記爲$C^0$；<code>B-spline filter</code>是二階連續，記爲$C^2$；&hellip;.。<strong>濾波器的連續性對於重建時非常重要，因爲重建后的函數的連續性與濾波器連續性相同。</strong></p>
+</blockquote>
+<h4 id="separable-filters">Separable Filters</h4>
+<p>可分離濾波器主要是針對一維以上的濾波器的。這裏以二維濾波器爲例説明。假設，有二維濾波器$f_2(x,y)$，若其能分解爲如下形式，這該濾波器就是可分離的；</p>
+<div>
+$$
+f_2(x,y) = f_1(x)f_1(y) \\[2ex]
+b_2[i,j] = b_1[i]b_1[j]
+$$
+</div>
+<p>簡單説就是二維濾波器可拆成兩個方向的一維濾波器，則稱該二維濾波器可分離。常見的<code>Gaussian Filter</code>就是可分離的。</p>
+<div>
+$$
+\begin{align}
+f_{2,g}(x,y) & = \frac{1}{2\pi}(e^{-x^2/2}e^{-y^2/2}) \\
+& = \frac{1}{2\pi}(e^{-(x^2 + y^2)/2}) \\
+& = \frac{1}{2\pi}e^{-r^2/2}
+\end{align}
+$$
+</div>
+<p>二維高斯函數圖像如下，其同時具有圓對稱和可分離的特性。</p>
+<center><img src = "figure9.29.png"></img></center>
+<p>這還看不出可分離濾波器的好處，現在利用二維離散可分離濾波器$b_2$對一幅圖像$a$進行濾波：</p>
+<div>
+$$
+\begin{align}
+(a \star b_2)[i,j] & = \sum_{i'}\sum_{j'}a[i',j']b_1[i-i']b_1[j-j'] \\
+& = \sum_{i'}b_1[i-i']\sum_{j'}a[i',j']b_1[j-j'] \\
+& = \sum_{i'}b_1[i-i']S[i']
+\end{align}
+$$
+</div>
+<p>其中$S[i&rsquo;] = \sum_{j&rsquo;}a[i&rsquo;,j&rsquo;]b_1[j-j&rsquo;]$。</p>
+<p>可以看出，可分離濾波器可以讓時間複雜度從$\mathcal{O}(n^2)$下降到$\mathcal{O}(n)$。因爲從上面推導過程可知，圖像先沿著$j$方向進行一維捲積運算，其結果在沿著$i$方向進行一維捲積運算。而不是像一般二維捲積運算，要在每個位置都進行$[i,j]$方向的捲積。所以，可分離濾波器最大的好處就是提高運算效率。</p>
+<p>下面給出可分離濾波器的代碼框架：</p>
+<center><img src = "ch9-9.3_filterImage.png" style = "zoom:70%"></img></center>
+<p>這裏忽略了邊界處理，邊界處理會在9.4.3節説明。</p>
+<h2 id="94-signal-processing-for-image">9.4 Signal Processing for Image</h2>
+<h3 id="941-image-filtering-using-discrete-filters">9.4.1 Image Filtering Using Discrete Filters</h3>
+<p>处理图像滤波时，最简单的是使用离散滤波器。例如，對圖像進行模糊操作，許多通用的低通濾波器都能實現。如下圖所示。從圖中可看出，高斯濾波器有非常平滑的模糊效果，所以這個濾波器也是模糊處理常用的。</p>
+<center><img src = "figure9.31.png"></img></center>
+<p>與模糊操作相對的是“銳化”操作。其中一種方法是<code>unsharp mask</code>：從原始圖像中減去比率為$\alpha$的模糊圖像。</p>
+<div>
+$$
+\begin{align}
+I_{sharp} & = (1 + \alpha)I - \alpha(I \star f_{g,\sigma}) \\
+& = I \star ((1 + \alpha)d - \alpha f_{g,\sigma})\\
+& = I \star f_{sharp}(\sigma, \alpha)
+\end{align}
+$$
+</div>
+<p>其中，$f_{g,\sigma}$為寬度為$\sigma$的高斯濾波器。這個銳化濾波器效果如下：</p>
+<center><img src = "figure9.32.png"></img></center>
+<p>另一個例子是，物體投射陰影，對物體輪廓進行模糊和物體移位就可得到柔和的投影。如下圖所示。這裏用到的移位濾波器可表示爲：</p>
+<div>
+$$
+d_{m,n}(i,j) = \begin{cases}
+1,& i = m \text{and} j = n, \\
+0,& \text{otherwise}
+\end{cases}
+$$
+</div>
+<center><img src = "figure9.33.png"></img></center>
+<p>整個投影濾波器：</p>
+<div>
+$$
+\begin{align}
+I_{shadow} & = (I \star d_{m,n}) \star f_{g,\sigma}\\
+& = I \star (d_{m,n} \star f_{g,\sigma}) \\
+& = I \star f_{shadow}(m,n,\sigma)
+\end{align}
+$$
+</div>
+<h3 id="942-antialiasing-in-image-sampling">9.4.2 Antialiasing in Image Sampling</h3>
+<p>前面已經提到過，在采樣過程中，如果采樣頻率遠低於信號頻率，那麽就會出現<code>alias</code>現象。這裏結合各種濾波器再進行説明。</p>
+<p>在之前章節已經提到，走樣現象有兩種表現，一種是<code>jaggies</code>，一種是<code>moire patterns</code>。<code>jaggies</code>就是單像素直綫呈現出&quot;鋸齒”狀；<code>moire patterns</code>就是出現一種連續樣式，如下圖中右圖的窗簾位置。</p>
+<center><img src = "figure9.34.png"></img></center>
+<p>解決<code>alias</code>現象的一個方法是，對圖像模糊后再進行采樣。例如使用<code>box filter</code>進行模糊；但是這類濾波器雖然能提高銳化邊緣的效果，但是依然會產生摩爾紋。如下圖所示。雖然高斯濾波器可以得到更好的效果，但是它也使得圖像變得更模糊。這就需要使用者在<code>銳化度</code>和<code>走樣</code>之閒尋求一個平衡。</p>
+<center><img src = "figure9.35.png"></img></center>
+<h3 id="943-reconstruction-and-resampling">9.4.3 Reconstruction and Resampling</h3>
+<p><code>Resampling</code>，是圖像處理中一個非常重要的操作，例如圖像縮放都屬於<code>resampling</code>操作。這個操作可以理解爲，對原始信號，利用連續函數重建后，在重建得到的連續函數進行重新采樣的過程。如下圖所示。</p>
+<center><img src = "figure9.36.png"></img></center>
+<p>這樣就能得到重采樣的代碼框架。</p>
+<center><img src = "ch9-9.4.3_resample_framework.png"></img></center>
+<p>從上面過程分析，好像<code>reconstruction</code>和<code>sampling</code>是順序進行的，其實并非如此，重建后的連續函數只是理論上存在的，我們只需要直接計算重采樣位置上的值就行了，不一定要得到重建后的連續函數。另外，前面說要解決采樣過程中的走樣問題，需要在采樣前對信號進行模糊（平滑）。所以，整個<code>Resampling</code>過程可以變爲下圖所示的形式。</p>
+<center><img src = "figure9.38.png"></img></center>
+<p>這樣，我們可以將重建濾波器、平滑濾波器和采樣濾波器三個濾波器合成一個<code>resampling filter</code>。</p>
+<p>另外，重采樣圖像一般是運用在矩形區域内，假設原始圖像尺寸為$(x_l, x_h) \times (y_l, y_h)$，新圖像尺寸為$(n_x^{new}, n_y^{new})$，那麽$x$和$y$方向的采樣率分別為$\Delta{x} = (x_h - x_l) / n_x^{new}$和$\Delta{y} = (y_h - y_l)/n_y^{new}$。這樣，起始采樣位置為$(x_l + \Delta{x} / 2, y_l + \Delta{y} / 2)$。基於矩形範圍的采樣代碼框架如下。</p>
+<center><img src = "ch9-9.4.3_resample_rect_framework.png"></img></center>
+<p><strong>現在又遇到了邊界處理問題，這裏一起來説明下。通常邊界處理有以下幾種方式：</strong></p>
+<blockquote>
+<ol>
+<li>
+<p>遇到超出邊界範圍的就截斷，相當於在圖像外圈填充了$0$值像素；</p>
+</li>
+<li>
+<p>遇到超出邊界範圍，取離該邊界最近的像素值填充；這相當於在圖像外圍填充了最外側一圈的像素值；</p>
+</li>
+<li>
+<p>儅遇到邊界時，修改濾波器以適應越界處理。</p>
+</li>
+</ol>
+</blockquote>
+<p>以上第一種方法，會導致圖像邊緣偏暗；第二種方法容易實現；第三種方法能獲得很好的效果，這種方法最簡單的處理是：
+$$
+result  = \frac{\sum_{j}f[j]a[x-j] * \sum_{i}f[i]}{\sum_{j}f[j]}
+$$</p>
+<p>其中，$i$取值為整個濾波器尺寸範圍，$j$取值為落在圖像内的部分。儅$\sum_{i}f[i] =1$時，可以保證圖像的平均亮度。</p>
+<p><strong>另一個重要問題是：重采樣濾波器的選擇，一般有兩個参考方向：濾波器形狀和尺寸</strong>。從前面分析可知，重采樣濾波器不僅含有重建濾波器，還有采樣濾波器；對於重建濾波器，再放大圖像時，我們希望它足夠平滑來消除走樣現象，并且濾波器要是<code>ripple free</code>的；對於采樣濾波器，我們則希望濾波器尺寸足夠大，以消除降采樣過程中出現的摩爾紋。根據下圖展示，繼續説明。</p>
+<center><img src = "figure9.39.png"></img></center>
+<p>当输出图像是输入图像的降采样时，采样滤波器的平滑程度要比重建滤波器的平滑程度来的大，所以要依据输出采样间隔来调整滤波器尺寸（如上圖中 $radius = 3$）；当对输出圖像需要更精细的采样（对图像进行向上采样或放大）时，重构所需的平滑度将占主导地位（重构函数已经足够平滑，可以比开始时更高的速率进行采样），因此 濾波器尺寸由输入样本间距确定（如上圖中 $radius = 1$）。</p>
+<p>選擇濾波器的過程通常要權衡處理效率和處理質量。<code>box filter</code>速度最快，<code>tent filter</code>效果中等，<code>piecewise cubic</code>效果最好。在<code>piecewise cubic</code>中，一般<code>Mitchell-Netravali filter</code>是較好的選擇。另外，采用可分離濾波器也能顯著提高效率，可分離濾波器的本質相當於在行方向進行了重采樣（改變圖像寬度，不改變圖像高度）；再在列方向進行重采樣得到最後結果。如下圖所示。</p>
+<center><img src = "figure9.40.png"></img></center>
+<h2 id="95-sampling-theory">9.5 Sampling Theory</h2>
+<p>(这部分还没有梳理好，先mark下，后面来补充)</p>
+<h2 id="聲明">聲明</h2>
+<p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-09-25
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/wechat.jpg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/alipay.jpg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/computer-graphic/">Computer Graphic</a>
+          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
+          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
+          <a href="/tags/games101/">Games101</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch8-the-graphic-pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
