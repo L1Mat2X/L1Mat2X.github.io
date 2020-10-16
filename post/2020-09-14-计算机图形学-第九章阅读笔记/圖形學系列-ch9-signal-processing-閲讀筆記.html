@@ -53,7 +53,7 @@
 本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。">
 <meta itemprop="datePublished" content="2020-09-25T08:10:58+08:00" />
 <meta itemprop="dateModified" content="2020-09-25T08:10:58+08:00" />
-<meta itemprop="wordCount" content="7611">
+<meta itemprop="wordCount" content="11705">
 
 
 
@@ -132,8 +132,8 @@
             <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
             <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
             </div>
-          <span class="more-meta"> 7611 words </span>
-          <span class="more-meta"> 16 mins read </span>
+          <span class="more-meta"> 11705 words </span>
+          <span class="more-meta"> 24 mins read </span>
         
       </div>
     </header>
@@ -173,7 +173,16 @@
             <li><a href="#943-reconstruction-and-resampling">9.4.3 Reconstruction and Resampling</a></li>
           </ul>
         </li>
-        <li><a href="#95-sampling-theory">9.5 Sampling Theory</a></li>
+        <li><a href="#95-sampling-theory">9.5 Sampling Theory</a>
+          <ul>
+            <li><a href="#951-the-fourier-transform">9.5.1 The Fourier Transform</a></li>
+            <li><a href="#952-convolution-and-the-fourier-transform">9.5.2 Convolution and the Fourier Transform</a></li>
+            <li><a href="#953-a-gallery-of-fourier-transform">9.5.3 A Gallery of Fourier Transform</a></li>
+            <li><a href="#954-dirac-impulses-in-sampling-theory">9.5.4 Dirac Impulses in Sampling Theory</a></li>
+            <li><a href="#955-sampling-and-aliasing">9.5.5 Sampling and Aliasing</a></li>
+            <li><a href="#956-ideal-filters-vs-useful-filters">9.5.6 Ideal Filters vs. Useful Filters</a></li>
+          </ul>
+        </li>
         <li><a href="#聲明">聲明</a></li>
       </ul>
     </li>
@@ -614,7 +623,144 @@ $$</p>
 <p>選擇濾波器的過程通常要權衡處理效率和處理質量。<code>box filter</code>速度最快，<code>tent filter</code>效果中等，<code>piecewise cubic</code>效果最好。在<code>piecewise cubic</code>中，一般<code>Mitchell-Netravali filter</code>是較好的選擇。另外，采用可分離濾波器也能顯著提高效率，可分離濾波器的本質相當於在行方向進行了重采樣（改變圖像寬度，不改變圖像高度）；再在列方向進行重采樣得到最後結果。如下圖所示。</p>
 <center><img src = "figure9.40.png"></img></center>
 <h2 id="95-sampling-theory">9.5 Sampling Theory</h2>
-<p>(这部分还没有梳理好，先mark下，后面来补充)</p>
+<p><font color = #0946A4> 先説明：第9.5節内容的梳理雖然惡補了很多知識，由於平常用的太少，在理解深度上還有所欠缺，本節内容大多數來自原書的翻譯，如果有些地方解釋不到位請指正。</font></p>
+<h3 id="951-the-fourier-transform">9.5.1 The Fourier Transform</h3>
+<p>傅里葉變換和捲積是采樣理論的數學基礎。而傅里葉變換的基礎是，任意函數都能通過叠加不同頻率的正弦函數獲得。例如下圖所示，其展示了函數
+$$
+\sum_{n=1,3,5,\cdots}^{\infty}\frac{4}{\pi n}\sin{(2\pi n x)}
+$$
+叠加不同個數正弦波的結果。</p>
+<center><img src = "figure9.41.png" style="zoom:85%"></img></center>
+<p>值得注意，正弦信號是周期性信號，而對於非周期信號采用這種方式表示，則需要叠加更多的正弦信號，相較於使用離散信號的叠加，采用連續正弦函數族的積分表示顯然更加合適。例如，盒函數(<code>box function</code>)，其可用餘弦函數族積分表示：
+$$
+\int_{-\infty}^{\infty}\frac{\sin{(\pi u)}}{\pi u}\cos{(2\pi u x)}\mathrm{d}u \tag{9.6}
+$$</p>
+<p>等式(9.6)表示，盒函數可由無窮多個不同的頻率的餘弦函數叠加而成，而不同頻率$u$的餘弦函數的振幅由函數$\frac{\sin{(\pi u)}}{\pi u}$決定(這裏的振幅也可理解爲每個餘弦函數的權重)。如下圖所示。</p>
+<center><img src = "figure9.42.png"></img></center>
+<p>原始函數記爲$f$，振幅函數記爲$\hat{f}$。再利用歐拉公式可將等式(9.6)化簡為如下形式：
+$$
+f(x) = \int_{-\infty}^{\infty}\hat{f}(u)e^{2\pi i u x}\mathrm{d}u \tag{9.7}
+$$</p>
+<p>等式(9.7)稱爲<strong>傅里葉逆變換(<code>inverse Fourier transform (IFT)</code>)</strong>。其中函數$\hat{f}$告訴我們如何通過對一系列正弦函數積分來獲得原始函數$f$。函數$\hat{f}$取值稱爲<strong><code>傅里葉頻譜(Fourier spectrum)</code></strong>。</p>
+<p>有傅里葉逆變換，必然有(正向)傅里葉變換(<code>(forward) Fourier transform (FT)</code>)，而傅里葉變換形式也非常簡單。
+$$
+\hat{f}(u) =\int_{-\infty}^{\infty}f(x)e^{-2\pi i u x}\mathrm{d}x \tag{9.8}
+$$</p>
+<p>使用$f-\hat{f}$形式表示兩種變換有時并不方便，所以，經常會使用$\mathcal{F}\{f\}$和$\mathcal{F}^{-1}\{\hat{f}\}$表示傅里葉變換和傅里葉逆變換。</p>
+<div>
+$$
+\hat{f}(u) = \mathcal{F}\{f(x)\} \\[2ex]
+f(x) = \mathcal{F}^{-1}\{\hat{f}(u)\}
+$$
+</div>
+<p>傅里葉變換有如下幾個性質：</p>
+<blockquote>
+<ol>
+<li>一個函數和其傅里葉變換有相同的平方積分；
+$$
+\int(f(x))^2\mathrm{d}x = \int(\hat{f}(u))^2\mathrm{d}u
+$$</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>原函數值縮放$a$倍，則其傅里葉變換也縮放$a$倍；</li>
+</ol>
+</blockquote>
+<div>
+$$
+\mathcal{F}\{af\} = a\mathcal{F}\{f\}
+$$
+</div>
+<blockquote>
+<ol start="3">
+<li>原函數若沿著自變量$x$方向上進行縮放$b$倍，則傅里葉變換將沿著$u$軸變化相同比例；</li>
+</ol>
+</blockquote>
+<div>
+$$
+\mathcal{F}\{f(x/b)\} = b\hat{f}(bu)
+$$
+</div>
+<blockquote>
+<ol start="4">
+<li>原函數的平均值等於$\hat{f}(0)$；</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="5">
+<li>如果函數$f$是一個實數函數，則$\hat{f}$是偶函數($\hat{f}(u) = \hat{f}(-u)$)；類似，如果函數$f$是一個偶函數，則$\hat{f}$則爲實數函數。</li>
+</ol>
+</blockquote>
+<p><font color = red>以上只是簡單介紹傅里葉變換和傅里葉逆變換，如想更詳細瞭解其數學理論，可自行查閲相關書籍。</font></p>
+<h3 id="952-convolution-and-the-fourier-transform">9.5.2 Convolution and the Fourier Transform</h3>
+<p>傅里葉變換和捲積運算之所以重要，是因爲兩者結合使用，能大大簡化運算。假設兩個函數$f$和$g$，它們的傅里葉變換為$\hat{f}$和$\hat{g}$，他們之間的捲積運算有如下方式：</p>
+<div>
+$$
+\mathcal{F}\{f \star g\} = \hat{f}\hat{g} \\[2ex]
+\hat{f}\star\hat{g} = \mathcal{F}\{fg\}
+$$
+</div>
+<p>換而言之，就是，兩函數在時域中的捲積的傅里葉變換與兩函數頻域中的乘積相等；兩函數頻域中的捲積與時域中乘積的傅里葉變換相等。這個特性讓傅里葉變換在信號的采樣和重建上非常實用。原來這兩個操作都是在<strong>時域</strong>内進行運算，而傅里葉變換則告訴我們，在<strong>頻域</strong>中運算也能得到相同結果，而且運算方式只是簡單的乘法。如下圖所示。</p>
+<center><img src = "figure9.45.png"></img></center>
+<h3 id="953-a-gallery-of-fourier-transform">9.5.3 A Gallery of Fourier Transform</h3>
+<p>這裏給出9.3.1節中提到的函數的傅里葉變換結果，並畫出他們的圖像。</p>
+<div>
+$$
+\mathcal{F}\{f_{box}\} = \frac{\sin{(\pi u)}}{\pi u} = \mathrm{sinc}{(\pi u)} \\[2ex]
+\mathcal{F}\{f_{tent}\} = \frac{\sin^2{(\pi u)}}{\pi^2 u^2} = \mathrm{sinc}^2(\pi u) \\[2ex]
+\mathcal{F}\{f_{B-spline}\} = \frac{\sin^4{(\pi u)}}{\pi^4 u^4} = \mathrm{sinc}^4(\pi u) \\[2ex]
+\mathcal{F}\{f_{Gaussian}\} = e^{-(2 \pi u)^2/2}
+$$
+</div>
+<center><img src = "figure9.46.png"></img></center>
+<p>注意，高斯函數的傅里葉變換相當於將原先標準差為$1.0$的高斯函數變爲標準差為$\frac{1}{2\pi}$的高斯函數。</p>
+<h3 id="954-dirac-impulses-in-sampling-theory">9.5.4 Dirac Impulses in Sampling Theory</h3>
+<p>脈衝信號在采樣理論中有重要作用，因爲它能夠對連續函數進行離散化。假設要表示一個在位置$a$処，信號强度為$b$的信號，則用脈衝信號可表示為$b\delta{(x - a)}$。因爲有這種特點，黨對一個連續函數$f(x)$進行離散化時，就能夠寫成$f(a)\delta{(x-a)}$。</p>
+<p>在一系列等間距點上對函數進行采樣可以表示為原始函數乘以等間距脈衝信號的總和，這稱爲脈衝序列(<code>impluse train</code>)。假設脈衝序列周期為$T$，則：
+$$
+s_T(x) = \sum_{i = -\infty}^{\infty}\delta(x - Ti)
+$$</p>
+<p>下圖展示了不同周期的脈衝序列及其傅里葉變換。</p>
+<center><img src = "figure9.47.png"></img></center>
+<p>由傅里葉變換的性質可知，一個周期為$T$的脈衝序列的傅里葉變換結果是周期為$\frac{1}{T}$的脈衝序列。換而言之，在時域中采樣頻率越高，在頻域中表示則距離越遠。</p>
+<h3 id="955-sampling-and-aliasing">9.5.5 Sampling and Aliasing</h3>
+<p>這裏從頻域角度解釋采樣和重建過程爲什麽需要捲積濾波操作，也可以解釋走樣（<code>alias</code>）現象。下面以圖像爲例，給出其采樣和重建后的頻譜。</p>
+<center><img src = "figure9.48.png"></img></center>
+<center style="font-size:14px;color:#0C0C0C">figure9.48</center> 
+<p>對於采樣操作，假設原始信號為$f$，采用脈衝序列$s_{T}$對其進行采樣，那麽計算方式為$f \cdot s_T$，由傅里葉變換的<code>乘積-捲積</code>性質可得采樣后信號的傅里葉變換為$\hat{f} \star \hat{s}_T = \hat{f} \star s_{\frac{1}{T}}$。利用脈衝序列$\delta$的定義可得：
+$$
+(\hat{f} \star s_{\frac{1}{T}})(u) = \sum_{-\infty}^{\infty}\hat{f}(u - i / T)
+$$</p>
+<p>從上式可以看出，與脈衝序列捲積結果，相當於在頻域上將原始信號的頻譜等間距$\frac{1}{T}$複製了N份。這導致在整數倍采樣頻率上很難在找到原始頻譜，因爲發生了混叠現象，這種現象是因爲原始信號頻率超過采樣頻率的一半（采樣頻率過低），這樣在混曡區域，信號不可逆的混合在一起，這就引起了走樣現象。這是走樣現象的第一種形式。這裏我們稱原始頻譜為基頻譜(<code>base spectrum</code>)，而那些複製頻譜稱爲走樣譜(<code>alias spectra</code>)。</p>
+<p>下面從重建角度展示走樣現象的第二種形式。假設原始離散信號為$a$，現使用寬度為$1$的<code>box filter</code>$f_{box,\frac{1}{2}}$對其進行捲積。則，重建后的頻譜等於原始信號頻譜與<code>box filter</code>函數頻譜的乘積——$\hat{a} \cdot \hat{f}_{box,\frac{1}{2}}$。從上圖中可以看出，重建前後，基頻譜的高頻分量被一定削弱，而走樣譜也存在一定削弱，另外由於<code>box filter</code>函數有非常寬的頻譜，因此這些被削弱的走樣譜變得更突出。這就引起了第二種形式的走樣——由於重構濾波器不合適帶來了走樣。</p>
+<p><font color = #0946A4> 這部分感覺好繞，原文寫的也很繞，而且從書中的圖對比看，不放大其實看不到什麽區別，另外還可能是對頻譜理解不深導致的。。。後期要有新體會再改改這部分</font></p>
+<h4 id="preventing-aliasing-in-sampling">Preventing Aliasing in Sampling</h4>
+<p>從上面的分析可以看出，要想獲得效果較好的采樣或重建結果，所使用的濾波器需要精心挑選。對於采樣過程，從頻域角度上看，使用低通濾波器可以限制頻譜的範圍，可以有效地抑制信號的混曡現象。</p>
+<center><img src = "figure9.49.1.png"></img></center>
+<p>另外，提高采樣率也能避免混曡現象的發生，因爲高采樣率讓走樣譜之間裏的更遠。如下圖所示。</p>
+<center><img src = "figure9.49.png"></img></center>
+<p>這兩種方法的原理都是讓頻譜寬度小於走樣譜之間的距離，換而言之，信號中最高頻率必須要小於采樣頻率的一半，這就是經典的<strong>奈奎斯特準則</strong>(<code>Nyquist criterion</code>)。通過采樣頻率所得到的最高允許頻率成爲<strong>奈奎斯特頻率</strong>(<code>Nyquist frequency</code>)或<strong>奈奎斯特極限</strong>(<code>Nyquist limit</code>)。根據<code>Nyquist-Shannon</code>采樣理論，頻率不超過奈奎斯特極限的信號（或者説帶寬限制為奈奎斯特頻率的信號），原則上可以根據樣本進行準確重構。</p>
+<p>以上解釋説明，儅采樣頻率足夠高時，我們不需要使用采樣濾波器進行預處理，直接進行采樣就行。但是儅原始信號頻譜範圍非常廣，例如圖像中有銳利的邊緣時，這就必須使用采樣濾波器對帶寬進行限制。例如下圖中，不同濾波器對帶寬限制的效果。</p>
+<center><img src = "figure9.50.png"></img></center>
+<p>下圖展示了，在不同濾波器處理後，相同采樣率下獲得采樣圖像效果。</p>
+<center><img src = "figure9.51.png"></img></center>
+<p>可以看出，低通濾波器雖然限制了頻譜寬度，但是它也讓圖像損失了高頻信息（就是讓圖像模糊了），但有時候這是值得的，因爲損失高頻信息總比得到混亂的頻譜來的好。</p>
+<h4 id="preventing-aliasing-in-reconstruction">Preventing Aliasing in Reconstruction</h4>
+<p>從頻域角度看，重建濾波器的任務是剔除走樣譜，保留基頻譜。從圖9.48中可以看出，即使使用“粗糙”的重建濾波器，它也移除了走樣譜。重要的是，<strong>濾波器完全阻止了所有走樣譜的直流尖峰信號</strong>。這是所有合理的重建濾波器的特徵：<strong>在頻域空間中，在采樣頻率的倍頻処都有零值</strong>。事實證明，這個特點與時域上的<code>ripple-free</code>性質是等價的。<strong>所以，好的重建濾波器必須好的低通濾波器，它必須完全剔除倍頻処的頻率</strong>。</p>
+<p>下圖展示了不同濾波器的重建效果。</p>
+<center><img src = "figure9.52.png"></img></center>
+<p>從圖中對比看，<code>box filter</code>是效果最差的，即使采樣率足夠高，但是依然會存在<code>artifacts</code>，也就是重建后的曲綫不夠平滑。而使用<code>tent filter</code>，相當於采用綫性插值，雖然削弱了高頻信號，但并沒有<code>box filter</code>那麽明顯的<code>artifacts</code>，重建后的曲綫也變得相對平滑。而最後的<code>B-spline filter</code>，重建曲綫非常光滑，有效的控制了走樣譜，還對基頻譜進行了一定程度的平滑，這就是之前提到的<strong>平滑和走樣之間的權衡</strong>。</p>
+<h4 id="preventing-aliasing-in-resampling">Preventing Aliasing in Resampling</h4>
+<p><code>Resampling</code>操作在之前説過，是<code>Reconstruction</code>和<code>Sampling</code>操作的結合，因此，之前提到反走樣的方法同樣適用重采樣操作，區別在於重采樣過程只使用了一個濾波器（同時要重建和采樣）。下圖展示了一個重采樣濾波器如何有效的剔除走樣譜，并且抑制頻譜寬度進行新的采樣操作。</p>
+<center><img src = "figure9.53.png"></img></center>
+<h3 id="956-ideal-filters-vs-useful-filters">9.5.6 Ideal Filters vs. Useful Filters</h3>
+<p>從頻域分析角度可得到一個結論：頻域中的盒濾波器(<code>box filter</code>)是采樣與重建的理想濾波器。在这两种操作下，该滤波器都能有效防止走样现象，而且不用减少<code>Nyquist frequency</code>之下的频率范围。</p>
+<p>我們知道傅里葉變換和傅里葉逆變換在本質上是相同的，因此傅里葉變換為<code>box filter</code>的空域濾波器就是$sinc(\pi x) = \sin{(\pi x)}/(\pi x)$函數，雖然它的頻域指標最優，但是在實際情況下卻很少使用，因爲無法產生最佳的結果，無論是在采樣還是重建操作下。</p>
+<p>從前面$sinc$函數的圖像可以看出，其能無限延伸，但是遠離中心時，函數值下降速度相對較慢
+，這是它的一個缺點；而另一個缺點是，對於一些采樣，它的負向突起也是問題。</p>
+<p>對於高斯濾波器在面對不同類型的采樣都能得到很好的結果，即使是面對要在輸入信號中去除高頻部分的困難任務。因爲從它的傅里葉變換圖像呈現指數衰減，而且沒有會導致走樣的“突起”。對於一些不太困難的情況，<code>tent filter</code>就足夠了。</p>
+<p>就重構而言，$sinc$函數的大小也會引起問題，但更重要的是，許多<code>ripple</code>會引起&quot;振鈴“(<code>ringing</code>)現象。</p>
 <h2 id="聲明">聲明</h2>
 <p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
     </div>
