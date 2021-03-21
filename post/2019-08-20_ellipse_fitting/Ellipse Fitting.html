@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ellipse Fitting - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2019-08-20_Ellipse_Fitting/Ellipse%20Fitting.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Ellipse Fitting" />
+<meta property="og:description" content="橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2019-08-20_Ellipse_Fitting/Ellipse%20Fitting.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-08-20T10:16:57&#43;08:00" />
+<meta property="article:modified_time" content="2019-08-20T10:16:57&#43;08:00" />
+
+<meta itemprop="name" content="Ellipse Fitting">
+<meta itemprop="description" content="橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。"><meta itemprop="datePublished" content="2019-08-20T10:16:57&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-20T10:16:57&#43;08:00" />
+<meta itemprop="wordCount" content="1412">
+<meta itemprop="keywords" content="ellipse,Least squares method," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ellipse Fitting"/>
+<meta name="twitter:description" content="橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Ellipse Fitting</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-20 </span>
+        <div class="post-category">
+            <a href="/categories/model-fitting/"> Model Fitting </a>
+            </div>
+          <span class="more-meta"> 1412 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#算法">算法</a></li>
+        <li><a href="#matlab代碼">Matlab代碼</a></li>
+        <li><a href="#參考文獻">參考文獻</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。霍夫變換有其特有的優點，例如高魯棒性，不需要預分割。但是它的缺點也同樣明顯：高計算複雜度以及解不唯一，這兩個缺點導致這個方法很難應用在工程中。而最小二乘法是通過最小化擬合點到橢圓的距離實現的。下面論文《Direct least square fitting of ellipses》[^[1]]就是采用最小二乘法實現。</p>
+<h2 id="算法">算法</h2>
+<p>　　假設橢圓一般化方程為：
+$$
+F(\vec{A}, \vec{X}) = \vec{A}^T \cdot \vec{X} = ax^2 + bxy + cy^2 + dx + ey + f = 0 \tag{1}
+$$
+　　其中，$\vec{A} = [\ a\ b\ c\ d\ e\ f\ ]^T$，$\vec{X} = [\ x^2\ xy\ y^2\ x\ y\ 1\ ]^T$。</p>
+<p>　　擬合一般二次曲綫的方法，是通過最小化“代數距離(algebratic distances)”實現：
+$$
+argmin \sum_{i=1}^{N}{(F(\vec{A}; \vec{X}_{i}))^2} \tag{2}\<br>
+$$
+　　論文中，通過對過去橢圓擬合方法的總結，為該最小化問題添加了約束條件：
+$$
+s.t. \ 4ac - b^2 = 1 \tag{3}
+$$
+　　重新整理該最小化問題：
+$$
+argmin\ E = ||\vec{D}\vec{A}||^2, \ \
+s.t. \ \vec{A}^T\vec{C}\vec{A} = 1 \tag{4}
+$$
+　　其中， $\vec{D}$為樣本數據集，$\vec{C}$為常數矩陣，$\vec{A}$為橢圓係數</p>
+<div>
+$$
+\vec{D} = [\vec{X}_1\ \vec{X}_2\ \dots\ \vec{X}_n]^T \\
+\vec{C} = \begin{pmatrix}
+0&0&2&0&0&0\\
+0&-1&0&0&0&0\\
+2&0&0&0&0&0\\
+0&0&0&0&0&0\\
+0&0&0&0&0&0
+\end{pmatrix}\\
+$$
+</div>
+<p>　　利用<strong>Language</strong>法，構建等式$h = E + \lambda (\vec{A}^T\vec{C}\vec{A})$，然後令$\frac{\partial{h}}{\vec{A}} = 0$，則可獲得以下方程組：</p>
+<div>
+$$
+\begin{array}{r}
+2\vec{D}^T\vec{D}\vec{A} - 2\lambda\vec{C}\vec{A} = 0\\
+\vec{A}^T\vec{C}\vec{A} = 1 
+\end{array}\tag{5}
+$$
+</div>
+<p>　　令$\vec{S} = \vec{D}^T\vec{D}$，化簡等式(5)，
+$$
+\vec{S}\vec{A} = \lambda\vec{C}\vec{A} \tag{6}
+$$
+$$
+\vec{A}^T\vec{C}\vec{A} = 1 \tag{7}
+$$
+　　$\vec{S}$稱爲散佈矩陣。</p>
+<p>　　對等式(6)求解其特徵值和特徵向量$(\lambda_i, \vec{u}_i)$，同樣$(\lambda_i, \mu\vec{u}_i)$也爲等式(6)的特徵解，其中$\mu$是任意實數。根據等式(7)可以很容易找到一個$\mu$使得$\mu_i^2\vec{u}_i^T\vec{C}\vec{u}_i = 1$，即：
+$$
+\mu_i = \sqrt{\frac{1}{\vec{u}_i^T\vec{C}\vec{u}_i}} = \sqrt{\frac{\lambda_i}{\vec{u}_i^T\vec{S}\vec{u}_i}} \tag{8}
+$$
+　　最後，令$\vec{A}_i = \mu_i\vec{u}_i$，取$\lambda_i &gt; 0$對應的特徵向量$\vec{u}_i$，即可作爲擬合的方程解。</p>
+<p>　　再進一步觀察，等式(6)的特徵解應該有6對$(\lambda_i, \vec{u}_i)$。如果等式(8)中平方根下的項為正，則這些對都是局部極小值。一般來説，$\vec{S}$是正定的，那麽分母$\vec{u}_i^T\vec{S}\vec{u}_i$對於所有的$\vec{u}_i$都是正的，因此，如果$\lambda_i &gt; 0$，則存在平方根，對於等式(5)的任意解都具有正廣義特徵值。</p>
+<p>　　對$\vec{S}$進行Cholesky分解，即$\vec{S} = \vec{Q}^2$，揭示了等式(6)的特徵值符號與$\vec{Q}^{-1}\vec{C}\vec{Q}^{-1}$特徵值符號相同，根據Sylvester慣性定律，其也同$\vec{C}$相同。對於等式(3)這個約束矩陣，在橢圓問題上有且只有一個正特徵值，因此這個方法計算出的解是唯一解。這就解決了論文開頭說的橢圓解的不確定性。
+　　</p>
+<h2 id="matlab代碼">Matlab代碼</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-matlab" data-lang="matlab"><span class="c">% x,y are lists of coordinates</span>
+<span class="k">function</span><span class="w"> </span>A <span class="p">=</span><span class="w"> </span><span class="nf">fitellipse</span><span class="p">(</span>x,y<span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="c">% Build design matrix</span>
+<span class="n">D</span> <span class="p">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.*</span><span class="n">x</span> <span class="n">x</span><span class="o">.*</span><span class="n">y</span> <span class="n">y</span><span class="o">.*</span><span class="n">y</span> <span class="n">x</span> <span class="n">y</span> <span class="nb">ones</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">x</span><span class="p">))];</span>
+<span class="c">% Build scatter matrix</span>
+<span class="n">S</span> <span class="p">=</span> <span class="n">D</span><span class="o">&#39;*</span><span class="n">D</span><span class="p">;</span>
+<span class="c">% Build 6x6 constraint matrix</span>
+<span class="n">C</span> <span class="p">=</span> <span class="n">zeors</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">C</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">C</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="c">% Solve eigensystem</span>
+<span class="p">[</span><span class="n">eig_vec</span><span class="p">,</span> <span class="n">eig_val</span><span class="p">]</span> <span class="p">=</span> <span class="n">eig</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">*</span><span class="n">C</span><span class="p">);</span>
+<span class="c">% Find the positive eigenvalue</span>
+<span class="p">[</span><span class="n">posR</span><span class="p">,</span> <span class="n">posC</span><span class="p">]</span> <span class="p">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">eig_val</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="o">~</span><span class="nb">isinf</span><span class="p">(</span><span class="n">eig_val</span><span class="p">));</span>
+<span class="c">% Extract eigenvector corresponding to positive eigenvalue</span>
+<span class="n">A</span> <span class="p">=</span> <span class="n">eig_vec</span><span class="p">(:,</span> <span class="n">posC</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="參考文獻">參考文獻</h2>
+<p>[1].  Fitzgibbon, Andrew, Maurizio Pilu, and Robert B. Fisher. &ldquo;Direct least square fitting of ellipses.&rdquo; IEEE Transactions on pattern analysis and machine intelligence 21.5 (1999): 476-480.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-08-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ellipse/">ellipse</a>
+          <a href="/tags/least-squares-method/">Least squares method</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-08-18-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch4%20Ray%20Tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">圖形學系列-Ch4 Ray Tracing-閲讀筆記</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2019-02-19_Blog_Analysis/Blog%20Analysis.html">
+            <span class="next-text nav-default">Blob特征提取介紹</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

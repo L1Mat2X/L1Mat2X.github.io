@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列 Ch10-Surface Shading-閲讀筆記 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="在第四章的4.5節已經簡單介紹過兩個shading模型，Lambertian Shading和Blinn-Phong Shading，以及Amb" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch10-Surface%20Shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列 Ch10-Surface Shading-閲讀筆記" />
+<meta property="og:description" content="在第四章的4.5節已經簡單介紹過兩個shading模型，Lambertian Shading和Blinn-Phong Shading，以及Amb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch10-Surface%20Shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-29T09:46:22&#43;08:00" />
+<meta property="article:modified_time" content="2020-09-29T09:46:22&#43;08:00" />
+
+<meta itemprop="name" content="圖形學系列 Ch10-Surface Shading-閲讀筆記">
+<meta itemprop="description" content="在第四章的4.5節已經簡單介紹過兩個shading模型，Lambertian Shading和Blinn-Phong Shading，以及Amb"><meta itemprop="datePublished" content="2020-09-29T09:46:22&#43;08:00" />
+<meta itemprop="dateModified" content="2020-09-29T09:46:22&#43;08:00" />
+<meta itemprop="wordCount" content="4005">
+<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列 Ch10-Surface Shading-閲讀筆記"/>
+<meta name="twitter:description" content="在第四章的4.5節已經簡單介紹過兩個shading模型，Lambertian Shading和Blinn-Phong Shading，以及Amb"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列 Ch10-Surface Shading-閲讀筆記</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-29 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            </div>
+          <span class="more-meta"> 4005 words </span>
+          <span class="more-meta"> 8 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#101-diffuse-shading">10.1 Diffuse Shading</a>
+          <ul>
+            <li><a href="#1011-lambertian-shading-model">10.1.1 Lambertian Shading Model</a></li>
+            <li><a href="#1012-ambient-shading">10.1.2 Ambient Shading</a></li>
+            <li><a href="#1013-vertex-based-diffuse-shading">10.1.3 Vertex-Based Diffuse Shading</a></li>
+          </ul>
+        </li>
+        <li><a href="#102-phong-shading">10.2 Phong Shading</a>
+          <ul>
+            <li><a href="#1021-phong-lighting-model">10.2.1 Phong Lighting Model</a></li>
+            <li><a href="#1022-surface-normal-vector-interpolation">10.2.2 Surface Normal Vector Interpolation</a></li>
+          </ul>
+        </li>
+        <li><a href="#103-artistic-shading">10.3 Artistic Shading</a>
+          <ul>
+            <li><a href="#1031-line-drawing">10.3.1 Line Drawing</a></li>
+            <li><a href="#1032-cool-to-warm-shading">10.3.2 Cool-to-Warm Shading</a></li>
+          </ul>
+        </li>
+        <li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+        <li><a href="#聲明">聲明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>在第四章的4.5節已經簡單介紹過兩個<code>shading</code>模型，<code>Lambertian Shading</code>和<code>Blinn-Phong Shading</code>，以及<code>Ambient Shading</code>。本章節將進一步探討這些<code>Shading</code>模型以及它們的應用。</p>
+<h2 id="101-diffuse-shading">10.1 Diffuse Shading</h2>
+<p>世界上大多數物體是不光滑的(<code>matte</code>)，換而言之，就是從不同角度觀察物體表面上一個點，觀察到的顔色是相對穩定的。這類物體通常稱爲<code>Lambertian objects</code>。本節討論這類物體的<code>shading</code>如何實現。</p>
+<p><font color = #0946A4><strong>注意，本章節物體坐標均為世界坐標系下；若使用透視變換後的坐標系，那麽與法綫夾角會發生變化，導致最後<code>shading</code>不正確</strong></font></p>
+<h3 id="1011-lambertian-shading-model">10.1.1 Lambertian Shading Model</h3>
+<p><code>Lambertian's cosine law</code>：<code>Lambertian objects</code>均遵守該定律，該定律描述物體表面某個點的顔色<code>c</code>與光纖和法綫夾角成正比。</p>
+<div>
+$$
+\mathcal{c} \propto \cos{\theta} \\
+\mathcal{c} \propto \mathbf{n} \cdot \mathbf{l}
+$$
+</div>
+<center><img src = "figure10.1.png"></img></center>
+<p><font color = #0946A4><strong>注意，$\mathbf{l}$與物體的位置，這相當於假設光源位於無窮遠，投射過來的光纖被稱爲<code>directional light</code>，因爲只和其方向有關</strong>。</font></p>
+<p>物體表面的亮暗變化與光纖的强度以及表面反射率有關。通常用$\mathcal{c}_r$表示光纖在物體表面的漫反射率(<code>diffuse reflectance</code>)，該反射率與顔色相關，不同顔色反射率不同。這樣，</p>
+<div>
+$$
+\mathcal{c} \propto \mathcal{c}_{r}(\mathbf{n}\cdot \mathbf{l}) \tag{10.1}
+$$
+</div>
+<p>再添加光纖强度分量$\mathcal{c}_{l}$</p>
+<div>
+$$
+\mathcal{c} = \mathcal{c}_{r}\mathcal{c}_{l}(\mathbf{n}\cdot\mathbf{l}) \tag{10.2}
+$$
+</div>
+<p>其中，$c_r$ 和 $c_l$ 均爲<code>RGB</code>的向量，取值範圍均爲<code>[0,1]</code>。再觀察等式(10.2)會發現，計算結果$\mathcal{c}$并不一定在<code>[0,1]</code>範圍内，有可能出現負值，出現負值在物理上解釋爲法綫$\mathbf{n}$和入射光綫$\mathbf{l}$在物體的兩側，如下圖所示。這種現象顯然在渲染過程中會導致錯誤，因此要對等式(10.2)進行進一步限制，有兩種處理方式。</p>
+<center><img src = "figure10.2.png"></img></center>
+<div>
+$$
+\mathcal{c} = \mathcal{c}_{r}\mathcal{c}_{l}\max{(0,\mathbf{n}\cdot\mathbf{l})} \tag{10.3}
+$$
+</div>
+<p>或</p>
+<div>
+$$
+\mathcal{c} = \mathcal{c}_{r}\mathcal{c}_{l}|\mathbf{n}\cdot\mathbf{l}| \tag{10.4}
+$$
+</div>
+<p>等式(10.4)在物理含義上的解釋是非常反人類的，等式(10.4)可以想象為有兩個光源在物體的兩側，如下圖所示，因此稱爲<code>two-sided lighting</code>。所以，通常使用等式(10.3)作爲處理，它有良好的物理解釋以及簡潔的表示。</p>
+<center><img src = "figure10.3.png"></img></center>
+<h3 id="1012-ambient-shading">10.1.2 Ambient Shading</h3>
+<p>繼續解釋等式(10.3)，它依然包含一些缺陷，因爲，直接使用等式(10.3)時，背向光源的位置始終是黑的，這種情況和現實中顯然不匹配。因爲現實中，光纖會發生全方位反射，一些光纖會從各個方向入射背光面，因此即使處於背向光源的一側，物體表面也不可能是完全黑的。基於這個特性，通常的做法是在等式(10.3)中加入<code>環境光</code>項。</p>
+<div>
+$$
+\mathcal{c} = \mathcal{c}_{r}(\mathcal{c}_{a} + \mathcal{c}_{l}\max{(0,\mathbf{n}\cdot\mathbf{l})})
+$$
+</div>
+<p>為保證計算出的$\mathcal{c}$在$[0,1]^3$範圍内，那麽就需要保證$c_a + c_l \leq (1,1,1)$。否則需要對結果進行裁剪。</p>
+<h3 id="1013-vertex-based-diffuse-shading">10.1.3 Vertex-Based Diffuse Shading</h3>
+<p>假設，使用三角形進行物體表面的近似表示，儅每個三角形只存在一個法向量進行<code>shading</code>，結果會呈現出多面性，爲了得到更加平滑的結果，大神們提出在三角形每個頂點都使用不同的法向量進行等式(10.3)計算，之後在使用<code>重心插值法</code>在三角形内部進行插值填充。如下圖所示。</p>
+<center><img src = "figure10.4.png"></img></center>
+<p>這種方法存在的一個問題是，三角形頂點的法向量怎麽獲得？如果模型有隨附法向量，那麽在細分平滑模型時，可以隨著三角形的創建而獲得。但有些多邊形模型在頂點処并沒有提供法向量，那麽可以通過平均共享該頂點的多邊形法向量來獲得。這樣獲得的法向量并不是單位向量，所以在使用前需要進行歸一化處理。</p>
+<h2 id="102-phong-shading">10.2 Phong Shading</h2>
+<p>一些物體表面雖然是粗糙的，但是依然會存在高光(<code>highlight</code>)現象，并且高光區域會隨著觀察位置的變化而變化。這就需要新增一個觀測方向$\mathbf{e}$進行分析。</p>
+<p>再詳細描述下發生的高光現象：隨著觀察位置的變化，高光區域有時會變得模糊；高光區域反映出的顔色通常是光源顔色，物體表面顔色對其影響較小（這是因爲高光現象發生在物體表面，穿透物體表面並&quot;拾取&quot;物體顔色的光被散射了）。</p>
+<h3 id="1021-phong-lighting-model">10.2.1 Phong Lighting Model</h3>
+<center><img src = "figure10.5.png"></img></center>
+<p>圖中，$\mathbf{l}$表示光綫方向，$\mathbf{n}$表示物體表面法綫方向，$\mathbf{r}$表示光綫在物體表面反射方向，$\mathbf{e}$表示觀測方向。其中，觀測方向與反射光綫夾角為$\sigma$。<code>Phong Lighting</code>模型定義高光部分是假設夾角$\sigma$越趨於零，則高光部分越亮，換而言之，觀測方向$\mathbf{e}$越接近反射光綫，高光現象越明顯，高光光斑也會從模糊變得越清晰。這個假設是符合常理的，因爲生活中，儅拿鏡子觀察某個光源時，一定是反射位置最爲晃眼。</p>
+<p>根據這個模型假設，很容易得到：
+$$
+\mathcal{c} = \mathcal{c}_{l}(\mathbf{e}\cdot\mathbf{r})
+$$</p>
+<p>但是，這個等式依然存在問題，第一個就是點乘$\mathbf{e}\cdot \mathbf{r}$可能存在負值；第二個更爲重要的問題就是，利用這個等式，可觀察到的高光區間會非常大，遠超出現實中的情況。基於這兩點，大神對等式做了優化：
+$$
+\mathcal{c} = \mathcal{c}_{l}\max{(0, \mathbf{e}\cdot\mathbf{r})^p} \tag{10.5}
+$$</p>
+<p>其中，$p$被稱爲<code>Phong exponent</code>，其值為正實數，用於控制高光區域大小。如下圖所示，不同的$p$值，有不同的高光區域。</p>
+<center><img src = "figure10.6.png"></img></center>
+<p>你以爲大神對等式(10.5)的優化結束了？如果這樣就不叫大神了。</p>
+<p>再看等式(10.5)，實際應用中，我們已知$\mathbf{l}$、$\mathbf{n}$和$\mathbf{e}$，那麽可以通過反射定律計算得到$\mathbf{r}$。</p>
+<div>
+$$
+\mathbf{r} = -\mathbf{l} + 2(\mathbf{l}\cdot\mathbf{n})\mathbf{n} \tag{10.6}
+$$
+</div>
+<center><img src = "figure10.7.png"></img></center>
+<p>等式(10.6)看起來已經很簡單了，但是大神告訴你還不是最優的，我們計算$\mathbf{r}$是爲了得到$\mathbf{r}$和$\mathbf{e}$夾角的<code>cosine</code>值，它是實話只是個度量值，如果可以用其他方式得到類似的度量值，也一樣能使用。</p>
+<p>我們知道，在反射定律中，法綫$\mathbf{n}$是入射光綫$\mathbf{l}$和反射光綫$\mathbf{r}$的角平分綫，那麽要是入射光綫$\mathbf{l}$和觀測方向$\mathbf{e}$的角平分綫$\mathbf{h}$越靠近法綫$\mathbf{n}$，是不是也能説明觀測方向$\mathbf{e}$越靠近反射光綫$\mathbf{r}$？</p>
+<center><img src  = "figure10.8.png"></img></center>
+<p>其中，$\mathbf{h}$稱爲<code>half-vector</code>，計算方式如下：
+$$
+\mathbf{h} = \frac{\mathbf{e}+\mathbf{l}}{||\mathbf{e} + \mathbf{l}||}
+$$</p>
+<p>這樣，等式(10.5)就可改寫爲：
+$$
+\mathcal{c} = \mathcal{c}_{l}\max{(0,\mathbf{h} \cdot \mathbf{n})}^p \tag{10.7}
+$$</p>
+<p>等式(10.7)的優勢在於足夠簡單，雖然細節上，使用$\mathbf{h}$和$\mathbf{n}$來代替$\mathbf{e}$和$\mathbf{r}$會有一些區別，但是并不影響結果。它的缺點在於存在平方根和除法運算。</p>
+<p>有了高光項，結合等式(10.3)和等式(10.7)可得：</p>
+<div>
+$$
+\mathcal{c} = \mathcal{c}_{r}(\mathcal{c}_{a} + \mathcal{c}_{l}\max{(0,\mathbf{n}\cdot\mathbf{l})}) + \mathcal{c}_{l}\max{(0,\mathbf{h}\cdot\mathbf{n})^p} \tag{10.8}
+$$
+</div>
+<p>如果允許調整高光項的亮度和顔色，可以加入控制項$\mathcal{c}_{p}$。</p>
+<div>
+$$
+\mathcal{c} = \mathcal{c}_{r}(\mathcal{c}_{a} + \mathcal{c}_{l}\max{(0,\mathbf{n}\cdot\mathbf{l})}) + \mathcal{c}_{l}\mathcal{c}_{p}\max{(0,\mathbf{h}\cdot\mathbf{n})^p} \tag{10.9}
+$$
+</div>
+<h3 id="1022-surface-normal-vector-interpolation">10.2.2 Surface Normal Vector Interpolation</h3>
+<p>和具有相同幾何形狀的<code>Lambertian</code>表面相比，具有高光的光滑表面往往會快速改變顔色。因此，只在具有法向量的位置進行<code>shading</code>，會產生僞影現象。爲了減少這種現象，可以在多邊形内部插值出每個位置的法向量，然後使用上面提到的<code>Phong</code>模型進行<code>shading</code>操作。插值法向量的方法和在三角形内部插值顔色類似。</p>
+<div>
+$$
+\mathcal{c} = \alpha\mathcal{c}_0 + \beta\mathcal{c}_1 + \gamma\mathcal{c}_2 \tag{10.10}
+$$
+</div>
+<div>
+$$
+\mathbf{n} = \alpha\mathbf{n}_0 + \beta\mathbf{n}_1 + \gamma \mathbf{n}_{2} \tag{10.11}
+$$
+</div>
+<p>由等式(10.11)得到的法向量，需要經過歸一化處理才能在<code>shading</code>過程中使用。這種法向量的插值方式通常也稱爲<code>Phong normal interpolation</code>。</p>
+<h2 id="103-artistic-shading">10.3 Artistic Shading</h2>
+<p>前面介紹的兩種<code>shading</code>模型都是仿真物體在真實環境中的表現。而<code>Artistic shading</code>則是模仿人類藝術家的繪畫，這種方式通常稱爲<code>non-photorealistic rendering</code>。</p>
+<h3 id="1031-line-drawing">10.3.1 Line Drawing</h3>
+<p>轮廓，<code>silhouettes</code>，现实中物体不会出现，只有人们在绘图时才会出现的。假设两个三角形有一条共边，当其中一个三角形与观察方向同侧，而另一个三角形在异侧时，此時就需要繪製出三角形邊緣作爲輪廓。這種情況可用如下形式判斷是否需要繪製輪廓。
+$$
+(\mathbf{e}\cdot\mathbf{n}_0)(\mathbf{e}\cdot\mathbf{n}_1) \leq 0
+$$</p>
+<p>其中，$\mathbf{e}$表示邊緣與觀察者的連綫方向。這可推廣到兩個三角形所在的平面，假設平面方程為$f_i(\mathbf{p}) = 0$，那麽：
+$$
+\text{draw silhouette if } f_0(\mathbf{e})f_1(\mathbf{e}) \leq 0
+$$</p>
+<p>另外，現實中，儅用多邊形表示平滑表面時，并不會將每個多邊形的可見邊界都繪製出來，而是在真正有摺痕或轉角的地方才繪製，因此可以設定一個閾值用於判斷：
+$$
+\text{draw crease if }(\mathbf{n}_0 \cdot \mathbf{n}_1) \leq threshold
+$$</p>
+<p>結合繪製摺痕和繪製輪廓，可以得到非常漂亮的<code>line drawing</code>圖。</p>
+<h3 id="1032-cool-to-warm-shading">10.3.2 Cool-to-Warm Shading</h3>
+<p>藝術家在對綫圖進行<code>shading</code>操作時，通常會采用低强度的陰影來展示曲面的效果，并對物體進行上色。(還是看原文吧，<code>When artists shade line drawings, they often use low intensity shading to give some impression of curve to the surface and to give colors to objects</code>)。上色時，其中面向一個方向的會使用冷色調，另一個方向會使用暖色調。這些顔色的使用不會非常飽和，也不會非常暗，這樣就使得黑色輪廓有非常好的展示效果，<code>cartoon-like effect</code>。</p>
+<p>根據上面的描述，可以假設一個&quot;暖&quot;色光綫$\mathbf{l}$，以及&quot;暖度&quot;$k_w$，“暖度”的計算依然與光綫和法綫夾角有關，取值範圍為$[0,1]$。
+$$
+k_w = \frac{1+\mathbf{n}\cdot\mathbf{l}}{2}
+$$</p>
+<p>這樣著色點的顔色可以利用&quot;暖度&quot;來計算。
+$$
+\mathcal{c} = k_wc_w + (1 - k_w)c_c.
+$$</p>
+<p>其中，$c_w$和$c_c$分別表示暖色調顔色和冷色調顔色。例如，</p>
+<div>
+$$
+c_c = (0.4,0.4,0.7),\\
+c_w = (0.8,0.6,0.6)
+$$
+</div>
+<p>下圖展示了傳統的<code>Phong lighting</code>和上面提到的<code>shading</code>方式。</p>
+<center><img src = "figure10.9.png"></img></center>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<center><img src = "ch10-frequently_asked_questions.png"></img></center> 
+<h2 id="聲明">聲明</h2>
+<p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-09-29
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/computer-graphic/">Computer Graphic</a>
+          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
+          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
+          <a href="/tags/games101/">Games101</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch11-Texture%20Mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">圖形學系列 Ch11-Texture Mapping-閲讀筆記</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch9-Signal%20Processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列 Ch9-Signal Processing-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

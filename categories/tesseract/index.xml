@@ -6,11 +6,7 @@
     <description>Recent content in Tesseract on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 06 Jul 2016 14:08:16 +0800</lastBuildDate>
-    
-	<atom:link href="https://blog.matrixs.site/categories/tesseract/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 06 Jul 2016 14:08:16 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/categories/tesseract/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tesseract系列-How to Build Tesseract 3.04 with VS2013</title>
       <link>https://blog.matrixs.site/post/2016-07-06-tesseract-2-how-to-build-tesseract-3-dot-04-with-vs2013/</link>

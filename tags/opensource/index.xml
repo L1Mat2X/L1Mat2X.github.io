@@ -6,17 +6,13 @@
     <description>Recent content in OpenSource on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 17 Jun 2017 13:39:59 +0000</lastBuildDate>
-    
-	<atom:link href="https://blog.matrixs.site/tags/opensource/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 17 Jun 2017 13:39:59 +0000</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/opensource/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>利用OpenCV第三方库编译Leptonica</title>
-      <link>https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html</link>
+      <link>https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8OpenCV%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91Leptonica.html</link>
       <pubDate>Sat, 17 Jun 2017 13:39:59 +0000</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html</guid>
+      <guid>https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8OpenCV%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91Leptonica.html</guid>
       <description>OpenCV对于做计算机视觉这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教</description>
     </item>
     

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>豐衣足食系列-小米路由器4刷OpenWrt固件 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="最近把家裏閑置的小米路由器4刷成OpenWrt系統，特此記錄流程。 聲明 刷機有風險，入坑需謹慎！刷機后無法官方維修！凡是刷第三方固件出现的财务" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2021-03-21-%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt/%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F%E7%B3%BB%E5%88%97-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt%E5%9B%BA%E4%BB%B6.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="豐衣足食系列-小米路由器4刷OpenWrt固件" />
+<meta property="og:description" content="最近把家裏閑置的小米路由器4刷成OpenWrt系統，特此記錄流程。 聲明 刷機有風險，入坑需謹慎！刷機后無法官方維修！凡是刷第三方固件出现的财务" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2021-03-21-%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt/%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F%E7%B3%BB%E5%88%97-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt%E5%9B%BA%E4%BB%B6.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-03-21T10:35:51&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-21T10:35:51&#43;08:00" />
+
+<meta itemprop="name" content="豐衣足食系列-小米路由器4刷OpenWrt固件">
+<meta itemprop="description" content="最近把家裏閑置的小米路由器4刷成OpenWrt系統，特此記錄流程。 聲明 刷機有風險，入坑需謹慎！刷機后無法官方維修！凡是刷第三方固件出现的财务"><meta itemprop="datePublished" content="2021-03-21T10:35:51&#43;08:00" />
+<meta itemprop="dateModified" content="2021-03-21T10:35:51&#43;08:00" />
+<meta itemprop="wordCount" content="2023">
+<meta itemprop="keywords" content="Router,OpenWrt,小米路由器,Breed引導,刷機," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="豐衣足食系列-小米路由器4刷OpenWrt固件"/>
+<meta name="twitter:description" content="最近把家裏閑置的小米路由器4刷成OpenWrt系統，特此記錄流程。 聲明 刷機有風險，入坑需謹慎！刷機后無法官方維修！凡是刷第三方固件出现的财务"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">豐衣足食系列-小米路由器4刷OpenWrt固件</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-03-21 </span>
+        <div class="post-category">
+            <a href="/categories/%E8%B7%AF%E7%94%B1%E5%99%A8/"> 路由器 </a>
+            <a href="/categories/%E6%95%99%E7%A8%8B/"> 教程 </a>
+            </div>
+          <span class="more-meta"> 2023 words </span>
+          <span class="more-meta"> 5 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#聲明">聲明</a></li>
+        <li><a href="#準備工具">準備工具</a></li>
+        <li><a href="#拆機">拆機</a></li>
+        <li><a href="#showtime">ShowTime</a>
+          <ul>
+            <li><a href="#啓動路由器uboot命令行模式">啓動路由器UBOOT命令行模式</a></li>
+            <li><a href="#刷入breed引導固件">刷入Breed引導固件</a></li>
+            <li><a href="#刷入openwrt">刷入OpenWrt</a></li>
+          </ul>
+        </li>
+        <li><a href="#參考博文">參考博文</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近把家裏閑置的小米路由器4刷成OpenWrt系統，特此記錄流程。</p>
+<h2 id="聲明">聲明</h2>
+<p>刷機有風險，入坑需謹慎！刷機后無法官方維修！凡是刷第三方固件出现的财务损失由个人承担！</p>
+<h2 id="準備工具">準備工具</h2>
+<p>網上能搜到很多免拆機刷OpenWrt的教程，但是親身測試過沒有成功所以放棄了。本文介紹的是利用TTL刷機的方法。需要的材料如下。</p>
+<p>軟件列表：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1. CH340G USB TO TTL小板Windows10驅動；或者CP2102 USB TO TTL小板Windows10驅動；
+2. Putty；
+3. TFTPD64；
+4. breed.bin - 引導固件
+5. openwrt-ramips-mt7621-mir4-squashfs-factory.bin - OpenWrt固件
+</code></pre></td></tr></table>
+</div>
+</div><p>硬件列表：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1. USB TO TTL 小板一塊（CH340G或CP2102都行）
+2. 杜邦綫3根；
+3. 排針；
+4. 電烙鐵1套；
+5. 焊錫；
+6. 松香；
+7. 螺絲刀；
+</code></pre></td></tr></table>
+</div>
+</div><p>這裏我使用的是CP2102的板子。</p>
+<center><img src = "R4-openwrt_2.png" style="zoom:20%"></img></center>
+<p>以上軟件列表可從<a href="R4-openwrt-tools.rar">這裏</a>下載。</p>
+<h2 id="拆機">拆機</h2>
+<ol>
+<li>先將路由器背面標簽紙下的螺絲移除，再沿著路由器邊將卡扣打開。</li>
+</ol>
+<center><img src = "R4-openwrt_3.png" style="zoom:20%"></img></center>
+<ol start="2">
+<li>移除下圖藍色框内的兩個螺絲，以及綠框中2.4GHz天綫和橙色框中5GHz天綫，這樣就能將主板整個拆下。</li>
+<li>在下圖紅框中有四個排針孔，爲了以後調試方便，我直接焊了四根排針，四根排針的端口分別為(從上到下): TX、GND、RX和空。其實在排針下方就有標記。</li>
+</ol>
+<center><img src = "R4-openwrt_1.png" style = "zoom:50%"></img></center>
+<ol start="4">
+<li>至此，拆機部分就完成了。</li>
+</ol>
+<h2 id="showtime">ShowTime</h2>
+<h3 id="啓動路由器uboot命令行模式">啓動路由器UBOOT命令行模式</h3>
+<ol>
+<li>將焊接好的排針用杜邦綫與TTL小板連接，連接順序如下：</li>
+</ol>
+<ul>
+<li>路由器上TX脚連接TTL板上的RX脚；</li>
+<li>路由器上RX脚連接TTL板上的TX脚；</li>
+<li>路由器上GND脚連接TTL板上的GND脚；</li>
+</ul>
+<ol start="2">
+<li>TTL板連接電腦，路由器通電。</li>
+<li>電腦中打開<code>設備管理器</code>查看TTL小板的串口號；</li>
+<li>打開<code>Putty</code>，選擇串口連接；修改TTL對應的端口號；速率改爲115200；打開。之後就能在<code>Putty</code>上看到路由輸出的一些信息了。</li>
+</ol>
+<center><img src = "R4-openwrt_4.png"></img></center>
+<ol start="5">
+<li>按著路由器上<code>Reset</code>按鈕重置路由器，鬆開后，在<code>Putty</code>界面狂按數字$4$。</li>
+<li>之後會進入UBOOT命令行模式，按順序輸入下面兩條指令</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">setenv uart_en 1
+saveenv
+</code></pre></td></tr></table>
+</div>
+</div><ol start="7">
+<li>之後會出現如下提示，就説明成功了。</li>
+</ol>
+<center><img src = "R4-openwrt_5.png"></img></center>
+<h3 id="刷入breed引導固件">刷入Breed引導固件</h3>
+<ol>
+<li>網綫連接路由器，在電腦端配置固定ip為<code>192.168.31.2</code>（我使用默認網段）</li>
+<li>打開<code>tftpd.exe</code>，在<code>current directory</code>中配置<code>breed.bin</code>放置的文件夾；</li>
+</ol>
+<center><img src = "R4-openwrt_6.png"></img></center>
+<ol start="3">
+<li>路由器斷電后重新上電；</li>
+<li>瘋狂按數字$9$，但看到下圖中紅框内提示即可，否則重來；</li>
+</ol>
+<center><img src = "R4-openwrt_7.png"></img></center>
+<ol start="5">
+<li>接著在<code>tftpd.exe</code>窗口將<code>Server interfaces</code>選擇為路由器網關地址；在<code>Putty</code>中按下面方式輸入：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">9: System Load Boot Loader then write to Flash via TFTP. 
+ Warning!! Erase Boot Loader in Flash then burn new one. Are you sure?(Y/N)
+ Please Input new ones /or Ctrl-C to discard
+        Input device IP (192.168.31.1) ==:192.168.31.1(這裏填網關地址)
+        Input server IP (192.168.31.33) ==:192.168.31.2（這裏填電腦上配置的固定ip地址）
+        Input Uboot filename (uboot.bin) ==:breed.bin（填寫breed固件文件名）
+</code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>回車，這時候就開始輸入breed引導固件，但出現下面提示則説明刷入成功。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">TFTP from server 192.168.31.2; our IP address is 192.168.31.1
+Filename &#39;breed.bin&#39;.
+
+ TIMEOUT_COUNT=10,Load address: 0x80100000
+Loading: Got ARP REPLY, set server/gtwy eth addr (00:xx:xx:xx:xx:xx)
+Got it
+#####################
+done
+Bytes transferred = 105490 (19c12 hex)
+LoadAddr=80100000 NetBootFileXferSize= 00019c12
+..ranand_erase: start:0, len:20000 
+.(5192)offs=0 piece=0 piece_size=105490 rc=0
+Done!
+</code></pre></td></tr></table>
+</div>
+</div><ol start="7">
+<li>之後路由器會重啓，在出現如下提示時，按任意鍵。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Boot and Recovery Environment for Embedded Devices
+Copyright (C) 2018 HackPascal &lt;hackpascal@gmail.com&gt;
+Build date 2018-12-29 [git-135bed9]
+Version 1.1 (r1266)
+
+DRAM: 128MB
+Platform: MediaTek MT7621A ver 1, eco 3
+Board: Xiaomi R3G
+Clocks: CPU: 880MHz, DDR: 1200MHz, Bus: 293MHz, Ref: 40MHz
+Environment variables @ 00060000 on flash bank 0, size 00020000
+Flash: Toshiba NAND 128MiB 3.3V 8-bit (128MB) on mt7621-nfi.0
+mt7621-nfi.0: Found Fact BBT at block 1023 (offset 0x07fe0000)
+mt7621-nfi.0: Block 768 (offset 0x06000000) is marked as bad block in Fact BBT
+rt2880-eth: MAC address from EEPROM is invalid, using default settings.
+rt2880-eth: Using MAC address 00:0c:43:00:00:01
+eth0: MediaTek MT7530 Gigabit switch
+
+Network started on eth0, inet addr 192.168.1.1, netmask 255.255.255.0
+
+Press any key to interrupt autoboot ... 4
+</code></pre></td></tr></table>
+</div>
+</div><ol start="8">
+<li>將電腦端ip改回自動獲取，打開瀏覽器輸入<code>192.168.1.1</code>，如果出現下面界面説明<code>breed</code>引導成功。</li>
+</ol>
+<center><img src = "R4-openwrt_9.png"></img></center>
+<ol start="9">
+<li>至此，刷入<code>openwrt</code>固件的前期準備工作完成。之後操作就非常簡單了。</li>
+</ol>
+<h3 id="刷入openwrt">刷入OpenWrt</h3>
+<p>Openwrt固件可以在網上搜索到，也可自行編譯，建議自行編譯，因爲Openwrt源碼中可以支持小米路由器4的MT7261平臺，自行編譯可以根據需求選擇默認安裝的插件。這裏提供一個別人編譯好的<a href="https://www.right.com.cn/forum/thread-772270-1-1.html">openwrt固件</a>，親測算比較好的，但是還是有一個缺點（V2Ray的url無法配置，所以之後我會自行編譯一個固件放出）。下面先開始刷入這個固件吧。</p>
+<ol>
+<li>先備份現有固件，裏面有EEEROM和固件兩個，都要備份（之前看了一篇博文介紹原因，現在找不到了，等找到后貼上，但是最重要的一句話就是&quot;一定要先備份&quot;）。</li>
+<li>備份結束后就可以更新固件了，直接上傳固件，重啓路由器，見證奇跡吧！</li>
+</ol>
+<p>網上有的博文說刷入OpenWrt后會有地址問題，但我沒有遇到所以也就不詳細説了。另外自行編譯openwrt固件也非常簡單，網上教程很多，唯一注意的就是編譯時的網絡環境有要求。</p>
+<p>最後看看刷入的Openwrt後臺管理界面。</p>
+<center><img src = "R4-openwrt_10.png"></img></center>
+<h2 id="參考博文">參考博文</h2>
+<p>感謝各位大神提供的方法和固件。本博文參考以下幾篇博文完成。</p>
+<p>[1] <a href="https://zhuanlan.zhihu.com/p/56317023">小米路由器4刷breed, pandavan，openwrt</a></p>
+<p>[2] <a href="https://blog.csdn.net/ZeroSO/article/details/105333454">小米路由器R4 TTL刷不死Bread第三方固件写入升级</a></p>
+<p>[3] <a href="https://parrotsec-cn.org/t/4-openwrt/2758">小米路由器4 刷Openwrt踩坑记录 (未完待续…)</a></p>
+<p>[4] <a href="https://www.right.com.cn/forum/thread-772270-1-1.html">小米路由4 R4 OpenWrt 固件</a></p>
+<p>[5] <a href="https://www.right.com.cn/forum/thread-1141988-1-1.html">[AX3PRO] 第三方openwrt小米路由器系列固件 R3G R4 R3Pro mini</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-03-21
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/router/">Router</a>
+          <a href="/tags/openwrt/">OpenWrt</a>
+          <a href="/tags/%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A8/">小米路由器</a>
+          <a href="/tags/breed%E5%BC%95%E5%B0%8E/">Breed引導</a>
+          <a href="/tags/%E5%88%B7%E6%A9%9F/">刷機</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch18-Light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列 Ch18-Light-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

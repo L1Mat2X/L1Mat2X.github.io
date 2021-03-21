@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列 Ch18-Light-閲讀筆記 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="本章節介紹測量光綫的一個工具 —— Radiometry，該工具對於計算機圖形學來説非常重要。本章節還包含Photometry，它用於量化Radiometry，並通過縮放來估計有多少“有用”的光綫。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch18-Light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列 Ch18-Light-閲讀筆記" />
+<meta property="og:description" content="本章節介紹測量光綫的一個工具 —— Radiometry，該工具對於計算機圖形學來説非常重要。本章節還包含Photometry，它用於量化Radiometry，並通過縮放來估計有多少“有用”的光綫。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch18-Light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-02-25T09:17:56&#43;08:00" />
+<meta property="article:modified_time" content="2021-02-25T09:17:56&#43;08:00" />
+
+<meta itemprop="name" content="圖形學系列 Ch18-Light-閲讀筆記">
+<meta itemprop="description" content="本章節介紹測量光綫的一個工具 —— Radiometry，該工具對於計算機圖形學來説非常重要。本章節還包含Photometry，它用於量化Radiometry，並通過縮放來估計有多少“有用”的光綫。"><meta itemprop="datePublished" content="2021-02-25T09:17:56&#43;08:00" />
+<meta itemprop="dateModified" content="2021-02-25T09:17:56&#43;08:00" />
+<meta itemprop="wordCount" content="5760">
+<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101,Radiometry,BRDF,Transport Equation,Photometry," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列 Ch18-Light-閲讀筆記"/>
+<meta name="twitter:description" content="本章節介紹測量光綫的一個工具 —— Radiometry，該工具對於計算機圖形學來説非常重要。本章節還包含Photometry，它用於量化Radiometry，並通過縮放來估計有多少“有用”的光綫。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列 Ch18-Light-閲讀筆記</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-02-25 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            </div>
+          <span class="more-meta"> 5760 words </span>
+          <span class="more-meta"> 12 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#181-radiometry">18.1 Radiometry</a>
+          <ul>
+            <li><a href="#1811-photons---光子">18.1.1 Photons - 光子</a></li>
+            <li><a href="#1812-spectral-energy---光譜能量">18.1.2 Spectral Energy - 光譜能量</a></li>
+            <li><a href="#1813-power---功率">18.1.3 Power - 功率</a></li>
+            <li><a href="#1814-solid-angle---立體角">18.1.4 Solid angle - 立體角</a></li>
+            <li><a href="#1815-differential-solid-angle---微分立體角">18.1.5 Differential Solid Angle - 微分立體角</a></li>
+            <li><a href="#1816-radiant-intensity---輻射强度">18.1.6 Radiant Intensity - 輻射强度</a></li>
+            <li><a href="#1817-spectral-intensity---光譜强度">18.1.7 Spectral Intensity - 光譜强度</a></li>
+            <li><a href="#1818-irradiance---輻射照度">18.1.8 Irradiance - 輻射照度</a></li>
+            <li><a href="#1819-spectral-irradiance---光譜輻射照度">18.1.9 Spectral Irradiance - 光譜輻射照度</a></li>
+            <li><a href="#18110-radiance---輻射率">18.1.10 Radiance - 輻射率</a></li>
+            <li><a href="#18111-spectral-radiance---光譜輻射率">18.1.11 Spectral Radiance - 光譜輻射率</a></li>
+            <li><a href="#18112-radiance-and-other-radiometric-quantities">18.1.12 Radiance and Other Radiometric Quantities</a></li>
+            <li><a href="#18113-brdf">18.1.13 BRDF</a></li>
+          </ul>
+        </li>
+        <li><a href="#182-transport-equation">18.2 Transport Equation</a></li>
+        <li><a href="#183-photometry">18.3 Photometry</a></li>
+        <li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+        <li><a href="#聲明">聲明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>本章節介紹測量光綫的一個工具 —— <code>Radiometry</code>，該工具對於計算機圖形學來説非常重要。本章節還包含<code>Photometry</code>，它用於量化Radiometry，並通過縮放來估計有多少“有用”的光綫。</p>
+<h2 id="181-radiometry">18.1 Radiometry</h2>
+<p>本節有許多術語與概念，無論從英文還是中文翻譯上看這些術語都很容易搞混。本節中使用的單位均爲國際標準單位，例如<code>meter(m)</code>和<code>gram(g)</code>。另外説明，本章節内容與原書框架一樣，但會補充Games101課程上提到的一些概念。</p>
+<h3 id="1811-photons---光子">18.1.1 Photons - 光子</h3>
+<p>大家都知道，光具有波粒二象性，在這裏，我們將光纖看著由許許多多的光子組成的。爲了便於理解，本章節中的光子都是指具有一定位置和傳播方向的粒子，波長為$\lambda$，波長單位為$[nm]$，有時也用$[\dot{A}]埃$表示，$1nm = 10 \dot{A}$。</p>
+<p>光子的速度$c$通常與其所在的傳播介質有關，無論是波長$\lambda$還是速度$c$，都受到傳播介質的影響，因此定義頻率$f = c/\lambda$用於表徵光子的特性，頻率$f$不受傳播介質影響。另一個不受影響的量就是光子所携帶的能量$q$，其計算方式如下：
+$$
+q = hf = h\frac{c}{\lambda}
+$$</p>
+<p>其中，$h = 6.63 \times 10^{-34} J s$為<code>Plank</code>常數，單位為焦耳秒。</p>
+<h3 id="1812-spectral-energy---光譜能量">18.1.2 Spectral Energy - 光譜能量</h3>
+<p>假設我們獲取到大量的光子，那麽這些光子構成的總能量為：</p>
+<div>
+$$
+Q = \sum_{i}{q_i}
+$$
+</div>
+<p>從光的波動性角度會問：“能量在各個波長上的分佈是怎樣的？”對這個問題，可以采用直方圖統計的方式進行，將波長範圍按特定區間長度劃分爲多個<code>bin</code>，然後分別統計每個<code>bin</code>中光子的總能即可。另一個更加常用的方式是，將統計出的總能量除以區間大小，我們將該方式計算結果稱爲<code>光譜能量</code>，用$Q_{\lambda}$表示。</p>
+<div>
+$$
+Q_{\lambda} = \frac{\Delta{q}}{\Delta{\lambda}}
+$$
+</div>
+<p>注意，在圖形學中很少使用$Q$，一直都是使用$Q_{\lambda}$，因此在之後提到的能量均指光譜能量$Q_{\lambda}$；但是在Games101課中，并未使用光譜能量這一概念，所以本節會把兩者都列出。</p>
+<h3 id="1813-power---功率">18.1.3 Power - 功率</h3>
+<p>功率的定義是單位時間内產生的能量。在圖形學中的功率也一樣，表示光源產生能量的速率，單位為瓦特$[W]$或焦耳每秒$[J\cdot s^{-1}]$表示。
+$$
+P = \frac{\Delta{q}}{\Delta{t}}
+$$</p>
+<p>相比于傳統功率，在圖形學中更關心的是<code>spectral power（光譜功率）</code>，其單位為$[W(nm)^{-1}]$，計算方式如下：
+$$
+\mathcal{\Phi}_{\lambda} = \frac{\Delta{q}}{\Delta{t}\Delta{\lambda}}
+$$</p>
+<p>圖形學中也經常不使用下表$\lambda$表示。</p>
+<h3 id="1814-solid-angle---立體角">18.1.4 Solid angle - 立體角</h3>
+<p>我們知道，在圓中，角度和弧長、半徑的關係是：
+$$
+\theta = \frac{l}{r}
+$$</p>
+<center><img src = "ch18-angle.png"></img></center>
+<p>而在球體中，可定義立體角爲所對面積與球體半徑平方的比值：
+$$
+\Omega = \frac{A}{r^2}
+$$</p>
+<center><img src = "ch18-solid_angle.png"></img></center>
+<h3 id="1815-differential-solid-angle---微分立體角">18.1.5 Differential Solid Angle - 微分立體角</h3>
+<center><img src = "ch18-differential_solid_angle.png"></img></center>
+<h3 id="1816-radiant-intensity---輻射强度">18.1.6 Radiant Intensity - 輻射强度</h3>
+<p>根據<a href="https://en.wikipedia.org/wiki/Radiant_intensity">Wikipedia定義</a>，<code>Radiant Intensity</code>為單位立體角内的輻射功率（這裏指的非光譜功率），單位為$[\frac{W}{sr}]$或$[\frac{lm}{sr} = cd = candela]$
+$$
+I(\omega) = \frac{\Delta P}{\Delta \omega}
+$$</p>
+<h3 id="1817-spectral-intensity---光譜强度">18.1.7 Spectral Intensity - 光譜强度</h3>
+<p>根據<a href="https://en.wikipedia.org/wiki/Radiant_intensity">Wikipedia定義</a>，<code>Spectral Intensity</code>為每單位頻率或波長的<code>Radiant Intensity</code>，單位爲$[W\cdot sr^{-1}\cdot Hz^{-1}]$。計算方式：</p>
+<div>
+$$
+I_{\lambda}(\omega) = \frac{I(\omega)}{\Delta \lambda} = \frac{\Delta P}{\Delta \lambda\cdot \Delta \omega} \\[3ex]
+\text{或}\\[2ex]
+I_{\lambda}(\omega) = \frac{I(\omega)}{\Delta f} = \frac{\Delta P}{\Delta \lambda \cdot \Delta f}
+$$
+</div>
+<h3 id="1818-irradiance---輻射照度">18.1.8 Irradiance - 輻射照度</h3>
+<p>這個物理量用於描述“在某一點上會有多少光纖到達？”很明顯，回答這個問題一般會使用密度函數。這就推出了<code>Irradiance</code>的<a href="https://en.wikipedia.org/wiki/Irradiance">定義</a>：單位面積上的<code>Radiant Power</code>。單位為$[W\cdot m^{-2}]$。計算方式為：
+$$
+H = \frac{\Delta P}{\Delta A}
+$$</p>
+<h3 id="1819-spectral-irradiance---光譜輻射照度">18.1.9 Spectral Irradiance - 光譜輻射照度</h3>
+<p>與之前光譜强度定義類似，<code>Spectral Irradiance</code>的<a href="https://en.wikipedia.org/wiki/Irradiance">定義</a>為每單位頻率或波長的<code>Irradiance</code>，單位為$[W\cdot m^{-2} \cdot Hz^{-1}]$或$[W\cdot m^{-2}\cdot nm^{-1}]$。計算方式：</p>
+<div>
+$$
+H_{\lambda} = \frac{H}{\Delta \lambda} = \frac{\Delta P}{\Delta A\cdot \Delta \lambda} = \frac{\Delta \Phi_{\lambda}}{\Delta A} \\[3ex]
+\text{或} \\[2ex]
+H_{\lambda} = \frac{H}{\Delta f} = \frac{\Delta P}{\Delta A\cdot \Delta f} 
+$$
+</div>
+<p>注意，儅光綫離開物體表面，例如反射，此時這個量我們稱爲<code>Radiant exitance</code>，用符號$E$或$E_{\lambda}$表示，它們物理含義相同。但是，相同點的<code>Irradiance</code>和<code>Radiant exitance</code>的量通常是不一樣的。</p>
+<h3 id="18110-radiance---輻射率">18.1.10 Radiance - 輻射率</h3>
+<p>儘管<code>Irradiance</code>解釋了有多少光綫到達某一點，但是它并未指定光纖是從哪個方向來的，而某個特定方向來的光綫量通常也是我們會關心的，因此有了<code>Radiance</code>的定義。根據<a href="https://en.wikipedia.org/wiki/Radiance">Wikipedia</a>的定義，單位立體角單位投影面積的輻射功率。單位為$[W\cdot sr^{-1}\cdot m^{-2}]$。計算方式如下：
+$$
+L = \frac{\Delta H}{\Delta \omega}
+$$</p>
+<p>現實中，我們會采用下面這種裝置進行測量。該裝置由<code>irradiance</code>測量器和張角為$\Delta \sigma$的圓錐形調節器構成。</p>
+<center><img src = "figure18.1.png"></img></center>
+<p>在圖形學中，輻射率是經常計算的量，因爲它不隨空間距離變化。例如下圖，被采樣表面積與距離的平方成正比，到達檢測器的光綫與距離的平方成反比，所以兩個檢測器的讀數是一致的。</p>
+<center><img src = "figure18.2.png"></img></center>
+<p>另外，注意定義中的單位投影面積，實際中，檢測器通常與被測表面不會100%成投影關係，之間相差一個校正因子$\cos{\theta}$。如下圖所示。所以在計算輻射率時，要將該校正項加上。</p>
+<center><img src = "figure18.3.png"></img></center>
+$$
+L = \frac{\Delta H}{\Delta \omega \cdot \cos{\theta}}
+$$
+<p>最後注意，在使用過程中，我們通常會將離開某個表面的輻射率稱爲<code>surface radiance(表面輻射率)</code>，用$L_s$表示。把某個表面的輸入輻射率稱爲<code>field radiance(場輻射率)</code>，用$L_f$表示。</p>
+<div>
+$$
+L_s = \frac{\Delta E}{\Delta \omega \cos{\theta}} \\[3ex]
+L_f = \frac{\Delta H}{\Delta \omega \cos{\theta}}
+$$
+</div>
+<h3 id="18111-spectral-radiance---光譜輻射率">18.1.11 Spectral Radiance - 光譜輻射率</h3>
+<p>與其他光譜量定義類似，<a href="https://en.wikipedia.org/wiki/Radiance">Spectral Radiance</a>定義爲每單位頻率或每單位波長的<code>Radiance</code>。單位爲$[W\cdot sr^{-1}\cdot m^{-2}\cdot Hz^{-1}]$或$[W\cdot sr^{-1}\cdot m^{-2}\cdot nm^{-1}]$。計算方式：
+$$
+L_{\lambda} = \frac{L}{\Delta \lambda} \<br>
+L_{v} = \frac{L}{\Delta v}
+$$</p>
+<p>注意，這裏用$v$表示頻率，否則會與<code>場輻射率</code>表示混淆。</p>
+<p>至此，輻射度量學的一些基本量就介紹完畢，下面是這些量的總結。</p>
+<center><img src = "ch18-radiometry_summary.png"></img></center>
+<p>再放一張<code>Radiant Intensity</code>、<code>Irradiance</code>和<code>Radiance</code>的對比圖，一開始這三個量太容易搞混了。</p>
+<center><img src = "ch18-important_light_measurements_of_interest.png"></img></center>
+<h3 id="18112-radiance-and-other-radiometric-quantities">18.1.12 Radiance and Other Radiometric Quantities</h3>
+<p>假設已知表面的<code>field radiance</code>，那麽其他輻射度量學的物理量都能通過該量獲得，這就是爲什麽<code>radiance</code>被認爲是輻射度量學量的基礎。例如，下圖中的<code>irradiance</code>可以通過如下方式計算：</p>
+<center><img src = "figure18.4.png"></img></center>
+$$
+H = \int_{\text{all } k}L_f(k)\cos{\theta}d\sigma
+$$
+<p>接著上面這個例子，假設從各個方向來的<code>field radiance</code>不變，利用經典球坐標係表示微分立體角$d\sigma$：
+$$
+d\sigma \equiv \sin{\theta}d\theta d\phi
+$$</p>
+<p>那麽，<code>irradiance</code>可表示成：</p>
+<div>
+$$
+\begin{align}
+H &= \int_{\phi = 0}^{2\pi}\int_{\theta = 0}^{\frac{\pi}{2}}L_f \cos{\theta}\sin{\theta}d\theta d\phi \\[2ex]
+&= \pi L_f
+\end{align}
+$$
+</div>
+<p>注意上面結果中的因子$\pi$，這個因子在輻射度量學中會經常出現，并且是我們選擇如何測量立體角的產物。例如，單位球面積的倍數是$\pi$而不是$1$。</p>
+<p>同理，我们可以计算某个面上的<code>Power</code>。
+$$
+\Phi = \int_{\text{all }x}H(x)dAv
+$$</p>
+<h3 id="18113-brdf">18.1.13 BRDF</h3>
+<p>這玩意看全稱<code>Bidirectional Reflectance Distribution Function(雙向反射分佈函數)</code>還挺唬人的，其實就是用一個函數來表徵入射光綫經過物體表面后如何被反射走的，本質上也是表徵了物體表面的特徵。直覺上，假設入射光綫來自某個方向$k_i$，在出射方向$k_o$上會有一個立體角的散射。基於這種現象，我們采用下面方式進行<code>BRDF</code>的測定。</p>
+<center><img src = "figure18.5.png"></img></center>
+<p>我們將測定的量用比值形式刻畫。其中$H$表示位置$k_i$上的<code>Irradiance</code>，$L_s$表示方向$k_o$上的<code>field radiance</code>。這樣在所有方向對上進行測量后就可以得到一個$4$維函數$\rho(k_i, k_o)$。這個函數就被稱爲<code>BRDF</code>，它刻畫物體表面反射光綫的方向性質。
+$$
+\rho = \frac{L_s(k_o)}{H(k_i)}
+$$</p>
+<h4 id="directional-hemispherical-reflectance">Directional Hemispherical Reflectance</h4>
+<p>有了<code>BRDF</code>后，就會想知道“入射光綫有多少被反射？”顯然這個問題並不好回答，因爲這還和入射光綫的方向分佈有關。但是可以簡化這個問題，我們只考慮某個方向$k_i$上的反射部分，這部分被稱爲<code>directional hemispherical reflectance(半球方向反射係數)</code>，記爲$R(k_i)$。
+$$
+R(k_i) = \frac{\text{所有出射方向上的功率 }k_o}{\text{方向}k_i\text{上的功率}}
+$$</p>
+<p>假設我們考慮入射功率$\Phi_i$作用在一小塊面積$\Delta A$上，那麽可以將$R(k_i)$轉換爲<code>radiant exitance</code>和<code>irradiance</code>的比值。
+$$
+R(k_i) = \frac{E(k_o)}{H(k_i)}
+$$</p>
+<p>根據能量守恆，$R(k_i)$取值範圍為$0~1$。下面推導$R(k_i)$與<code>BRDF</code>之間的關係。</p>
+<p>根據<code>BRDF</code>的定義：
+$$
+L(k_o) = H(k_i)\rho(k_i, k_o) \tag{18.1}
+$$</p>
+<p>由<code>Radiance</code>的定義，
+$$
+L(k_o) = \frac{\Delta E}{\Delta \sigma_{o} \cos{\theta_o}} \tag{18.2}
+$$</p>
+<p>其中$E$表示在方向$k_o$上某一小區域的<code>radiant exitance</code>。有公式(18.1)和公式(18.2)可知。
+$$
+H(k_i)\rho(k_i, k_o) = \frac{\Delta E}{\Delta \sigma_{o} \cos{\theta_o}}
+$$</p>
+<p>整理可得：
+$$
+\frac{\Delta E}{H} = \rho(k_i,k_o)\Delta \sigma_{o}\cos{\theta}_o
+$$</p>
+<p>該式表示某個出射方向$k_o$與入射方向$k_i$的<code>irradiance</code>比率關係。根據$R(k_i)$定義，要計算所有出射方向上的功率，所以$R(k_i)$的積分形式如下：
+$$
+R(k_i) = \int_{\text{all }k_o}\rho(k_i,k_o)\cos{\theta_o}d\sigma_o
+$$</p>
+<p>這樣就將<code>BRDF</code>與半球方向反射係數聯係起來了。</p>
+<h4 id="ideal-diffuse-brdf">Ideal Diffuse BRDF</h4>
+<p>對於理想的漫反射模型<code>Lambertian</code>，它的<code>BRDF</code>值在每個方向對上都是相同的，因此可以用一個常量表示$\rho = C$，這也意味著在任意觀測方向上，物體表面的<code>radiance</code>是相同的。如果我們計算$R(k_i)$，那麽：</p>
+<div>
+$$
+\begin{align}
+R(k_i) &= \int_{\text{all }k_o}C\cos{\theta_o}d{\sigma_o}\\[2ex]
+&= \int_{\phi_o=0}^{2\pi}\int_{\theta_o = 0}^{\frac{\pi}{2}}C\cos{\theta_o}\sin{\theta_o}d{\theta_o}d{\phi_o}\\[2ex]
+&= \pi C
+\end{align}
+$$
+</div>
+<p>這個公式中可以看出，對於理想的<code>Lambertian</code>反射表面($R = 1$)，則$\rho = \frac{1}{\pi}$。那麽對於一般的<code>Lambertian</code>表面($R = r$)，其<code>BRDF</code>值為：
+$$
+\rho(k_i, k_o) = \frac{r}{\pi}
+$$</p>
+<p>這個關係也從側面證實了在使用球面坐標系時，縮放因子一般是$\pi$的倍數而不是$1$。</p>
+<h2 id="182-transport-equation">18.2 Transport Equation</h2>
+<p>根據<code>BRDF</code>定義，它的形式并不直觀，我們可以將其寫成只有<code>radiance</code>項的形式。假設我們能夠獲得某個立體角$\Delta \sigma_i$下的<code>radiance</code>$L_i$，并且能測出$k_o$方向上的反射<code>radiance</code>$L_o$，如下圖所示，那麽我們就能將<code>BRDF</code>寫成如下形式。
+$$
+\rho = \frac{L_o}{L_i\cos{\theta_i}\Delta{\sigma_i}}
+$$</p>
+<center><img src = "figure18.6.png"></img></center>
+<p>重新整理可得一個小部分的<code>radiance</code>形式：
+$$
+\Delta{L_o} = \rho(k_i, k_o)L_i\cos{\theta_i}\Delta{\sigma_i}
+$$</p>
+<p>由於入射光綫可以從任意方向來，所以計算結果需要對所有入射方向光纖進行積分。
+$$
+L_s(k_o) = \int_{\text{all }k_i} \rho(k_i, k_o)L_f(k_i)\cos{\theta_i}d\sigma_i \tag{18.3}
+$$</p>
+<p>這樣得到的等式在圖形學中稱爲<code>rendering equation(渲染方程)</code>。</p>
+<p>等式(18.3)表示從光源來的光綫，但是實際情況下，其他物體表面也有可能會反射出光纖到達觀測點，如下圖所示，觀測點$x$在$k_i$上接收到了從$x'$反射來的光纖，那麽此時這條光纖的$L_f(k_i)$就要表示爲$L_s(-k_i)$，其立體角可用如下方式計算。
+$$
+\Delta{\sigma_i} = \frac{\Delta{A'}\cos{\theta'}}{||x-x'||^2}
+$$</p>
+<p>其中，$\Delta{A'}$是與$x'$關聯的面積。</p>
+<center><img src = "figure18.7.png"></img></center>
+<p>將$\Delta{\sigma'}$帶入公式(18.3)可得：</p>
+<div>
+$$
+L_s(x,k_o) = \int_{\text{all }x'\text{ visible to }x}\frac{\rho(k_i,k_o)L_s(x',x-x')\cos{\theta_i}\cos{\theta'}}{||x-x'||^2}dA' \tag{18.4}
+$$
+</div>
+<p>這裏，我們使用非歸一化向量$x-x'$表示從$x'$到$x$的方向，同樣，我們將$L_s$改寫成關於位置和方向的函數。對於公式(18.4)依然有不足，就是積分域不好確定，因此這裏定義一個指示函數。</p>
+<div>
+$$
+v(x, x') = \begin{cases}
+1, &\text{if }x\text{ and }x'\text{ are mutually visible},\\
+0 &\text{otherwise.}
+\end{cases}
+$$
+</div>
+<p>渲染方程可改寫為
+$$
+L_s(x, k_o)= \int_{\text{all }x'}\frac{\rho(k_i, k_o)L_s(x', x-x')v(x,x')\cos{\theta_i}\cos{\theta'}}{||x-x'||^2}dA' \tag{18.5}
+$$</p>
+<p>下面接著這個方程説事。以下内容來自課程Games-101。</p>
+<p>公式(18.5)反映了某個觀測點$x$反射了其他所有位置$x'$來的光纖，但是觀測點$x$本身可能也會向外輻射光纖，所以渲染方程的形式可寫爲：
+$$
+L_r(x, k_o) = L_e(x,k_o) + L_s(x, k_o)\tag{18.6}
+$$</p>
+<p>等式(18.6)展开后是第二类Fredholm积分形式（Ps：这是啥？不懂，但不影响后面理解）。在数值计算中，可以将其写成标准化形式：
+$$
+I(u) = E(u) + I(v)K(u,v)dv\tag{18.7}
+$$</p>
+<p>其中$E(u)$就对应$L_e(x, k_o)$项，$I(v)$對應公式(18.5)中的$L_s(x', x-x')$項，$K(u,v)dv$對應公式(18.5)中剩餘的積分項$\frac{\rho(k_i, k_o)\cos{\theta_i}\cos{\theta'}}{||x-x'||^2}dA'$。繼續簡化，假設物體自身向外輻射的<code>irradiance</code>相同，那麽上面等式(18.7)可簡化成
+$$
+L_n = E + KL_{n-1}\tag{18.8}
+$$</p>
+<p>等式(18.8)是個遞歸形式，其中$n$表示了光纖從發光體出發后彈射次數。將這個等式展開可得
+$$
+L_n = E + KE + K^2E + K^3E + \cdots\tag{18.9}
+$$</p>
+<p>等式(18.9)就是<code>Ray Tracing</code>的本質，其中各項的物理含義如下</p>
+<center><img src = "ch18-ray_tracing_equation.png"></img></center>
+<p>就説妙不妙吧！！！！</p>
+<h2 id="183-photometry">18.3 Photometry</h2>
+<p>對於每一個<code>spectral radiometric quantity(光譜輻射度量量)</code>，都有一個相對應的<code>photometric quantity(光度度量量)</code>來衡量有多少輻射率對人眼有效。假設給定一個光譜輻射度量量$f_r(\lambda)$，相對應的光度度量量$f_p$可表示爲：
+$$
+f_p = 683\frac{lm}{W}\int_{\lambda = 380 nm}^{800nm} \bar{y}(\lambda)f_r(\lambda)d\lambda
+$$</p>
+<p>其中，$\bar{y}$表示人類視覺系統的<code>luminous efficiency function(發光效率函數)</code>。常量$683$是爲了讓定義與歷史上的絕對光度測定量保持一致。</p>
+<p>對於人眼來説，函數$\bar{y}(\lambda)$在各個波長上是不同的，如下圖所示。低於$380 \ nm$波長的光是無法被人眼看到的，此時，$\bar{y} = 0$。在波長$\lambda = 555 \ nm$達到峰值，這波長是純綠色的光。之後逐漸降低直到紅外區域邊界$\lambda = 800 \ nm$処。</p>
+<center><img src = "figure18.8.png"></img></center>
+<p>計算機圖形學中最常用的光度測定量是亮度，其光度測定量為
+$$
+Y = 683 \frac{lm}{W}\int_{\lambda = 380 \ nm}^{800 \ nm}\bar{y}(\lambda)L(\lambda)d\lambda
+$$</p>
+<p>該量表示一個物體有多亮，單位為流明$lm$。而實際使用中，通常要結合所消耗的功率，例如燈泡，燈泡的效率越高，產生的光纖就越多，其$\bar{y}$也越大，從而每瓦特所產生的流明也越多。從而亮度單位就是$\frac{lm}{W}\cdot \frac{W}{(m^2sr)} = \frac{lm}{m^2sr}$，其中每單位立體角内的流明量被定義爲<code>candela(坎德拉, cd)</code>，因此亮度單位通常采用$\frac{cd}{m^2}$。</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<center><img src = "ch18-frequently_asked_questions.png"></img></center> 
+<h2 id="聲明">聲明</h2>
+<p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-02-25
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/computer-graphic/">Computer Graphic</a>
+          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
+          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
+          <a href="/tags/games101/">Games101</a>
+          <a href="/tags/radiometry/">Radiometry</a>
+          <a href="/tags/brdf/">BRDF</a>
+          <a href="/tags/transport-equation/">Transport Equation</a>
+          <a href="/tags/photometry/">Photometry</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2021-03-21-%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt/%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F%E7%B3%BB%E5%88%97-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt%E5%9B%BA%E4%BB%B6.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">豐衣足食系列-小米路由器4刷OpenWrt固件</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch12-Data%20Structures%20for%20Graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列 Ch12-Data Structures for Graphics-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

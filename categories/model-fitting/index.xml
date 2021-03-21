@@ -6,17 +6,13 @@
     <description>Recent content in Model Fitting on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 Aug 2019 10:16:57 +0800</lastBuildDate>
-    
-	<atom:link href="https://blog.matrixs.site/categories/model-fitting/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 20 Aug 2019 10:16:57 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/categories/model-fitting/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ellipse Fitting</title>
-      <link>https://blog.matrixs.site/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</link>
+      <link>https://blog.matrixs.site/post/2019-08-20_Ellipse_Fitting/Ellipse%20Fitting.html</link>
       <pubDate>Tue, 20 Aug 2019 10:16:57 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</guid>
+      <guid>https://blog.matrixs.site/post/2019-08-20_Ellipse_Fitting/Ellipse%20Fitting.html</guid>
       <description>橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。</description>
     </item>
     

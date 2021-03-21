@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="本章节介绍第二种（第一种是第四章中的ray tracing）渲染方式：逐个将物体绘制到屏幕上。两者的不同在于：ray tracing是每个像素会被哪些几何图元影响，而本章节中的渲染方式是每个几何图元影响哪些像素。这种处理几何图元占据图像像素的过程称为光栅化，这种对物体逐个光栅化的过程称为光柵化渲染。這種起始於物體，終止于圖像像素更新的流程稱爲圖形化管綫(graphic pipeline)。本章先從光柵化開始，在介紹其前後的流程分別如何進行的。Graphic pipeline整個過程如下圖所示。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch8-the%20Graphic%20Pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記" />
+<meta property="og:description" content="本章节介绍第二种（第一种是第四章中的ray tracing）渲染方式：逐个将物体绘制到屏幕上。两者的不同在于：ray tracing是每个像素会被哪些几何图元影响，而本章节中的渲染方式是每个几何图元影响哪些像素。这种处理几何图元占据图像像素的过程称为光栅化，这种对物体逐个光栅化的过程称为光柵化渲染。這種起始於物體，終止于圖像像素更新的流程稱爲圖形化管綫(graphic pipeline)。本章先從光柵化開始，在介紹其前後的流程分別如何進行的。Graphic pipeline整個過程如下圖所示。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch8-the%20Graphic%20Pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-03T19:08:03&#43;08:00" />
+<meta property="article:modified_time" content="2020-09-03T19:08:03&#43;08:00" />
+
+<meta itemprop="name" content="圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記">
+<meta itemprop="description" content="本章节介绍第二种（第一种是第四章中的ray tracing）渲染方式：逐个将物体绘制到屏幕上。两者的不同在于：ray tracing是每个像素会被哪些几何图元影响，而本章节中的渲染方式是每个几何图元影响哪些像素。这种处理几何图元占据图像像素的过程称为光栅化，这种对物体逐个光栅化的过程称为光柵化渲染。這種起始於物體，終止于圖像像素更新的流程稱爲圖形化管綫(graphic pipeline)。本章先從光柵化開始，在介紹其前後的流程分別如何進行的。Graphic pipeline整個過程如下圖所示。
+"><meta itemprop="datePublished" content="2020-09-03T19:08:03&#43;08:00" />
+<meta itemprop="dateModified" content="2020-09-03T19:08:03&#43;08:00" />
+<meta itemprop="wordCount" content="7847">
+<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記"/>
+<meta name="twitter:description" content="本章节介绍第二种（第一种是第四章中的ray tracing）渲染方式：逐个将物体绘制到屏幕上。两者的不同在于：ray tracing是每个像素会被哪些几何图元影响，而本章节中的渲染方式是每个几何图元影响哪些像素。这种处理几何图元占据图像像素的过程称为光栅化，这种对物体逐个光栅化的过程称为光柵化渲染。這種起始於物體，終止于圖像像素更新的流程稱爲圖形化管綫(graphic pipeline)。本章先從光柵化開始，在介紹其前後的流程分別如何進行的。Graphic pipeline整個過程如下圖所示。
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-03 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            </div>
+          <span class="more-meta"> 7847 words </span>
+          <span class="more-meta"> 16 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#81-rasterization">8.1 Rasterization</a>
+          <ul>
+            <li><a href="#811-繪製直綫">8.1.1 繪製直綫</a></li>
+            <li><a href="#812-三角形光柵化">8.1.2 三角形光柵化</a></li>
+            <li><a href="#813-clipping">8.1.3 Clipping</a></li>
+            <li><a href="#方法1--clipping-before-the-transform">方法1:  Clipping Before the Transform</a></li>
+            <li><a href="#方法2-clipping-in-homogeneous-coordinate">方法2: Clipping in Homogeneous Coordinate</a></li>
+            <li><a href="#816-clipping-against-a-plane">8.1.6 Clipping against a Plane</a></li>
+          </ul>
+        </li>
+        <li><a href="#82-operations-before-and-after-rasterization">8.2 Operations Before and After Rasterization</a>
+          <ul>
+            <li><a href="#821-simple-2d-drawing">8.2.1 Simple 2D Drawing</a></li>
+            <li><a href="#822-a-minimal-3d-pipeline">8.2.2 A Minimal 3D pipeline</a></li>
+            <li><a href="#823-using-a-z-buffer-for-hidden-surface">8.2.3 Using a Z-Buffer for Hidden Surface</a></li>
+            <li><a href="#824-per-vertex-shading">8.2.4 Per-vertex Shading</a></li>
+            <li><a href="#825-per-fragment-shading">8.2.5 Per-fragment Shading</a></li>
+            <li><a href="#補充flat-shading">補充：Flat Shading</a></li>
+            <li><a href="#826-texture-mapping">8.2.6 Texture Mapping</a></li>
+            <li><a href="#827-shading-frequency">8.2.7 Shading Frequency</a></li>
+          </ul>
+        </li>
+        <li><a href="#83-simple-antialiasing">8.3 Simple Antialiasing</a></li>
+        <li><a href="#84-culling-primitives-for-efficiency">8.4 Culling Primitives for Efficiency</a>
+          <ul>
+            <li><a href="#841-view-volume-culling">8.4.1 View Volume Culling</a></li>
+            <li><a href="#842-backface-culling">8.4.2 Backface Culling</a></li>
+          </ul>
+        </li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#聲明">聲明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>本章节介绍第二种（第一种是第四章中的<code>ray tracing</code>）渲染方式：逐个将物体绘制到屏幕上。两者的不同在于：<code>ray tracing</code>是<strong>每个像素</strong>会被哪些几何图元影响，而本章节中的渲染方式是<strong>每个几何图元</strong>影响哪些像素。这种处理几何图元占据图像像素的过程称为<strong>光栅化</strong>，这种对物体逐个光栅化的过程称为<strong>光柵化渲染</strong>。這種起始於物體，終止于圖像像素更新的流程稱爲<strong>圖形化管綫(graphic pipeline)</strong>。本章先從光柵化開始，在介紹其前後的流程分別如何進行的。<code>Graphic pipeline</code>整個過程如下圖所示。</p>
+<center><img src = "figure8.1.png" style = "zoom:70%"></img></center>
+<h2 id="81-rasterization">8.1 Rasterization</h2>
+<p><code>Rasterization</code>是整個<code>Graphic pipeline</code>的核心操作，之所以是核心，是因爲它將幾何圖元的數學表示轉換爲像素表示（這是個人理解）。<code>Rasterizer</code>需要完成兩個任務：一個是枚舉出覆蓋輸入圖元的所有像素；另一個就是對圖元的屬性進行插值。</p>
+<h3 id="811-繪製直綫">8.1.1 繪製直綫</h3>
+<h4 id="隱式直綫方程表示">隱式直綫方程表示</h4>
+<p>假设直线上有两点$(x_0, y_0)$和$(x_1, y_1)$，该直线的隐式表达如下：
+$$
+f(x, y) \equiv (y_0 - y_1)*x + (x_1 - x_0) * y + x_0y_1 - x_1y_0 = 0 \tag{8.1}
+$$</p>
+<p>这里假设$x_0 \leq x_1$，直线的斜率$m$可表示为：
+$$
+m = \frac{y_1 - y_0}{x_1 - x_0}
+$$</p>
+<p>接下去的讨论中，假设$m \in (0,1]$；此時，
+若點沿著直綫運動，其在$x$軸上的變化速度要快於$y$軸上的變化速度。类似讨论可以推广到$m \in (-\infty, -1]$、$m \in (-1, 0]$和$m \in (1, \infty)$。</p>
+<h4 id="直綫光柵化">直綫光柵化</h4>
+<p><code>The midpoint algorithm</code>的框架如下：</p>
+<center><img src = "ch8-8.1_midpoint_algorithm_1.png"></img></center>
+<p>該算法從左至右繪製直綫，$x$和$y$均爲整數，在<code>some condition</code>下，$y$方向會移動一個像素。因此整個流程的關鍵就是如何定義<code>some condition</code>。</p>
+<p>一種便捷的做法就是，觀察兩個備選像素的中點(<code>midpoint</code>)。假設當前綫段繪製到$(x,y)$點，那麽下一個點可能是$(x+1,y)$或$(x+1,y+1)$中的一個，那麽這兩個備選點的中點為$(x+1,y+0.5)$，如果直綫在中點下方穿過，那麽下一個繪製點就是$(x+1,y)$，否則為$(x+1,y+1)$。而判斷直綫在點上方還是下方的方式也非常簡單，就是將點帶入直綫方程(8.1)判斷符號即可。如下圖所示：</p>
+<center><img src = "figure8.3.png"></img></center>
+<p>那麽算法框架即可升級爲：</p>
+<blockquote>
+<p>$y = y_0$<br>
+for $x = x_0$ to $x_1$ do<br>
+　　draw($x,y$)<br>
+　　if ( $f(x+1, y+0.5) &lt; 0$ )  then<br>
+　　　　$y = y + 1$</p>
+</blockquote>
+<p>現在這個框架已經能很好的進行繪製直綫了，但是效率依舊不高。如果將判斷條件改爲<strong>增量判斷</strong>，可提高整個算法框架的執行效率。那下面來看看<strong>增量判斷</strong>是如何做的。</p>
+<p>依舊假設直綫當前繪製點為$(x,y)$，那麽比較一下兩個等式：</p>
+<div>
+$$
+f(x+1,y) = f(x,y) + (y_0 - y_1)\\
+f(x+1,y+1) = f(x,y) + (y_0 - y_1) + (x_1 - x_0)
+$$
+</div>
+<p>觀察可發現，下一個繪製點的判斷都用到了當前繪製點的信息，這樣就能將算法的修改爲：</p>
+<center><img src = "ch8-8.1_midpoint_algorithm_2.png"></img></center>
+<p>雖然增量法比非增量法高效，但是會引入數值誤差的纍積，但是綫段很少有幾千個像素的長度，因此，這種數值誤差并不致命。另外，由於$(x_1 - x_0)$和$(y_0 - y_1)$是確定的，因此可以存成變量之後反復使用，有時我們希望編輯器就能做到，但并非如此，所以在某些對效率嚴格要求的環境下，需要手動檢查編譯結果。</p>
+<h3 id="812-三角形光柵化">8.1.2 三角形光柵化</h3>
+<p>三角形的光柵化和直綫光柵化有類似的問題，但也有其特有問題，其一就是插值問題。假設平面上的三角形由點$p_0 = (x_0, y_0)$、$p_1 = (x_1, y_1)$和$p_2 = (x_2, y_2)$構成，即已知三角形三個頂點屬性，先要獲得三角形内任意一點屬性，可通過<code>Gouraud interpolation</code>方式獲得，例如，已知三個頂點顔色向量分別爲$\mathbf{c}_0$、$\mathbf{c}_1$和$\mathbf{c}_2$，三角形内任意一點重心坐標爲$(\alpha, \beta, \gamma)$，那麽任意點顔色可表示為：
+$$
+\mathbf{c} = \alpha \mathbf{c}_0 + \beta \mathbf{c}_1 + \gamma \mathbf{c}_2
+$$</p>
+<p>三角形光柵化的另一個問題就是共邊和共點問題。假設有兩個不同顔色三角形有一條公共邊，爲了保證繪製后，兩三角形閒不會有空洞出現，通常會使用<code>midpoint algorithm</code>繪製三角形各邊並用插值填充三角形内區域，這會導致，這條共邊的顔色和三角形繪製順序有關，這顯然是不合理的。而解決這個問題的辦法也非常簡單粗暴：判斷共邊上的像素點重心是在哪個三角形内，那麽該像素就屬於對應三角形。（當然，還會存在像素點重心剛好在共邊上的問題，這在之後會提供解決方法）</p>
+<p>結合上面兩個問題，可以把三角形光柵化歸結爲重心坐標測試問題，暴力算法如下：</p>
+<center><img src = "ch8-8.1_brute_force_triangle_rasterization.png"></img></center>
+<p>顯然，通過一些優化，能大幅提高該光柵化算法的效率。顯然，不需要對整幅圖像的像素點進行遍歷，只需遍歷覆蓋當個三角形區域即可：</p>
+<center><img src = "ch8-8.1_triangle_rasterization_1.png"></img></center>
+<p>其中:</p>
+<div>
+$$
+f_{01}(x,y) = (y_0 - y_1)x + (x_1 - x_0)y + x_0y_1 - x_1y_0\\
+f_{12}(x,y) = (y_1 - y_2)x + (x_2 - x_1)y + x_1y_2 - x_2 y_1\\
+f_{20}(x,y) = (y_2 - y_0)x + (x_0 - x_2)y + x_2y_0 - x_0y_2
+$$
+</div>
+<p>算法中只測試$\alpha &gt; 0$，而不是測試$\alpha \in (0,1)$。這是因爲儅$\alpha$、$\beta$、$\gamma$都爲正數時，它們都會小於$1$，因爲$\alpha + \beta + \gamma = 1$。</p>
+<p>同样，该算法也能用增量式进行优化。例如，内循环中$f_{12}(x + 1,y) = f_{12}(x,y) + A$，外循环中$f_{12}(x,y+1) = f_{12}(x,y) + B$。其中$A = \frac{(y_0 - y_1)}{f_{12}(x_0, y_0)}$，$B = \frac{(x_1 - x_0)}{f_{12}(x_0, y_0)} $。其他项类似处理即可。</p>
+<h4 id="dealing-with-pixels-on-triangle-edges">Dealing with Pixels on Triangle Edges</h4>
+<p>現在來解決像素點重心正好落在兩三角形共邊上的問題。最簡單的方式就是隨便挑選歸屬其中一個三角形。但還有另一種方式判斷：選取任意一屏幕外點，若該屏幕外點在共邊一側，那麽該共邊就屬於該側三角形。如下圖：</p>
+<center><img src = "figure8.6.png"></img></center>
+<p>那麽屏幕外的點如何選取，因爲不管如何選取，都會存在屏幕外點落在共邊所在直綫上。所以屏幕外點可任意選取，通常使用點$(x,y) = (-1,-1)$。在光柵化算法内部不進行這種情況判斷，所以，屏幕外點是否落在共邊直綫上需在外部處理。這樣，整個算法可升級爲：</p>
+<center><img src = "ch8-8.1_triangle_rasterization_2.png"></img></center>
+<p>上面的伪代码依然包含许多细节需要注意，例如除零问题，浮点误差等等，还有即使两三角形共边，但是指向若相反时，符号也会相反。这些在设计光栅化程序时都需要注意。</p>
+<h3 id="813-clipping">8.1.3 Clipping</h3>
+<p>簡單的將圖元變換到像平面再光柵化往往效果不佳。這是因爲如果圖元空間位置位於可視區域外時，例如視點的後方，不加處理的光柵化就會導致錯誤的結果。回顾透视变换后的结果：</p>
+<div>
+$$
+\begin{bmatrix}
+x'\\
+y'\\
+z'\\
+w'
+\end{bmatrix} = P * \begin{bmatrix}
+x \\
+y \\ 
+z \\
+1\\
+\end{bmatrix} = \begin{bmatrix}
+nx\\
+ny\\
+(n+f)z - fn\\
+z\\
+\end{bmatrix} \sim \begin{bmatrix}
+\frac{nx}{z}\\
+\frac{ny}{z}\\
+n+f - \frac{fn}{z}\\
+1\\
+\end{bmatrix}
+$$
+</div>
+<p>单独观察$z' = n+f - \frac{fn}{z}$，其图像如下：</p>
+<center><img src="figure8.7-1.png"></img></center>
+<p>当$z &lt; 0 $时，$z'$则变为正值，这就出现了下面情况：</p>
+<center><img src="figure8.7-2.png"></img></center>
+<p>基於這個原因，光柵化前需要進行<code>clipping</code>操作，用於移除可視範圍外的部分。下面是個三角形被裁切的例子。</p>
+<center><img src = "figure8.8.png"></img></center>
+<p>這裏有兩種常用的<code>clipping</code>方法：</p>
+<blockquote>
+<ol>
+<li>在世界坐標系下，使用視錐體的六個面作爲<code>clipping plane</code>;</li>
+<li>在4D變換空間進行齊次坐標除法前；</li>
+</ol>
+</blockquote>
+<p>這兩種方法都能利用下面的算法框架有效實現：</p>
+<center><img src = "ch8-8.1_clipping_framework.png"></img></center>
+<h3 id="方法1--clipping-before-the-transform">方法1:  Clipping Before the Transform</h3>
+<p>该方法实现比较直接，问题在于”六个平面如何表示？&ldquo;通过視錐體的8顶点变换后，来确定平面方程。</p>
+<div>
+$$
+(x,y,z) =
+\begin{align}
+& (l, b, n)\\
+& (r,b,n)\\
+& (l,t,n)\\
+& (r,t,n)\\
+& (l,b,f)\\
+& (r,b,f)\\
+& (l,t,f)\\
+& (r,t,f)
+\end{align}
+$$
+</div>
+<p><font color = "red">這裏原書貌似有錯，書中說“利用圖5.11的逆變換作用於8個視錐體頂點”，可是圖5.11不存在</font></p>
+<h3 id="方法2-clipping-in-homogeneous-coordinate">方法2: Clipping in Homogeneous Coordinate</h3>
+<p>假设在4D齐次坐标表示为$(x,y,z,w)$，那么除法前进行裁剪的平面方程如下：</p>
+<div>
+$$
+\begin{array}{r}
+-x + lw = 0,\\
+x-rw = 0,\\
+-y + bw = 0,\\
+y-tw = 0,\\
+-z + nw = 0,\\
+z-fw = 0.
+\end{array}
+$$
+</div>
+<p>這些平面表示同樣簡單，處理效率也比方法1來的高效。</p>
+<h3 id="816-clipping-against-a-plane">8.1.6 Clipping against a Plane</h3>
+<p>以上兩種方法，無論選用哪個，都需要通過平面進行裁剪。這裏回顧平面方程隱函數表示：
+$$
+f(\mathbf{p}) = \mathbf{n} \cdot (\mathbf{p} - \mathbf{q})
+$$</p>
+<p>其中，$\mathbf{p}$為平面上任意點，$\mathbf{n}$平面法向量，$\mathbf{q}$平面上某個已知點坐標。</p>
+<p>平面隱函數也通常改寫爲:
+$$
+f(\mathbf{p}) = \mathbf{n} \cdot \mathbf{p} + \mathcal{D} = 0 \tag{8.2}
+$$</p>
+<p>有趣的是，公式(8.2)既可以表示3D中的平面，也可表示2D中的直綫，還可以表示4D中的體。所有這些實體都在其所在維度下稱爲平面。</p>
+<p>現回到3D空間中，假設綫段$\mathbf{a}\mathbf{b}$，判斷兩個端點是否位於某個平面$f(\mathbf{p}) = 0$的兩側（假設$f(\mathbf{p}) &gt; 0 $是在平面外側，$f(\mathbf{p})&lt;0$是在平面内側），只需判斷$f(\mathbf{a})$和$f(\mathbf{b})$是否同號即可。若兩個端點在平面不同側，那麽，綫段$\mathbf{a}\mathbf{b}$與平面$f(\mathbf{p}) = 0$的交點可按如下方式計算：</p>
+<div>
+$$
+\begin{cases}
+\mathbf{p} = \mathbf{a} + t(\mathbf{b} - \mathbf{a}) \\
+f(\mathbf{p}) = \mathbf{n} \cdot \mathbf{p} + \mathcal{D} = 0
+\end{cases} \\[2ex]
+\Rightarrow \mathbf{n}\cdot (\mathbf{a} + t(\mathbf{b}-\mathbf{a})) + \mathcal{D} = 0 \\[2ex]
+\Rightarrow t = \frac{\mathbf{n}\cdot\mathbf{a} + \mathbf{D}}{\mathbf{n}\cdot(\mathbf{a}-\mathbf{b})}
+$$
+</div>
+<p>這樣，就能快速找到被平面截斷的綫段位置。</p>
+<h2 id="82-operations-before-and-after-rasterization">8.2 Operations Before and After Rasterization</h2>
+<p>回顧本章節最開始的<code>Graphic pipeline</code>流程圖，在<code>Rasterization</code>之前的操作是<code>vertex-processing</code>，在<code>Rasterization</code>之後的操作是<code>fragment processing</code>和<code>blending</code>。
+<code>vertex-processing</code>是將輸入的頂點通過modeling、viewing和projection這些變換，將其從世界坐標系變換到屏幕空間，同時計算了其他信息，例如顔色、表面法向量或紋理坐標。
+<code>fragment-processing</code>是計算每個<code>fragment</code>的顔色和深度，這兩個信息可以直接使用<code>rasterization</code>的結果，也可使用更複雜的<code>shading operations</code>。
+<code>blending</code>是將<code>fragments</code>按一定遮擋關係復原回圖元，最常用的做法是選擇最小深度的<code>fragment</code>。</p>
+<h3 id="821-simple-2d-drawing">8.2.1 Simple 2D Drawing</h3>
+<p>这种绘制vertex和fragment阶段基本没有进行操作，而在blending阶段，也只是颜色的简单覆盖。application层直接提供基元所有像素坐标，光栅器完成之后的所有工作。</p>
+<h3 id="822-a-minimal-3d-pipeline">8.2.2 A Minimal 3D pipeline</h3>
+<p>與2D繪製不同的是，進行3D繪製時，<code>vertex-processing</code>需要進行坐標的轉換，將圖元轉換到屏幕空間后，之後的操作與2D繪製一樣。</p>
+<p>但是，3D繪製依然存在問題 —— 繪製順序。直覺上只需要從遠到近繪製物體就能獲得正確的結果，這就是<code>painter's algorithm</code>。但是其依然存在嚴重的缺陷，例如下圖的圖形使用畫家算法就無法正確繪製。</p>
+<center><img src = "figure8.9.png" style = "zoom:70%"></img></center>
+<p>还有另外一个问题，如果“前后”顺序不存在时，畫家算法也无法有效工作。若對圖元進行深度排序后再進行繪製，這種操作有非常耗時，特別是對大型場景的渲染，這樣的排序會讓快速執行的數據流變慢。</p>
+<h3 id="823-using-a-z-buffer-for-hidden-surface">8.2.3 Using a Z-Buffer for Hidden Surface</h3>
+<p>上面提到的畫家算法存在的缺陷是致命的，因此在實際中很少使用。取而代之的就是更簡單高效的<code>z-buffer algorithm</code>。該算法思路如下：對每個像素追蹤離繪製平面最近的距離，抛棄超過這個距離的位置。該距離信息存儲在每個像素點的RGB值之後，稱爲深度信息。這塊存儲深度信息的緩存通常稱爲<strong>深度緩存</strong>或<strong>z-buffer</strong>。</p>
+<p><code>z-buffer</code>算法通常是在<code>blending</code>階段執行，通過比較深度信息，能準確反映圖元閒的遮擋關係。由於深度緩存是最小值存儲，因此在初始化時，需要初始化為最大深度值，否則算法無法獲得正確結果。同樣，深度信息也能通過插值的方式得到。</p>
+<h4 id="precision-issues">Precision Issues</h4>
+<p>z-values通常使用非負整數表示，相比於浮點數表示，這樣占用的高速緩存最少，也就是代價最小。但同時面臨著<strong>精度問題</strong>。</p>
+<p>假設有$\mathcal{B}$個非負整數${0,1,\cdots,\mathcal{B}-1}$，現將$z = n$的進平面映射到$0$，$z=f$的遠平面映射到$\mathcal{B}-1$，這裏暫時假設$z,n,f$均爲正數。相鄰兩個整數閒的表示精度為：
+$$
+\Delta{z} = \frac{f-n}{\mathcal{B}}
+$$</p>
+<p>只要$\Delta{z}$越小，説明表示的精度越高；在計算機中，$\mathcal{B} = 2^b$，其中$b$表示二進制位數。因此，減小$\Delta{z}$有兩種方式：第一種是讓$n$和$f$更接近；第二種是增大$b$值。由於$b$值往往都是固定的，所以只能通過第一種方式調整。</p>
+<p>在生成透視圖像時，z-buffer的精度問題就會伴隨而來。觀察透視變換矩陣中，z值的計算如下，：
+$$
+z = n+f - \frac{fn}{z_w}
+$$</p>
+<p>可看出，$\Delta{z}$是與$z_w$存在反比關係的，也僅與$z_w$有關。再做如下推導：</p>
+<div>
+$$
+\begin{cases}
+z_0 = n + f - \frac{fn}{{z_w}_0} \\[3ex]
+z_1 = n + f - \frac{fn}{{z_w}_1}
+\end{cases} \\[4ex]
+\Rightarrow \Delta{z} = z_1 - z_0 = \frac{fn}{{z_w}_0} - \frac{fn}{{z_w}_1} = \frac{({z_w}_1 - {z_w}_0) fn}{{z_w}_0 {z_w}_1} \\[4ex]
+\Rightarrow \Delta{z} = \lim_{{z_w}_1 \rightarrow {z_w}_0}\frac{({z_w}_1 - {z_w}_0) fn}{{z_w}_0 {z_w}_1} \approx \frac{fn\Delta{z_w}}{z_w^2} \\[4ex]
+\Rightarrow \Delta{z_w} \approx \frac{z_w^2\Delta{z}}{fn} \\[4ex]
+\Rightarrow \Delta{z_w^{max}} \approx \frac{f\Delta{z}}{n}
+$$
+</div>
+<p>從這個式子中可以看出，若按直覺（爲了不丟失視點前方的物體）將進平面$n$設爲$0$，那麽這會引起更爲糟糕的情況——無限大的$\Delta{z_w^{max}}$。<strong>因此，在實際操作中，要謹慎選取遠近平面的值，即$n$和$f$的取值</strong>。</p>
+<p><font color  = "red">這後半部分其實不怎麽理解和主題有啥關係</font></p>
+<h3 id="824-per-vertex-shading">8.2.4 Per-vertex Shading</h3>
+<p>到目前爲止，<code>rasterizer</code>只是將顔色插值后直接繪製在輸出圖像上，這顯然是不夠的。對比下面兩幅圖，左側是到目前爲止，光柵化后的結果，右側是做了之後要介紹的<code>shading</code>后的結果。</p>
+<center><img src = "ch8-8.2.4_rotating_cubes_now_you_can_do.png"></img> <img src = "ch8-8.2.4_rotaing_cubes_expected.png"></img></center>
+<p>所謂的<code>shading</code>簡單理解就是明暗表示。這裏可以使用第四章中給出的光照等式(4.3)。</p>
+<div>
+$$
+L = k_a \cdot I_a + k_d\cdot\mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{l})} + k_s\cdot \mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{h})}^p
+$$
+</div>
+<p>這個等式需要提供光照方向$\mathbf{l}$，觀察方向以及表面法向量$\mathbf{n}$。</p>
+<p>一種處理<code>shading</code>的方式是在<code>vertex</code>階段完成，因此稱爲<code>per-vertex shading</code>，也被稱爲<code>Gouraud shading</code>。該方法需要調用者為每個頂點提供法向量、光照位置和顔色(顔色在同一個物體上可能不會變化，所以顔色不需要每個頂點單獨提供)，每個頂點的觀測方向和光纖方向可以通過相機、光源和頂點位置計算出來。這樣使用等式(4.3)就能獲得每個頂點的著色信息，再通過插值獲取基元内其他位置著色信息，最後輸出圖像。</p>
+<p><code>Per-vertex shading</code>的缺點也非常明顯，它丟棄了用頂點描述的基元的内部細節（好繞口啊，還是用原文表訴<code>it cannot produce any details in the shading that are smaller than the primitives used to draw the surface</code>）。下圖展示使用該方法的渲染結果。</p>
+<center><img  src = "figure8.13.png"></img></center>
+<h3 id="825-per-fragment-shading">8.2.5 Per-fragment Shading</h3>
+<p>這種方法又稱爲<code>Phong shading</code>，簡單的說就是逐個像素使用等式(4.3)計算，而不是像<code>per-vertex shading</code>對頂點處理後，通過插值顔色填充内部。當然，該方法也會使用插值方法，而它插值的是每個<code>fragment</code>的法向量信息。該方法是在<code>Fragment processing</code>階段完成的。</p>
+<p>下面展示該方法的渲染結果。</p>
+<center><img src = "figure8.14.png"></img></center>
+<h3 id="補充flat-shading">補充：Flat Shading</h3>
+<p>假設物體表面都是用一些小的幾何基元描述（例如三角形，四邊形等），那這種方法就是對每個幾何基元進行<code>shading</code>操作，換言之，每個幾何基元只有一個法向量。下面看看這種方法的效果。</p>
+<center><img src = "figure8.13.5.png"></img></center>
+<p>對比以上提到的三種<code>shading</code>方法，從左到右依次是<code>Flat Shading</code>、<code>Gouraud Shading</code>和<code>Phong Shading</code>。</p>
+<center><img src = "ch8-8.2_shading_compare.png"></img></center>
+<h3 id="826-texture-mapping">8.2.6 Texture Mapping</h3>
+<p>再回顧等式(4.3)
+$$
+L = k_a \cdot I_a + k_d\cdot\mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{l})} + k_s\cdot \mathbf{I}\cdot\max{(0,\mathbf{n}\cdot\mathbf{h})}^p
+$$</p>
+<p>目前，等式中的$k_a$、$k_d$和$k_s$這些都是通過調用者設定的，若是調用者使用一張圖片，儅每次進行<code>shading</code>計算時，都去提供的圖片上索引一個位置，取該位置的值放入等式計算，那麽調用者提供的這張圖片就好像被貼在了被渲染的物體表面了。調用者提供的圖片就稱爲<code>texture image</code>；在<code>texture image</code>上索引位置就稱爲<code>texture lookup</code>；而獲得的<code>texture image</code>上坐標稱爲<code>texture coordinate</code>。這整個過程就稱爲<code>texture mapping</code>。</p>
+<h3 id="827-shading-frequency">8.2.7 Shading Frequency</h3>
+<p>可以看出，前面介紹的三種<code>shading</code>方法，在著色頻率上是不同的；而著色頻率的確定又和場景中顔色變化快慢有關。如果場景中有大規模陰影特徵，那就可以使用低頻率的著色模型。如果爲了充分表現物體細節，那就需要使用高頻著色模型。</p>
+<p>當然前面三個<code>shading</code>模型並沒有絕對的高低頻率之分，例如，<code>Flat shading</code>中，只要每個幾何圖元足夠小，其效果和<code>Phong shading</code>就幾乎沒什麽區別，此時它的<code>shading frequency</code>就非常高。</p>
+<center><img src = "ch8-8.2.7_shading_frequency.png"></img></center>
+<h2 id="83-simple-antialiasing">8.3 Simple Antialiasing</h2>
+<p>目前，介紹的簡單的三角形光柵化算法容易產生<code>alias</code>的現象，也叫走樣。走樣現象就是在幾何基元的邊界有明顯的鋸齒，如下圖中的直綫。</p>
+<center><img src = "figure8.15.png"></img></center>
+<p>爲了避免這種現象，人們發明了很多<code>antialias</code>（反走樣）算法。其中一種是利用<code>box filtering</code>對圖像進行模糊，例如上圖中的直綫，經過<code>box filtering</code>后，直綫不再是單像素描述，而是在一個矩形框内描述。</p>
+<p>下面講解下更簡單的實現<code>box-filter antialiasing</code>的過程：假設，要在一張$256 \times 256$的圖上繪製了寬度為1.2像素的直綫；首先進行超采樣<code>supersampling</code>，即在每個像素中采樣$4 \times 4$個點，將圖像放大了16倍；再通過對超采樣的圖像進行$4 \times 4$的均值濾波，就能獲得反走樣后的直綫圖像。這種做法和直接利用<code>box filter</code>進行濾波獲得的圖像是相近的。但是繪製物體非常小時，效果並不好。</p>
+<p><font color= 0x1ABADA>另外要指出，超采樣是要付出<strong>代價</strong>的。這裏的代價就是更多的空間和處理時間。</font></p>
+<h2 id="84-culling-primitives-for-efficiency">8.4 Culling Primitives for Efficiency</h2>
+<p><code>object-order</code>渲染的好處就是，只需要遍歷一遍<strong>所有的</strong>幾何基元，就能得到想要的結果，但是，如果渲染場景非常複雜，例如一座城市</p>
+<center><img src = "ch8-8.4_city.png"></img></center>
+<p>城市中只有很少的建築能呈現在視綫方向中，如果遍歷<strong>所有的</strong>幾何基元，那會造成相當大的資源浪費。合理的做法就是確認並丟棄那些不可見的幾何基元，這個操作就稱爲<code>culling</code>。</p>
+<p><code>culling</code>的策略通常有三種（通常會串聯使用）：</p>
+<blockquote>
+<ol>
+<li>view volume culling - 丟棄視錐躰外的幾何基元；</li>
+<li>occlusion culling - 丟棄那些在視錐躰之内，但是被更靠近視點的其他幾何基元遮擋的幾何基元；</li>
+<li>backface culling - 丟棄背對攝像機的幾何基元；</li>
+</ol>
+</blockquote>
+<p>這裏只對<code>view volume culling</code>和<code>backface culling</code>做簡單介紹。</p>
+<h3 id="841-view-volume-culling">8.4.1 View Volume Culling</h3>
+<p>儅幾何基元完全在<code>view volume</code>外時，它就能被剔除掉，如果能夠利用簡單的測試來剔除大量幾何基元，那麽可以顯著提高繪製效率。另一方面，對幾何基元進行單獨測試來判讀是否要被繪製，要比利用光柵器將其消除的代價更高。</p>
+<p><code>View volume Culling</code>同樣也叫<code>View frustum culling</code>，這個操作對利用物體的<code>bounding volume</code>來判斷是否在視錐體内非常有效，如果<code>bounding volume</code>不在視錐躰内，那麽構成物體的三角形基元也不會在視錐躰内。</p>
+<p>假設，我們有$1000$個三角形基元被一個中心為$\mathbf{c}$，半徑爲$r$的球體包圍，那麽，我們只需要檢查這個球體是否在<code>clipping plane</code>外即可，<code>clipping plane</code>方程為：
+$$
+(\mathbf{p}-\mathbf{a})\cdot \mathbf{n} = 0
+$$</p>
+<p>其中，$\mathbf{a}$為平面上固定點，$\mathbf{p}$為任意點，$\mathbf{n}$是平面法向量。只需要判斷球體中心到平面的距離是否會大於$r$即可：
+$$
+\frac{(\mathbf{c} - \mathbf{a})\cdot \mathbf{n}}{||\mathbf{n}||} &gt; r
+$$</p>
+<p>當然，值得注意的是，儅所有三角形基元位於<code>clipping plane</code>外時，球體依然可能會與<code>clipping plane</code>交曡。因此，這種測試只是保守測試，它的保守程度與<code>bounding volume</code>有關。</p>
+<h3 id="842-backface-culling">8.4.2 Backface Culling</h3>
+<p>儅多邊形是封閉時，通常假定法向量向外的那側為正面。儅這個多邊形背對相機方向時，它肯定會被正對相機的一側遮擋。此時，該多邊形基元就能被<code>culling</code>。在第十章也會有説明。</p>
+<h2 id="faq">FAQ</h2>
+<center><img src = "ch8-frequently_asked_questions.png"></img></center>
+<h2 id="聲明">聲明</h2>
+<p>該文檔是本人閲讀書籍《Fundamentals of Computer Graphics, Fourth_Edition》和學習課程《Games-101：现代计算机图形学入门》時整理的閲讀筆記，文檔中所有圖片主要來自本書截圖、Games-101課件截圖和網絡公開圖片。若發現錯誤，歡迎討論指正：<code>uninitmatrix@gmail.com</code>。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-09-03
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/computer-graphic/">Computer Graphic</a>
+          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
+          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
+          <a href="/tags/games101/">Games101</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch9-Signal%20Processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">圖形學系列 Ch9-Signal Processing-閲讀筆記</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch7%20Viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列-Ch7 Viewing-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">L1Mat2X</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
