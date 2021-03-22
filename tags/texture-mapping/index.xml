@@ -6,13 +6,17 @@
     <description>Recent content in Texture Mapping on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 29 Sep 2020 10:26:56 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/texture-mapping/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Sep 2020 10:26:56 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.matrixs.site/tags/texture-mapping/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>圖形學系列 Ch11-Texture Mapping-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch11-Texture%20Mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch11-texture-mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Tue, 29 Sep 2020 10:26:56 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch11-Texture%20Mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch11-texture-mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;何爲紋理？在圖形學中，定義物體表面空間變化屬性，即隨著空間位置變換，物體表面呈現出不同屬性，但這種屬性并未真的改變整個物體表面形狀，我們將這種變換的屬性稱爲物體表面紋理。&lt;/p&gt;
 &lt;p&gt;圖形學中，爲了在物體表面獲得紋理效果，會使用&lt;strong&gt;紋理映射(texture mapping)&lt;strong&gt;技術：該技術使用一幅圖像，稱爲紋理圖（&lt;code&gt;texture map&lt;/code&gt;、&lt;code&gt;texture image&lt;/code&gt;或&lt;code&gt;texture&lt;/code&gt;），該圖像包含所有物體表面紋理信息，然後通過數學上的&lt;/strong&gt;映射&lt;/strong&gt;，將該圖像“放置”到物體表面。&lt;/p&gt;
 &lt;p&gt;本章討論紋理表示物體表面細節、陰影和反射。基本思想比較簡單，但是在實際應用中會遇到一些問題。第一，紋理圖通常需要扭曲使用，因此設計紋理圖到物體表面的函數映射關係是一個巨大的挑戰；第二，紋理映射是一個重采樣過程，重采樣就容易出現走樣現象，許多紋理映射器的複雜度高就是爲了解決這些走樣失真導致的。&lt;/p&gt;</description>
