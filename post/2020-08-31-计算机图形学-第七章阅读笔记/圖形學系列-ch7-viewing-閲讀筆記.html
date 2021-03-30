@@ -481,10 +481,12 @@ $$
 \end{bmatrix}
 $$
 </div>
-<p>這樣使用透視投影變換的<code>viewing transformation</code>矩陣可變爲：
+<p>這樣使用透視投影變換的<code>viewing transformation</code>矩陣可變爲：</p>
+<div>
 $$
-\mathbf{M} = \mathbf{M}<em>{vp}\mathbf{M}</em>{orth}\mathbf{P}\mathbf{M}_{cam}
-$$</p>
+\mathbf{M} = \mathbf{M}_{vp}\mathbf{M}_{orth}\mathbf{P}\mathbf{M}_{cam}
+$$
+</div>
 <p>算法框架為：</p>
 <center><img src = "ch7-7.1_line_segment_transformation_framework_3.png"></img></center>
 <h2 id="74-透視投影變換的一些特點">7.4 透視投影變換的一些特點</h2>

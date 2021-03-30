@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>補充材料 on L1Mat2X&#39;Blog - 學無止儘</title>
+    <link>https://blog.matrixs.site/categories/%E8%A3%9C%E5%85%85%E6%9D%90%E6%96%99/</link>
+    <description>Recent content in 補充材料 on L1Mat2X&#39;Blog - 學無止儘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 29 Mar 2021 10:30:41 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.matrixs.site/categories/%E8%A3%9C%E5%85%85%E6%9D%90%E6%96%99/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>圖形學系列 Game101-Homework5 Generating Camera Rays</title>
+      <link>https://blog.matrixs.site/post/2021-03-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E4%B8%9A5%E8%A1%A5%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-game101-homework5-generating-camera-rays.html</link>
+      <pubDate>Mon, 29 Mar 2021 10:30:41 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/post/2021-03-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E4%B8%9A5%E8%A1%A5%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-game101-homework5-generating-camera-rays.html</guid>
+      <description>本文内容為個人做Games101課程作業-5時遇到問題的一個記錄，主要為説明作業中如何生成一條Primary Ray或Camera Ray。不知</description>
+    </item>
+    
+  </channel>
+</rss>
