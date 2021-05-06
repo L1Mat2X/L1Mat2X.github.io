@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sorting on L1Mat2X&#39;Blog - 學無止儘</title>
+    <link>https://blog.matrixs.site/tags/sorting/</link>
+    <description>Recent content in Sorting on L1Mat2X&#39;Blog - 學無止儘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 27 Apr 2021 14:16:53 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.matrixs.site/tags/sorting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>算法系列 Timsort排序算法原理學習</title>
+      <link>https://blog.matrixs.site/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97-timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html</link>
+      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97-timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html</guid>
+      <description>&lt;p&gt;最近在實際應用中頻繁遇到快速排序算法(&lt;code&gt;qsort&lt;/code&gt;)最壞情況，其實際耗時遠超過想象。主要原因在於進行排序的數據并非完全無序的，因此借此機會瞭解了當下使用廣汎的排序算法&lt;code&gt;Timsort&lt;/code&gt;，特此記錄。本文不涉及具體代碼實現，但是會結合自己實現過程給出僞代碼，如有錯誤歡迎指正。&lt;/p&gt;
+&lt;p&gt;本文會從原理出發給出各個部分實現僞代碼，最後再討論細節。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

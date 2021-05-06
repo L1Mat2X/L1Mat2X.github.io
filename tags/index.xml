@@ -6,10 +6,55 @@
     <description>Recent content in Tags on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 29 Mar 2021 10:30:41 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 27 Apr 2021 14:16:53 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Algorithm</title>
+      <link>https://blog.matrixs.site/tags/algorithm/</link>
+      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Binary sort</title>
+      <link>https://blog.matrixs.site/tags/binary-sort/</link>
+      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/binary-sort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Merge sort</title>
+      <link>https://blog.matrixs.site/tags/merge-sort/</link>
+      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/merge-sort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sorting</title>
+      <link>https://blog.matrixs.site/tags/sorting/</link>
+      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/sorting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Timsort</title>
+      <link>https://blog.matrixs.site/tags/timsort/</link>
+      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/timsort/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Camera Rays</title>
