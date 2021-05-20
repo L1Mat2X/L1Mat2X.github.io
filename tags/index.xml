@@ -6,7 +6,7 @@
     <description>Recent content in Tags on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Apr 2021 14:16:53 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 20 May 2021 11:13:35 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,36 @@
     <item>
       <title>Algorithm</title>
       <link>https://blog.matrixs.site/tags/algorithm/</link>
-      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
       
       <guid>https://blog.matrixs.site/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Distance Transformation</title>
+      <link>https://blog.matrixs.site/tags/distance-transformation/</link>
+      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/distance-transformation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Image Processing</title>
+      <link>https://blog.matrixs.site/tags/image-processing/</link>
+      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/image-processing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Meijster</title>
+      <link>https://blog.matrixs.site/tags/meijster/</link>
+      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/meijster/</guid>
       <description></description>
     </item>
     

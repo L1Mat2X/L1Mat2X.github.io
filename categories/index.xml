@@ -6,7 +6,7 @@
     <description>Recent content in Categories on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Apr 2021 14:16:53 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 20 May 2021 11:13:35 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.matrixs.site/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>Algorithm</title>
       <link>https://blog.matrixs.site/categories/algorithm/</link>
-      <pubDate>Tue, 27 Apr 2021 14:16:53 +0800</pubDate>
+      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
       
       <guid>https://blog.matrixs.site/categories/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Image Processing</title>
+      <link>https://blog.matrixs.site/categories/image-processing/</link>
+      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/categories/image-processing/</guid>
       <description></description>
     </item>
     
