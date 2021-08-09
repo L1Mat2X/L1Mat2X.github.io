@@ -49,7 +49,7 @@
 <meta itemprop="description" content="最近把家裏閑置的小米路由器4刷成OpenWrt系統，特此記錄流程。 聲明 刷機有風險，入坑需謹慎！刷機后無法官方維修！凡是刷第三方固件出现的财务">
 <meta itemprop="datePublished" content="2021-03-21T10:35:51+08:00" />
 <meta itemprop="dateModified" content="2021-03-21T10:35:51+08:00" />
-<meta itemprop="wordCount" content="2024">
+<meta itemprop="wordCount" content="2136">
 
 
 
@@ -127,7 +127,7 @@
             <a href="/categories/%E8%B7%AF%E7%94%B1%E5%99%A8/"> 路由器 </a>
             <a href="/categories/%E6%95%99%E7%A8%8B/"> 教程 </a>
             </div>
-          <span class="more-meta"> 2024 words </span>
+          <span class="more-meta"> 2136 words </span>
           <span class="more-meta"> 5 mins read </span>
         
       </div>
@@ -375,7 +375,12 @@ Press any key to interrupt autoboot ... 4
 <li>至此，刷入<code>openwrt</code>固件的前期準備工作完成。之後操作就非常簡單了。</li>
 </ol>
 <h3 id="刷入openwrt">刷入OpenWrt</h3>
-<p>Openwrt固件可以在網上搜索到，也可自行編譯，建議自行編譯，因爲Openwrt源碼中可以支持小米路由器4的MT7261平臺，自行編譯可以根據需求選擇默認安裝的插件。這裏提供一個別人編譯好的<a href="https://www.right.com.cn/forum/thread-772270-1-1.html">openwrt固件</a>，親測算比較好的，但是還是有一個缺點（V2Ray的url無法配置，所以之後我會自行編譯一個固件放出）。下面先開始刷入這個固件吧。</p>
+<p>Openwrt固件可以在網上搜索到，也可自行編譯，建議自行編譯，因爲Openwrt源碼中可以支持小米路由器4的MT7261平臺，自行編譯可以根據需求選擇默認安裝的插件。<del>這裏提供一個別人編譯好的<a href="https://www.right.com.cn/forum/thread-772270-1-1.html">openwrt固件</a>，親測算比較好的，但是還是有一個缺點（V2Ray的url無法配置，所以之後我會自行編譯一個固件放出）</del>。</p>
+<blockquote>
+<p>time: 2021-08-07</p>
+<p>填個坑，最近有時間自己編譯了<a href="https://github.com/coolsnowwolf/lede">Lean的Openwrt固件</a>，並測試無線、V2Ray等功能，能夠滿足自己的需求，有需要者自行取用，<a href="openwrt-ramips-mt7621-xiaomi_mi-router-4-initramfs-kernel.bin">點擊下載</a>。編譯過程非常簡單，建議利用Docker或虛擬機搞個新系統，然後安裝大佬的教程做就行。</p>
+</blockquote>
+<p>下面先開始刷入這個固件吧。</p>
 <ol>
 <li>先備份現有固件，裏面有EEEROM和固件兩個，都要備份（之前看了一篇博文介紹原因，現在找不到了，等找到后貼上，但是最重要的一句話就是&quot;一定要先備份&rdquo;）。</li>
 <li>備份結束后就可以更新固件了，直接上傳固件，重啓路由器，見證奇跡吧！</li>
