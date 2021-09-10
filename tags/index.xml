@@ -6,10 +6,64 @@
     <description>Recent content in Tags on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 20 May 2021 11:13:35 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 22 Jun 2021 09:37:16 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>BRDF</title>
+      <link>https://blog.matrixs.site/tags/brdf/</link>
+      <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/brdf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Materials</title>
+      <link>https://blog.matrixs.site/tags/materials/</link>
+      <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/materials/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reflection Models</title>
+      <link>https://blog.matrixs.site/tags/reflection-models/</link>
+      <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/reflection-models/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rough-Layered</title>
+      <link>https://blog.matrixs.site/tags/rough-layered/</link>
+      <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/rough-layered/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Smooth-Layered</title>
+      <link>https://blog.matrixs.site/tags/smooth-layered/</link>
+      <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/smooth-layered/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Specular Reflection</title>
+      <link>https://blog.matrixs.site/tags/specular-reflection/</link>
+      <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/specular-reflection/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Algorithm</title>
@@ -255,15 +309,6 @@
     </item>
     
     <item>
-      <title>BRDF</title>
-      <link>https://blog.matrixs.site/tags/brdf/</link>
-      <pubDate>Thu, 25 Feb 2021 09:17:56 +0800</pubDate>
-      
-      <guid>https://blog.matrixs.site/tags/brdf/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Photometry</title>
       <link>https://blog.matrixs.site/tags/photometry/</link>
       <pubDate>Thu, 25 Feb 2021 09:17:56 +0800</pubDate>
@@ -314,6 +359,123 @@
       <pubDate>Tue, 29 Sep 2020 10:26:56 +0800</pubDate>
       
       <guid>https://blog.matrixs.site/tags/texture-mapping/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Field-of-View</title>
+      <link>https://blog.matrixs.site/tags/field-of-view/</link>
+      <pubDate>Mon, 31 Aug 2020 14:41:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/field-of-view/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perspective Projection</title>
+      <link>https://blog.matrixs.site/tags/perspective-projection/</link>
+      <pubDate>Mon, 31 Aug 2020 14:41:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/perspective-projection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Projective Transformations</title>
+      <link>https://blog.matrixs.site/tags/projective-transformations/</link>
+      <pubDate>Mon, 31 Aug 2020 14:41:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/projective-transformations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Viewing Transformations</title>
+      <link>https://blog.matrixs.site/tags/viewing-transformations/</link>
+      <pubDate>Mon, 31 Aug 2020 14:41:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/viewing-transformations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>2D Transformations</title>
+      <link>https://blog.matrixs.site/tags/2d-transformations/</link>
+      <pubDate>Fri, 21 Aug 2020 17:15:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/2d-transformations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>3D Transformations</title>
+      <link>https://blog.matrixs.site/tags/3d-transformations/</link>
+      <pubDate>Fri, 21 Aug 2020 17:15:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/3d-transformations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Affine</title>
+      <link>https://blog.matrixs.site/tags/affine/</link>
+      <pubDate>Fri, 21 Aug 2020 17:15:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/affine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Coordinate Transformations</title>
+      <link>https://blog.matrixs.site/tags/coordinate-transformations/</link>
+      <pubDate>Fri, 21 Aug 2020 17:15:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/coordinate-transformations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Translation</title>
+      <link>https://blog.matrixs.site/tags/translation/</link>
+      <pubDate>Fri, 21 Aug 2020 17:15:33 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/translation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Orthographic Views</title>
+      <link>https://blog.matrixs.site/tags/orthographic-views/</link>
+      <pubDate>Tue, 18 Aug 2020 09:56:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/orthographic-views/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perspective Views</title>
+      <link>https://blog.matrixs.site/tags/perspective-views/</link>
+      <pubDate>Tue, 18 Aug 2020 09:56:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/perspective-views/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ray-Object Intersection</title>
+      <link>https://blog.matrixs.site/tags/ray-object-intersection/</link>
+      <pubDate>Tue, 18 Aug 2020 09:56:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/ray-object-intersection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shading</title>
+      <link>https://blog.matrixs.site/tags/shading/</link>
+      <pubDate>Tue, 18 Aug 2020 09:56:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/shading/</guid>
       <description></description>
     </item>
     

@@ -2,6 +2,111 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.matrixs.site/tags/brdf/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/computer-graphic/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/games101/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/materials/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/post/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/reflection-models/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/rough-layered/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/smooth-layered/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/specular-reflection/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/post/2021-06-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch24-reflection-models-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/</loc>
+    <lastmod>2021-06-22T09:37:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.matrixs.site/tags/algorithm/</loc>
     <lastmod>2021-05-20T11:13:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -10,13 +115,6 @@
   
   <url>
     <loc>https://blog.matrixs.site/categories/algorithm/</loc>
-    <lastmod>2021-05-20T11:13:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/categories/</loc>
     <lastmod>2021-05-20T11:13:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -44,28 +142,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/</loc>
-    <lastmod>2021-05-20T11:13:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.matrixs.site/tags/meijster/</loc>
-    <lastmod>2021-05-20T11:13:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/post/</loc>
-    <lastmod>2021-05-20T11:13:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/tags/</loc>
     <lastmod>2021-05-20T11:13:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -212,21 +289,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/</loc>
-    <lastmod>2021-04-19T08:56:20+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.matrixs.site/tags/camera-rays/</loc>
-    <lastmod>2021-03-29T10:30:41+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/categories/games101/</loc>
     <lastmod>2021-03-29T10:30:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -331,13 +394,6 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/tags/brdf/</loc>
-    <lastmod>2021-02-25T09:17:56+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.matrixs.site/tags/photometry/</loc>
     <lastmod>2021-02-25T09:17:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -429,6 +485,34 @@
   </url>
   
   <url>
+    <loc>https://blog.matrixs.site/tags/field-of-view/</loc>
+    <lastmod>2020-08-31T14:41:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/perspective-projection/</loc>
+    <lastmod>2020-08-31T14:41:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/projective-transformations/</loc>
+    <lastmod>2020-08-31T14:41:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/viewing-transformations/</loc>
+    <lastmod>2020-08-31T14:41:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch7-viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-08-31T14:41:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -436,8 +520,71 @@
   </url>
   
   <url>
+    <loc>https://blog.matrixs.site/tags/2d-transformations/</loc>
+    <lastmod>2020-08-21T17:15:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/3d-transformations/</loc>
+    <lastmod>2020-08-21T17:15:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/affine/</loc>
+    <lastmod>2020-08-21T17:15:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/coordinate-transformations/</loc>
+    <lastmod>2020-08-21T17:15:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/translation/</loc>
+    <lastmod>2020-08-21T17:15:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.matrixs.site/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch6-transformation-matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-08-21T17:15:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/orthographic-views/</loc>
+    <lastmod>2020-08-18T09:56:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/perspective-views/</loc>
+    <lastmod>2020-08-18T09:56:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/ray-object-intersection/</loc>
+    <lastmod>2020-08-18T09:56:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/shading/</loc>
+    <lastmod>2020-08-18T09:56:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
