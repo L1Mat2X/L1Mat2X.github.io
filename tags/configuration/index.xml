@@ -13,10 +13,10 @@
     
     <item>
       <title>OpenCV源码环境配置（2.X版及3.X版 &#43; VS2008/VS2013 &#43; win7 x86）</title>
-      <link>https://blog.matrixs.site/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+      <link>https://blog.matrixs.site/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html</link>
       <pubDate>Mon, 28 Mar 2016 11:40:19 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://blog.matrixs.site/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html</guid>
       <description>OpenCV作为一个十分优秀的跨平台计算机视觉库，我们不仅可以使用其提供的工具，有时更希望能了解其实现机制，然后修改它，进化它。因此构建一个</description>
     </item>
     

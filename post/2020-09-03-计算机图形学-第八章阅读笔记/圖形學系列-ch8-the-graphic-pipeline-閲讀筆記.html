@@ -36,7 +36,7 @@
 
 
 
-<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -52,7 +52,7 @@
 ">
 <meta itemprop="datePublished" content="2020-09-03T19:08:03+08:00" />
 <meta itemprop="dateModified" content="2020-09-03T19:08:03+08:00" />
-<meta itemprop="wordCount" content="7853">
+<meta itemprop="wordCount" content="7857">
 
 
 
@@ -95,12 +95,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -115,6 +124,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -131,7 +141,7 @@
             <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
             <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
             </div>
-          <span class="more-meta"> 7853 words </span>
+          <span class="more-meta"> 7857 words </span>
           <span class="more-meta"> 16 mins read </span>
         
       </div>
@@ -236,9 +246,11 @@ $$</p>
 <p>其中:</p>
 <div>
 $$
-f_{01}(x,y) = (y_0 - y_1)x + (x_1 - x_0)y + x_0y_1 - x_1y_0\\
-f_{12}(x,y) = (y_1 - y_2)x + (x_2 - x_1)y + x_1y_2 - x_2 y_1\\
-f_{20}(x,y) = (y_2 - y_0)x + (x_0 - x_2)y + x_2y_0 - x_0y_2
+\begin{align}
+f_{01}(x,y) &= (y_0 - y_1)x + (x_1 - x_0)y + x_0y_1 - x_1y_0\\
+f_{12}(x,y) &= (y_1 - y_2)x + (x_2 - x_1)y + x_1y_2 - x_2 y_1\\
+f_{20}(x,y) &= (y_2 - y_0)x + (x_0 - x_2)y + x_2y_0 - x_0y_2
+\end{align}
 $$
 </div>
 <p>算法中只測試$\alpha &gt; 0$，而不是測試$\alpha \in (0,1)$。這是因爲儅$\alpha$、$\beta$、$\gamma$都爲正數時，它們都會小於$1$，因爲$\alpha + \beta + \gamma = 1$。</p>
@@ -376,14 +388,16 @@ $$</p>
 <p>可看出，$\Delta{z}$是與$z_w$存在反比關係的，也僅與$z_w$有關。再做如下推導：</p>
 <div>
 $$
-\begin{cases}
+\begin{align}
+&\begin{cases}
 z_0 = n + f - \frac{fn}{{z_w}_0} \\[3ex]
 z_1 = n + f - \frac{fn}{{z_w}_1}
 \end{cases} \\[4ex]
-\Rightarrow \Delta{z} = z_1 - z_0 = \frac{fn}{{z_w}_0} - \frac{fn}{{z_w}_1} = \frac{({z_w}_1 - {z_w}_0) fn}{{z_w}_0 {z_w}_1} \\[4ex]
-\Rightarrow \Delta{z} = \lim_{{z_w}_1 \rightarrow {z_w}_0}\frac{({z_w}_1 - {z_w}_0) fn}{{z_w}_0 {z_w}_1} \approx \frac{fn\Delta{z_w}}{z_w^2} \\[4ex]
-\Rightarrow \Delta{z_w} \approx \frac{z_w^2\Delta{z}}{fn} \\[4ex]
-\Rightarrow \Delta{z_w^{max}} \approx \frac{f\Delta{z}}{n}
+\Rightarrow &\Delta{z} = z_1 - z_0 = \frac{fn}{{z_w}_0} - \frac{fn}{{z_w}_1} = \frac{({z_w}_1 - {z_w}_0) fn}{{z_w}_0 {z_w}_1} \\[4ex]
+\Rightarrow &\Delta{z} = \lim_{{z_w}_1 \rightarrow {z_w}_0}\frac{({z_w}_1 - {z_w}_0) fn}{{z_w}_0 {z_w}_1} \approx \frac{fn\Delta{z_w}}{z_w^2} \\[4ex]
+\Rightarrow &\Delta{z_w} \approx \frac{z_w^2\Delta{z}}{fn} \\[4ex]
+\Rightarrow &\Delta{z_w^{max}} \approx \frac{f\Delta{z}}{n}
+\end{align}
 $$
 </div>
 <p>從這個式子中可以看出，若按直覺（爲了不丟失視點前方的物體）將進平面$n$設爲$0$，那麽這會引起更爲糟糕的情況——無限大的$\Delta{z_w^{max}}$。<strong>因此，在實際操作中，要謹慎選取遠近平面的值，即$n$和$f$的取值</strong>。</p>
@@ -548,13 +562,10 @@ $$</p>
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -568,15 +579,15 @@ $$</p>
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

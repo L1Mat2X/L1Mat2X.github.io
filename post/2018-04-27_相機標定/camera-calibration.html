@@ -35,7 +35,7 @@
 
 
 
-<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -49,7 +49,7 @@
 <meta itemprop="description" content="符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点">
 <meta itemprop="datePublished" content="2018-04-27T10:40:53+08:00" />
 <meta itemprop="dateModified" content="2018-04-27T10:40:53+08:00" />
-<meta itemprop="wordCount" content="6182">
+<meta itemprop="wordCount" content="6186">
 
 
 
@@ -91,12 +91,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -111,6 +120,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -126,7 +136,7 @@
         <div class="post-category">
             <a href="/categories/computer-vision/"> Computer Vision </a>
             </div>
-          <span class="more-meta"> 6182 words </span>
+          <span class="more-meta"> 6186 words </span>
           <span class="more-meta"> 13 mins read </span>
         
       </div>
@@ -470,7 +480,7 @@ $$
 $$
 \begin{equation}
 \begin{matrix}
-r_1^T r_2 = 0 \Rightarrow h_1^TA^{-T}A^{-1}h_2 = 0 \\
+r_1^T r_2 = 0 \Rightarrow h_1^TA^{-T}A^{-1}h_2 = 0 \\[2ex]
 ||r_1|| = ||r_2|| = 1 \Rightarrow h_1^TA^{-T}A^{-1}h_1 = h_2^TA^{-T}A^{-1}h_2
 \end{matrix}
 \tag{12}
@@ -532,21 +542,25 @@ $$
 <p>一般的情况下，公式(13)运用<strong>Cholesky分解</strong>，就可得到内参的一般化公式：</p>
 <div>
 $$
-c_y = \frac{(B_{12}B_{13}-B_{11}B_{23})}{B_{11}B_{22} - B_{12}^2} \\
-\lambda = B_{33} - \frac{B_{13}^2 + c_y (B_{12}B_{13}-B_{11}B_{23})}{B_{11}} \\
-m = \sqrt{\frac{\lambda}{B_{11}}} \\
-n = \sqrt{\frac{\lambda B_{11}}{B_{11}B_{22} - B_{12}^2}} \\
-r = -\frac{B_{12}m^2n}{\lambda} \\
-c_x = \frac{rc_y}{m}-B_{13}\frac{m^2}{\lambda}
+\begin{align}
+c_y &= \frac{(B_{12}B_{13}-B_{11}B_{23})}{B_{11}B_{22} - B_{12}^2} \\
+\lambda &= B_{33} - \frac{B_{13}^2 + c_y (B_{12}B_{13}-B_{11}B_{23})}{B_{11}} \\
+m &= \sqrt{\frac{\lambda}{B_{11}}} \\
+n &= \sqrt{\frac{\lambda B_{11}}{B_{11}B_{22} - B_{12}^2}} \\
+r &= -\frac{B_{12}m^2n}{\lambda} \\
+c_x &= \frac{rc_y}{m}-B_{13}\frac{m^2}{\lambda}
+\end{align}
 $$
 </div>
 <p>一旦内参确定了，那么每张图的外参可以根据下面式得到：</p>
 <div>
 $$
-r_1 = \lambda A^{-1}h_1 \\
-r_2 = \lambda A^{-1}h_2 \\
-r_3 = r_1 \times r_2 \\
-t = \lambda A^{-1} h_3
+\begin{align}
+r_1 &= \lambda A^{-1}h_1 \\
+r_2 &= \lambda A^{-1}h_2 \\
+r_3 &= r_1 \times r_2 \\
+t &= \lambda A^{-1} h_3
+\end{align}
 $$
 </div>
 <p>其中，$\lambda = \frac{1}{||A^{-1}h_1||} = \frac{1}{||A^{-1}h_2||}$</p>
@@ -669,13 +683,10 @@ $$
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -689,15 +700,15 @@ $$
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

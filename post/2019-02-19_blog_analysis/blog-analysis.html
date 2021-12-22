@@ -35,7 +35,7 @@
 
 
 
-<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -49,7 +49,7 @@
 <meta itemprop="description" content="原点矩、中心距、Hu矩 最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义： 设$X$为随机变量，$c$为常数，$k$为正整数。则">
 <meta itemprop="datePublished" content="2019-02-14T10:07:06+08:00" />
 <meta itemprop="dateModified" content="2019-02-14T10:07:06+08:00" />
-<meta itemprop="wordCount" content="2228">
+<meta itemprop="wordCount" content="2241">
 
 
 
@@ -91,12 +91,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -111,6 +120,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -126,7 +136,7 @@
         <div class="post-category">
             <a href="/categories/computer-vision/"> Computer Vision </a>
             </div>
-          <span class="more-meta"> 2228 words </span>
+          <span class="more-meta"> 2241 words </span>
           <span class="more-meta"> 5 mins read </span>
         
       </div>
@@ -223,8 +233,10 @@ $$</p>
 <p>与此相关的还有<strong>蓬松度(Bulkiness)<strong>和</strong>结构因子(Structure Factor)</strong>：</p>
 <div>
 $$
-bulkiness = \frac{\pi * r_1 * r_2}{\alpha_{00}}\\
-sturcturefactor = anisometry * bulkiness - 1
+\begin{align}
+\text{bulkiness} &= \frac{\pi * r_1 * r_2}{\alpha_{00}}\\
+\text{sturcture factor} &= anisometry * bulkiness - 1
+\end{align}
 $$
 </div>
 <p>另外，还有的区域特征如下:</p>
@@ -259,16 +271,20 @@ $$
 </ol>
 <div>
 $$
-m_R = \frac{1}{K}\sum_{k= 0}^{K-1}||(x_k, y_k) - (\bar{x}, \bar{y})|| \\
-\sigma_R^2 = \frac{1}{K}\sum_{k=0}^{K-1}[||(x_k, y_k) - (\bar{x}, \bar{y})|| - m_R]^2
+\begin{align}
+m_R &= \frac{1}{K}\sum_{k= 0}^{K-1}||(x_k, y_k) - (\bar{x}, \bar{y})|| \\[2ex]
+\sigma_R^2 &= \frac{1}{K}\sum_{k=0}^{K-1}[||(x_k, y_k) - (\bar{x}, \bar{y})|| - m_R]^2
+\end{align}
 $$
 </div>
 <p>其中，$K$表示轮廓点个数；</p>
 <p>通过这两个属性能推出以下特征：</p>
 <div>
 $$
-roundness = 1 - \frac{\sigma_R}{m_R} \\[2ex]
-sides = 1.4111 * \left( \frac{m_R}{\sigma_R}\right)^{0.4724}
+\begin{align}
+roundness &= 1 - \frac{\sigma_R}{m_R} \\
+sides &= 1.4111 * \left( \frac{m_R}{\sigma_R}\right)^{0.4724}
+\end{align}
 $$
 </div>
 <p>另外， $\frac{m_R}{\sigma_R}$有以下三个性质：</p>
@@ -279,25 +295,31 @@ $$
 <p>有了区域R后，可以结合原始图像直接提取到区域R中的灰度信息；例如，<strong>最大灰度值</strong>和<strong>最小灰度值</strong>：</p>
 <div>
 $$
-g_{min} = \min_{(x,y) \in R}f(x,y)\\
-g_{max} = \max_{(x,y) \in R}f(x,y)
+\begin{align}
+g_{min} &= \min_{(x,y) \in R}f(x,y)\\
+g_{max} &= \max_{(x,y) \in R}f(x,y)
+\end{align}
 $$
 </div>
 <p>这两个值方便后续对每个单独区域进行归一化处理操作。</p>
 <p><strong>平均灰度值</strong>可以对区域内的亮度进行一个度量，结合<strong>灰度值方差</strong>，可以对区域内的灰度值进行变换：</p>
 <div>
 $$
-\bar{g_i} = \frac{1}{\alpha_{00}^i}\sum_{(x,y) \in R_i}f(x,y)\\
-s^2 = \frac{1}{\alpha_{00}^i - 1}\sum_{(x,y) \in R_i}[f(x,y) - \bar{g_i}]^2
+\begin{align}
+\bar{g_i} &= \frac{1}{\alpha_{00}^i}\sum_{(x,y) \in R_i}f(x,y)\\[2ex]
+s^2 &= \frac{1}{\alpha_{00}^i - 1}\sum_{(x,y) \in R_i}[f(x,y) - \bar{g_i}]^2
+\end{align}
 $$
 </div>
 <p>这里$\alpha_{00}^i$是指第$i$个区域的面积。</p>
 <p>而<strong>灰度直方图</strong>和<strong>累计直方图</strong>也属于灰度值特征。基于直方图可计算出<strong>中值灰度值</strong>、<strong>熵</strong>和<strong>灰度各向异性</strong>:</p>
 <div>
 $$
-g_{median} = \min{\{g:c_g \geq 0.5\}} \\[4ex]
-entropy = -\sum_{0}^{255}p_i * \log_2{(p_i)} \\[4ex]
-gray\_anisotropy = \frac{\sum_{0}^{g_{median}}p_i * \log_2{(p_i)}}{entropy}
+\begin{align}
+g_{median} &= \min{\{g:c_g \geq 0.5\}} \\[2ex]
+\text{entropy} &= -\sum_{0}^{255}p_i * \log_2{(p_i)} \\[2ex]
+\text{gray_anisotropy} &= \frac{\sum_{0}^{g_{median}}p_i * \log_2{(p_i)}}{entropy}
+\end{align}
 $$
 </div>
 <p>与区域矩类似，灰度值矩同样能计算出灰度值面积、重心以及椭圆参数等；不同的在于，使用灰度值特征，可以将图像视作一个模糊集合，不必对每个像素是否属于某个物体做硬性判断，而是用模糊隶属关系值确定此像素属于此物体的百分比程度。模糊集理论可参考《数字图像处理》一书中的介绍。下面给出两个基于模糊集计算的特征：<strong>fuzzy_perimeter</strong>和<strong>fuzzy_entropy</strong>。</p>
@@ -438,13 +460,10 @@ $$
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -458,15 +477,15 @@ $$
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

@@ -632,14 +632,14 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/tags/ellipse/</loc>
+    <loc>https://blog.matrixs.site/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</loc>
     <lastmod>2019-08-20T10:16:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</loc>
+    <loc>https://blog.matrixs.site/tags/ellipse-fitting/</loc>
     <lastmod>2019-08-20T10:16:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -800,6 +800,20 @@
   </url>
   
   <url>
+    <loc>https://blog.matrixs.site/tags/build/</loc>
+    <lastmod>2016-03-28T11:40:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/cmake/</loc>
+    <lastmod>2016-03-28T11:40:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.matrixs.site/tags/configuration/</loc>
     <lastmod>2016-03-28T11:40:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -814,14 +828,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2016-03-28T11:40:19+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/tags/source-code/</loc>
+    <loc>https://blog.matrixs.site/post/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/2016-03-28-opencv%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html</loc>
     <lastmod>2016-03-28T11:40:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

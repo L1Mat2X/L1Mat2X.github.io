@@ -35,7 +35,7 @@
 
 
 
-<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -49,7 +49,7 @@
 <meta itemprop="description" content="本文内容為個人做Games101課程作業-5時遇到問題的一個記錄，主要為説明作業中如何生成一條Primary Ray或Camera Ray。不知">
 <meta itemprop="datePublished" content="2021-03-29T10:30:41+08:00" />
 <meta itemprop="dateModified" content="2021-03-29T10:30:41+08:00" />
-<meta itemprop="wordCount" content="2401">
+<meta itemprop="wordCount" content="2405">
 
 
 
@@ -91,12 +91,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -111,6 +120,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -129,7 +139,7 @@
             <a href="/categories/%E8%A3%9C%E5%85%85%E6%9D%90%E6%96%99/"> 補充材料 </a>
             <a href="/categories/scratchapixel/"> Scratchapixel </a>
             </div>
-          <span class="more-meta"> 2401 words </span>
+          <span class="more-meta"> 2405 words </span>
           <span class="more-meta"> 5 mins read </span>
         
       </div>
@@ -175,14 +185,12 @@
 <p>假設<code>Raster space</code>中像素位置為$(Pixel_x, Pixel_y)$，<code>NDC space</code>中坐標爲$(PixelNDC_x, PixelNDC_y)$，<code>Screen space</code>中坐標為$(PixelScreen_x, PixelScreen_y)$， 那麽：</p>
 <div>
 $$
-PixelNDC_x = \frac{(Pixel_x + 0.5)}{ImageWidth} \\[4ex]
-PixelNDC_y = \frac{(Pixel_y + 0.5)}{ImageHeight}
-$$
-</div>
-<div>
-$$
-PixelScreen_x = 2 * PixelNDC_x - 1 \\[4ex]
-PixelScreen_y = 1- 2* PixelNDC_y
+\begin{align}
+PixelNDC_x &= \frac{(Pixel_x + 0.5)}{ImageWidth} \\[2ex]
+PixelNDC_y &= \frac{(Pixel_y + 0.5)}{ImageHeight}\\[2ex]
+PixelScreen_x &= 2 * PixelNDC_x - 1 \\[2ex]
+PixelScreen_y &= 1- 2* PixelNDC_y
+\end{align}
 $$
 </div>
 <p>這裏$PixelScreen_y$的符號發生變化，是因爲從<code>NDC space</code>到<code>Screen space</code>時，坐標軸發生翻轉。</p>
@@ -190,17 +198,21 @@ $$
 <center><img src = "figure6-camratio.png"></img></center>
 <div>
 $$
-ImageAspectRatio = \frac{ImageWidth}{ImageHeight} \\[4ex]
-PixelCamera_x = (2 * PixelNDC_x - 1) * ImageAspectRatio \\[4ex]
-PixelCamera_y = (1 - 2*PixelNDC_y)
+\begin{align}
+ImageAspectRatio &= \frac{ImageWidth}{ImageHeight} \\[2ex]
+PixelCamera_x &= (2 * PixelNDC_x - 1) * ImageAspectRatio \\[2ex]
+PixelCamera_y &= (1 - 2*PixelNDC_y)
+\end{align}
 $$
 </div>
 <p>注意，這裏$PixelCamera_x$和$PixelCamera_y$和<a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays">原文</a>中的不同，但是個人推導后覺得是原文中的符號取錯了。</p>
 <p>最後，我們還需要考慮視場角$\alpha$的影響。之前我們默認設置了成像平面位於相機前方單位$1$的位置，且成像平面尺寸為$[-1,1]^2$，那麽此時視場角為$90^{\circ}$。而視場角對於不同光學模組是不同的，爲了在不同視場角下依然能看到整個畫面，因此還要將<code>Screen space</code>中的尺寸根據視場角進行縮放。</p>
 <div>
 $$
-PixelCamera_x = (2 * PixelNDC_x - 1) * ImageAspectRatio * tan(\frac{\alpha}{2})\\[4ex]
-PixelCamera_y = (1 - 2*PixelNDC_y) * tan(\frac{\alpha}{2})
+\begin{align}
+PixelCamera_x &= (2 * PixelNDC_x - 1) * ImageAspectRatio * tan(\frac{\alpha}{2})\\[2ex]
+PixelCamera_y &= (1 - 2*PixelNDC_y) * tan(\frac{\alpha}{2})
+\end{align}
 $$
 </div>
 <p>至此，作業5生成<code>camera ray</code>部分就能完成了。下面是參考代碼。</p>
@@ -349,13 +361,10 @@ $$
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -369,15 +378,15 @@ $$
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

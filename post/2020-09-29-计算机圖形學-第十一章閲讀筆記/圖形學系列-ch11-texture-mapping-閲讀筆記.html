@@ -38,7 +38,7 @@
 
 
 
-<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -56,7 +56,7 @@
 本章討論紋理表示物體表面細節、陰影和反射。基本思想比較簡單，但是在實際應用中會遇到一些問題。第一，紋理圖通常需要扭曲使用，因此設計紋理圖到物體表面的函數映射關係是一個巨大的挑戰；第二，紋理映射是一個重采樣過程，重采樣就容易出現走樣現象，許多紋理映射器的複雜度高就是爲了解決這些走樣失真導致的。">
 <meta itemprop="datePublished" content="2020-09-29T10:26:56+08:00" />
 <meta itemprop="dateModified" content="2020-09-29T10:26:56+08:00" />
-<meta itemprop="wordCount" content="12240">
+<meta itemprop="wordCount" content="12242">
 
 
 
@@ -100,12 +100,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -120,6 +129,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -136,7 +146,7 @@
             <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
             <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
             </div>
-          <span class="more-meta"> 12240 words </span>
+          <span class="more-meta"> 12242 words </span>
           <span class="more-meta"> 25 mins read </span>
         
       </div>
@@ -315,12 +325,14 @@ $$</p>
 <p><code>cubemaps</code>一个非常恶心的问题就是，六个面的$(u,v)$的方向如何定义；理論上任何方式都行，但不同的定義會導致最終結果不同。對於OpenGL，其定義如下：</p>
 <div>
 $$
-\phi_{-x}(x,y,z) = \frac{1}{2}[1 + (+z, -y)/|x|],\\
-\phi_{+x}(x,y,z) = \frac{1}{2}[1 + (-z, -y)/|x|],\\
-\phi_{-y}(x,y,z) = \frac{1}{2}[1 + (+x, -z)/|y|],\\
-\phi_{+y}(x,y,z) = \frac{1}{2}[1 + (+x, +z)/|y|],\\
-\phi_{-z}(x,y,z) = \frac{1}{2}[1 + (-x, -y)/|z|],\\
-\phi_{+z}(x,y,z) = \frac{1}{2}[1 + (+x, -y)/|z|],\\
+\begin{align}
+\phi_{-x}(x,y,z) &= \frac{1}{2}[1 + (+z, -y)/|x|],\\
+\phi_{+x}(x,y,z) &= \frac{1}{2}[1 + (-z, -y)/|x|],\\
+\phi_{-y}(x,y,z) &= \frac{1}{2}[1 + (+x, -z)/|y|],\\
+\phi_{+y}(x,y,z) &= \frac{1}{2}[1 + (+x, +z)/|y|],\\
+\phi_{-z}(x,y,z) &= \frac{1}{2}[1 + (-x, -y)/|z|],\\
+\phi_{+z}(x,y,z) &= \frac{1}{2}[1 + (+x, -y)/|z|]
+\end{align}
 $$
 </div>
 <p>這裏如果結合書本中的圖來理解是<strong>錯誤</strong>的；</p>
@@ -481,7 +493,7 @@ $$</p>
 <h3 id="1135-anisotropic-filter">11.3.5 Anisotropic Filter</h3>
 <p>在<code>mipmap</code>中，我們利用長軸作爲寬度$D$計算$k$值，如果改用短軸作爲寬度$D$，然後沿著長軸進行多次查詢，將這些結果再做平均也能得到很好的效果，這種方式就是<code>Anisotropic Filter</code>的一個體現。</p>
 <p>當然還有其他方式，在Games101課程中，閆老師提到了<code>Ripmaps</code>各向異性操作。其生成的圖像序列如下，圖片來自<a href="https://en.wikipedia.org/wiki/Anisotropic_filtering">維基百科</a>。</p>
-<center><img src = "MipMap_Example_STS101_Anisotropic.png"></img></center>
+<center><img src = "ch11-11.3.5_MipMap_Example_STS101_Anisotropic.png"></img></center>
 <p>可以看出，<code>mipmaps</code>只是記錄了對角綫上的圖像序列，所以它只能查詢正方形區域，而<code>ripmaps</code>記錄了長寬方向上所有變化的圖像序列，所以對各向異性區域有很好的近似。但是，也僅是對與軸平行的區域效果較好，而對對角區域依然會引入是真。另外，<code>ripmaps</code>的存儲空閒比原來增加了3倍。</p>
 <p>課程中還提到了<code>EWA filter</code>，它能處理任意區域，它引入了權值，並進行多次查詢獲得結果，細節請自行google。</p>
 <h2 id="114-applications-of-texture-mapping">11.4 Applications of Texture Mapping</h2>
@@ -675,13 +687,10 @@ $$</p>
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -695,15 +704,15 @@ $$</p>
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

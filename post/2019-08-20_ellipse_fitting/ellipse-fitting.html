@@ -35,7 +35,7 @@
 
 
 
-<link href="/sass/main.min.755195eec2cd2b579195c9d117de66c609ee7f1325d073e27892d42031392a37.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -53,7 +53,7 @@
 
 
 
-<meta itemprop="keywords" content="ellipse,Least squares method," />
+<meta itemprop="keywords" content="ellipse fitting,Least squares method," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Ellipse Fitting"/>
 <meta name="twitter:description" content="橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。"/>
@@ -91,12 +91,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -111,6 +120,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -149,7 +159,7 @@
   </div>
 </div>
     <div class="post-content">
-      <p>橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。霍夫變換有其特有的優點，例如高魯棒性，不需要預分割。但是它的缺點也同樣明顯：高計算複雜度以及解不唯一，這兩個缺點導致這個方法很難應用在工程中。而最小二乘法是通過最小化擬合點到橢圓的距離實現的。下面論文《Direct least square fitting of ellipses》[^[1]]就是采用最小二乘法實現。</p>
+      <p>橢圓擬合的方法大致可以分爲兩種，一是聚類，二是最小二乘法。其中，聚類的方法主要是基於將待擬合點映射到參數空間中，這種方法的典型就是霍夫變換。霍夫變換有其特有的優點，例如高魯棒性，不需要預分割。但是它的缺點也同樣明顯：高計算複雜度以及解不唯一，這兩個缺點導致這個方法很難應用在工程中。而最小二乘法是通過最小化擬合點到橢圓的距離實現的。下面論文《Direct least square fitting of ellipses》<sup>[1]</sup>就是采用最小二乘法實現。</p>
 <h2 id="算法">算法</h2>
 <p>　　假設橢圓一般化方程為：
 $$
@@ -172,14 +182,16 @@ $$
 　　其中， $\vec{D}$為樣本數據集，$\vec{C}$為常數矩陣，$\vec{A}$為橢圓係數</p>
 <div>
 $$
-\vec{D} = [\vec{X}_1\ \vec{X}_2\ \dots\ \vec{X}_n]^T \\
-\vec{C} = \begin{pmatrix}
+\begin{align}
+&\vec{D} = [\vec{X}_1\ \vec{X}_2\ \dots\ \vec{X}_n]^T \\[2ex]
+&\vec{C} = \begin{pmatrix}
 0&0&2&0&0&0\\
 0&-1&0&0&0&0\\
 2&0&0&0&0&0\\
 0&0&0&0&0&0\\
 0&0&0&0&0&0
-\end{pmatrix}\\
+\end{pmatrix}
+\end{align}
 $$
 </div>
 <p>　　利用<strong>Language</strong>法，構建等式$h = E + \lambda (\vec{A}^T\vec{C}\vec{A})$，然後令$\frac{\partial{h}}{\vec{A}} = 0$，則可獲得以下方程組：</p>
@@ -191,14 +203,16 @@ $$
 \end{array}\tag{5}
 $$
 </div>
-<p>　　令$\vec{S} = \vec{D}^T\vec{D}$，化簡等式(5)，
+<p>　　令$\vec{S} = \vec{D}^T\vec{D}$，化簡等式(5)，</p>
+<div>
 $$
-\vec{S}\vec{A} = \lambda\vec{C}\vec{A} \tag{6}
+\begin{align}
+&\vec{S}\vec{A} = \lambda\vec{C}\vec{A} \tag{6} \\[2ex]
+&\vec{A}^T\vec{C}\vec{A} = 1 \tag{7}
+\end{align}
 $$
-$$
-\vec{A}^T\vec{C}\vec{A} = 1 \tag{7}
-$$
-　　$\vec{S}$稱爲散佈矩陣。</p>
+</div>
+<p>　　$\vec{S}$稱爲散佈矩陣。</p>
 <p>　　對等式(6)求解其特徵值和特徵向量$(\lambda_i, \vec{u}_i)$，同樣$(\lambda_i, \mu\vec{u}_i)$也爲等式(6)的特徵解，其中$\mu$是任意實數。根據等式(7)可以很容易找到一個$\mu$使得$\mu_i^2\vec{u}_i^T\vec{C}\vec{u}_i = 1$，即：
 $$
 \mu_i = \sqrt{\frac{1}{\vec{u}_i^T\vec{C}\vec{u}_i}} = \sqrt{\frac{\lambda_i}{\vec{u}_i^T\vec{S}\vec{u}_i}} \tag{8}
@@ -275,7 +289,7 @@ $$
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/ellipse/">ellipse</a>
+          <a href="/tags/ellipse-fitting/">ellipse fitting</a>
           <a href="/tags/least-squares-method/">Least squares method</a>
           </div>
       <nav class="post-nav">
@@ -342,13 +356,10 @@ $$
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -362,15 +373,15 @@ $$
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 
