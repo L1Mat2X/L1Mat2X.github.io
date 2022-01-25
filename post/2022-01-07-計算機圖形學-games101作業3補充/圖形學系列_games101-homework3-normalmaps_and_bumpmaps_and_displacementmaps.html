@@ -50,7 +50,7 @@
 <meta itemprop="description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。">
 <meta itemprop="datePublished" content="2022-01-07T10:32:35+08:00" />
 <meta itemprop="dateModified" content="2022-01-07T10:32:35+08:00" />
-<meta itemprop="wordCount" content="5680">
+<meta itemprop="wordCount" content="5684">
 
 
 
@@ -140,7 +140,7 @@
             <a href="/categories/%E8%A3%9C%E5%85%85%E6%9D%90%E6%96%99/"> 補充材料 </a>
             <a href="/categories/%E4%BD%9C%E6%A5%AD/"> 作業 </a>
             </div>
-          <span class="more-meta"> 5680 words </span>
+          <span class="more-meta"> 5684 words </span>
           <span class="more-meta"> 12 mins read </span>
         
       </div>
@@ -496,8 +496,10 @@ $$
 <p>由圖像上可知，</p>
 <div>
 $$
+\begin{align}
 \cos(\theta) = \frac{x}{\sqrt{x^2 + z^2}} \\
 \sin(\theta) = \frac{z}{\sqrt{x^2 + z^2}}
+\end{align}
 $$
 </div>
 <p>帶入上面計算可得最終結果為：</p>
@@ -519,8 +521,10 @@ $$</p>
 <p>其中，</p>
 <div>
 $$
-\mathbf{P}_u = \frac{\partial \mathbf{P}}{\partial u}\\
-\mathbf{P}_v = \frac{\partial \mathbf{P}}{\partial v}
+\begin{align}
+\mathbf{P}_u &= \frac{\partial \mathbf{P}}{\partial u}\\
+\mathbf{P}_v &= \frac{\partial \mathbf{P}}{\partial v}
+\end{align}
 $$
 </div>
 <p>現在，我們在其法向量方向對$\mathbf{P}$點施加一個擾動，我們成該擾動函數為凹凸函數 $b(u,v)$。</p>
