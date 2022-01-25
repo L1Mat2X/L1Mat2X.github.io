@@ -288,22 +288,24 @@ $$
 </ol>
 <p>奇異值分解與特徵值分解的區別除了兩個不同的正交矩陣和單個旋轉矩陣外，還有另外一個區別。由於奇異值分解后有不同的奇異值向量，我們可以通過翻轉符號來保持奇異值非負，同時需要翻轉奇異值向量的方向來保證結果不變，這樣就導致矩陣$\mathbf{U}$和矩陣$\mathbf{V}$不再是單純的旋轉矩陣，它們還包含了$reflection$操作。雖然看起來在使用過程中不太方便，但是通過矩陣的行列式的值就能判斷是旋轉（$+1$）還是鏡像（$-1$）。</p>
 <h4 id="paeth-decomposition-of-rotations">Paeth Decomposition of Rotations</h4>
-<p>旋轉矩陣可分解爲一系列斜切操作：
+<p>旋轉矩陣可分解爲一系列斜切操作：</p>
+<div>
 $$
 \begin{bmatrix}
-\cos{\phi},&amp;-\sin{\phi}\\<br>
-\sin{\phi},&amp;\cos{\phi}
+\cos{\phi},&-\sin{\phi}\\\\
+\sin{\phi},&\cos{\phi}
 \end{bmatrix} = \begin{bmatrix}
-1,&amp;\frac{\cos{\phi}-1}{\sin{\phi}}\\<br>
-0,&amp;1
+1,&\frac{\cos{\phi}-1}{\sin{\phi}}\\\\
+0,&1
 \end{bmatrix} \begin{bmatrix}
-1,&amp;0\<br>
-\sin{\phi},&amp;1
+1,&0\\
+\sin{\phi},&1
 \end{bmatrix} \begin{bmatrix}
-1,&amp;\frac{\cos{\phi}-1}{\sin{\phi}}\\<br>
-0,&amp;1
+1,&\frac{\cos{\phi}-1}{\sin{\phi}}\\\\
+0,&1
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <center><img src = "figure6.16.png"></img></center>
 <h2 id="62-3d-綫性變換">6.2 3D-綫性變換</h2>
 <p>類似2D的綫性變換，其中旋轉操作因爲多了兩個自由度，所以略有不同：
@@ -750,7 +752,7 @@ $$
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
 

@@ -6,10 +6,55 @@
     <description>Recent content in Tags on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 17 Nov 2021 09:17:25 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 07 Jan 2022 10:32:35 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bump Maps</title>
+      <link>https://blog.matrixs.site/tags/bump-maps/</link>
+      <pubDate>Fri, 07 Jan 2022 10:32:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/bump-maps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Displacement Maps</title>
+      <link>https://blog.matrixs.site/tags/displacement-maps/</link>
+      <pubDate>Fri, 07 Jan 2022 10:32:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/displacement-maps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Normal Maps</title>
+      <link>https://blog.matrixs.site/tags/normal-maps/</link>
+      <pubDate>Fri, 07 Jan 2022 10:32:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/normal-maps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TBN Matrix</title>
+      <link>https://blog.matrixs.site/tags/tbn-matrix/</link>
+      <pubDate>Fri, 07 Jan 2022 10:32:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/tbn-matrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Texture</title>
+      <link>https://blog.matrixs.site/tags/texture/</link>
+      <pubDate>Fri, 07 Jan 2022 10:32:35 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/texture/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>B-Splines</title>

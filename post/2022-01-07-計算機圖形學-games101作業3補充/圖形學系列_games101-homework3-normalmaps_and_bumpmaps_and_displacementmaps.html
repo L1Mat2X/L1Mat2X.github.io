@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps" />
+<meta property="og:description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html" />
+<meta property="article:published_time" content="2022-01-07T10:32:35+08:00" />
+<meta property="article:modified_time" content="2022-01-07T10:32:35+08:00" />
+<meta itemprop="name" content="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps">
+<meta itemprop="description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。">
+<meta itemprop="datePublished" content="2022-01-07T10:32:35+08:00" />
+<meta itemprop="dateModified" content="2022-01-07T10:32:35+08:00" />
+<meta itemprop="wordCount" content="5680">
+
+
+
+<meta itemprop="keywords" content="Normal Maps,Bump Maps,Displacement Maps,TBN Matrix,Texture," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps"/>
+<meta name="twitter:description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-07 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/games101/"> Games101 </a>
+            <a href="/categories/%E8%A3%9C%E5%85%85%E6%9D%90%E6%96%99/"> 補充材料 </a>
+            <a href="/categories/%E4%BD%9C%E6%A5%AD/"> 作業 </a>
+            </div>
+          <span class="more-meta"> 5680 words </span>
+          <span class="more-meta"> 12 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#texture-mapping的缺點">Texture Mapping的缺點</a></li>
+        <li><a href="#normal-mapping">Normal Mapping</a></li>
+        <li><a href="#tangent-space">Tangent Space</a></li>
+        <li><a href="#進一步討論tbn矩陣">進一步討論TBN矩陣</a></li>
+        <li><a href="#作業中的tbn">作業中的TBN</a></li>
+        <li><a href="#bump-mapping">Bump Mapping</a></li>
+        <li><a href="#displacement-mapping">Displacement Mapping</a></li>
+        <li><a href="#參考資料">參考資料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近重新做了games101課程作業3，發現裏面<code>bump_fragment_shader</code>其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。</p>
+<h2 id="texture-mapping的缺點">Texture Mapping的缺點</h2>
+<p>先回顧Blinn-Phong光照模型：</p>
+<center><img  src = "blinn-phong_lighting_model.png"></img></center>
+<p>某個著色點的取值可以寫爲：
+$$
+L = k_a I_a + k_d(\frac{I}{r^2})max(0, \mathbf{n}\cdot \mathbf{l}) + k_s(\frac{I}{r^2})max(0, \mathbf{n}\cdot \mathbf{h})^p
+$$</p>
+<p>我們利用<code>Texture mapping</code>時，將其中的$k_d$替換為紋理圖中查詢的結果，這樣就能完成整個紋理映射工作。</p>
+<p>在渲染過程中，我們會用大量的三角形來表示被渲染的物體模型，而每個三角形理論上都是“平坦”的，所以在每個三角形内部點的屬性都可以通過對三個頂點插值的方式獲得，這樣獲得的屬性值具有一定的變化連續性，但有時候反而會讓最終的結果失真，例如下面這張圖。</p>
+<center><img src = "normal_mapping_flat.png"></img></center>
+<p>圖中的墻壁咋一看效果還不錯，但是仔細看可以發現，雖然每個磚塊縫隙清晰可見，但缺少了“凹凸感”，也就是缺乏細節，這樣讓整面墻看起來非常“平整”。而導致這一效果的原因在於<strong>平面法向量</strong>。因爲我們在對墻壁建模時，其就是一個平面，法向量均是朝向同一個方向，例如下面左圖</p>
+<center><img src = "normal_mapping_surfaces.png"></img></center>
+<p>我們知道，一張圖内的物體要有“立體感”是需要光影的變化體現的。顯然相同方向的法向量不能產生這樣的效果，所以我們需要在建模時改變不同位置的法向量，例如上面的右圖，這就相當於在原本光滑的表面有了凹凸形變，這就能獲得我們想要的結果。下面就是采用這種方式獲得的圖像，對比兩者可以發現，添加法向量變化的結果明顯比原來的結果真實。</p>
+<center><img src = "normal_mapping_compare.png"></img></center>
+<p>這樣的技術被稱爲<code>Normal mapping</code>或<code>Bump mapping</code>。</p>
+<h2 id="normal-mapping">Normal Mapping</h2>
+<p>下面説説<code>Normal Mapping</code>是如何實現的，其實方式非常簡單。</p>
+<p>我們通常采用RGB圖像來存儲紋理，相似的，可以采用RGB圖像來存儲法向量信息：利用R、G、B三值分別表示法向量的X、Y、Z三個軸。由於法向量通常是單位向量，每個方向取值範圍為[-1, 1]，而RGB取值範圍為[0, 1]，因此在存儲時需要做映射：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">vec3</span> <span class="n">rgb_normal</span> <span class="o">=</span> <span class="n">normal</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">;</span>	<span class="c1">// transforms from [-1, 1] to [0, 1]
+</span></code></pre></td></tr></table>
+</div>
+</div><p>基於這個方式可得到上面墻面例子中的法向量圖。</p>
+<center><img src = "normal_mapping_normal_map.png"></img></center>
+<p>可以看到這張法向量貼圖呈現出偏藍色，因爲法向量基本是在z-軸附近變化，所以導致整張圖片呈現藍色。而上圖中，在頂部磚塊邊緣呈現出綠色，説明該位置的法向量方向是更偏向y軸的。有了法向量貼圖和紋理圖，利用Blinn-Phong著色模型和fragment著色器就能得到理想的結果了。</p>
+<p>雖然<code>normal mapping</code>效果不錯，但是其也是有限制的。首先，法向量貼圖中所表示的方向與平面法向量屬於同一個座標系下，例如世界座標系中；另一個就是法向量貼圖中所表示的方向大部分要與實際平面法向量朝向相似，也就是說假設平面法向量是沿著z-軸($(0,0,1)$)，法向量貼圖需要呈現出偏藍色；如果現在使用相同的法向量貼圖，而平面法向量朝向變爲沿著y-軸($(0,1,0)$)，這時得到的光照結果就不正確了，例如下圖所示。</p>
+<center><img src = "normal_mapping_ground_normals.png"></img> <img src = "normal_mapping_ground.png"></img></center>
+<p>爲解決這個問題，一個辦法是為每個表面做單獨的法向量貼圖，這個辦法看似簡單，但實際中並不好操作，由於兩者要同屬一個座標系中，所以假設有一個立方體，則需要製作6個法向量貼圖，如果模型中有無數的朝向不同的表面，可想這個製作難度以及存儲難度有多大，而且當模型發生運動，還需要記錄模型的運動變換，這就導致這個方式使用非常不便。例如下圖所示， 圖中紅色箭頭表示法向量貼圖中獲得的法綫方向，黑色箭頭表示平面法向量，它們均在$xyz$的世界坐標系中定義。</p>
+<center><img src = "normal_map_in_world_space.png"></img></center>
+<p>另一個解決辦法就是利用局部空間和坐標空間變換實現：定義局部空間為模型中每個位置的切平面與該位置上平面法向量構成，稱其為切向量空間(tangent space)。</p>
+<h2 id="tangent-space">Tangent Space</h2>
+<p>首先我們解釋下如何存儲的問題。定義切向量空間后，將每個位置實際用於渲染的法向量相對於其對應切向空間中的向量值存儲到法向量貼圖中，例如下圖所示，我們存儲圖中$n(S_p, t_p)$在$p$點処切向量空間中的取值。</p>
+<center><img src = "normal_map_in_tangent_space.png"></img></center>
+<p>下面説説如何使用，顯然我們做渲染時，所有的向量都需要位於同一個坐標系空間中，例如世界坐標系，而現在我們將法向量存放在切向量空間中，那麽這之間需要進行坐標系的轉換。轉換的方式有兩種：</p>
+<ol>
+<li>一種是將切向量空間中向量轉換到世界坐標係中；</li>
+<li>一種是將世界坐標系下的向量轉換到切向量空間中；</li>
+</ol>
+<p>這兩種方式孰優孰劣之後在討論，現在先引入TBN矩陣，該矩陣目的就是用於坐標系閒轉換。TBN矩陣中，$\mathbf{T}$代表Tangent vector，$\mathbf{B}$代表Bitangent vector，$\mathbf{N}$代表Normal vector。如下圖。</p>
+<center><img src = "normal_mapping_tbn_vectors.png"></img></center>
+<p>其中$\mathbf{N}$就是平面法向量方向，因此是可以從模型中獲得，現在就要計算得到$\mathbf{T}$和$\mathbf{B}$向量。再看上圖，我們構建TBN向量時，有意讓$\mathbf{T}$和$\mathbf{B}$兩個向量沿著紋理圖的xy-軸（或uv-軸）。這樣我們就能利用紋理坐標來計算$\mathbf{T}$和$\mathbf{B}$向量，看下圖。</p>
+<center><img src = "normal_mapping_surface_edges.png"></img></center>
+<p>模型中某個三角形的三個頂點映射到紋理圖中$P_1$、$P_2$、$P_3$三個點，那麽如圖可得到下面關係。</p>
+<div>
+$$
+\begin{align}
+E_1 &= \Delta U_1 T + \Delta V_1B\\
+E_2 &= \Delta U_2 T + \Delta V_2B
+\end{align}
+$$
+</div>
+<p>由於$\mathbf{T}$和$\mathbf{B}$為基向量，我們將其展開可得：</p>
+<div>
+$$
+\begin{align}
+(E_{1x},E_{1y},E_{1z}) &= \Delta U_1(T_x, T_y, T_z) + \Delta V_1(B_x,B_y, B_z)\\
+(E_{2x},E_{2y}, E_{2z}) &= \Delta U_2(T_x, T_y, T_z) + \Delta V_2(B_x, B_y, B_z)
+\end{align}
+$$
+</div>
+<p>改寫爲矩陣形式為：</p>
+<div>
+$$
+\begin{bmatrix}
+E_{1x} & E_{1y} & E_{1z}\\
+E_{2x} & E_{2y} & E_{2z}
+\end{bmatrix} = \begin{bmatrix}
+\Delta U_1 & \Delta V_1\\
+\Delta U_2 & \Delta V_2
+\end{bmatrix} \begin{bmatrix}
+T_x & T_y & T_z \\
+B_x & B_y & B_z
+\end{bmatrix}
+$$
+</div>
+<p>這樣，通過矩陣運算就可獲得$\mathbf{T}$和$\mathbf{B}$這兩個基向量。</p>
+<div>
+$$
+\begin{align}
+\begin{bmatrix}
+T_x & T_y & T_z \\
+B_x & B_y & B_z
+\end{bmatrix} &= \begin{bmatrix}
+\Delta U_1 & \Delta V_1\\
+\Delta U_2 & \Delta V_2
+\end{bmatrix}^{-1}\begin{bmatrix}
+E_{1x} & E_{1y} & E_{1z}\\
+E_{2x} & E_{2y} & E_{2z}
+\end{bmatrix}\\[2ex]
+\Rightarrow \begin{bmatrix}
+T_x & T_y & T_z \\
+B_x & B_y & B_z
+\end{bmatrix}  &= \frac{1}{\Delta U_1 \Delta V_2 - \Delta U_2 \Delta V_1}\begin{bmatrix}
+\Delta V_2 & -\Delta V_1\\
+-\Delta U_2 & \Delta U_1
+\end{bmatrix}\begin{bmatrix}
+E_{1x} & E_{1y} & E_{1z}\\
+E_{2x} & E_{2y} & E_{2z}
+\end{bmatrix}
+\end{align}
+$$
+</div>
+<p>這樣我們就獲得了最終的TBN矩陣：</p>
+<div>
+$$
+\begin{pmatrix}
+T_x & T_y & T_z \\
+B_x & B_y & B_z \\
+N_x & N_y & N_z
+\end{pmatrix}
+$$
+</div>
+<p>注意，向量$\mathbf{T}$、$\mathbf{B}$和$\mathbf{N}$均要轉換成單位向量。</p>
+<p>現在這個TBN矩陣如果左乘一個向量，則意味著將該向量從切向量空間中轉換到世界坐標係空間中。那麽從世界坐標系中轉換到切向量空間，則使用TBN矩陣的逆矩陣完成，由於TBN矩陣是正交矩陣，所以其逆矩陣與其轉置矩陣相等，所以TBN矩陣對於空間之間的轉換是非常簡潔友好的。</p>
+<h2 id="進一步討論tbn矩陣">進一步討論TBN矩陣</h2>
+<p>前面在舉例TBN矩陣時，我們假設了UV空間，即紋理空間是與平面法向量正交的，但是實際情況中不一定滿足這個條件，因此我們需要對其進行<strong>施密特正交化</strong>處理后才能使用：</p>
+<div>
+$$
+\begin{align}
+\mathbf{T} &= normalize(\mathbf{U} - dot(\mathbf{U}, \mathbf{N})\mathbf{N})\\[2ex]
+\mathbf{B}  &= normalize(cross(\mathbf{N}, \mathbf{T})) \\[2ex]
+\mathbf{TBN} &= mat3(\mathbf{T}, \mathbf{B}, \mathbf{N})
+\end{align}
+$$
+</div>
+<p>再者，前面提到過坐標系轉換有兩種：從切向量空間轉換到世界坐標系空間；或從世界坐標系空間轉換到切向量空間。下面就討論下這兩種轉換的優劣。</p>
+<p>從直覺出發，將法向量從切向量空間轉換到世界坐標系空間只需要轉換一個向量，非常簡單！從代碼角度看，對於每個三角形，TBN矩陣在<code>fragment shader</code>外計算好后傳入像素著色器，而在<code>fragment shader</code>内部需要對每個像素的法向量進行變換。例如下面代碼：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">vec3</span> <span class="n">FragPos</span><span class="p">;</span>
+	<span class="n">vec2</span> <span class="n">TexCoords</span><span class="p">;</span>
+	<span class="n">mat3</span> <span class="n">TBN</span><span class="p">;</span>
+	<span class="n">vec3</span> <span class="n">lightPos</span><span class="p">;</span>
+	<span class="n">vec3</span> <span class="n">viewPos</span><span class="p">;</span>
+<span class="p">}</span><span class="n">frag_shader_t</span><span class="p">;</span>
+
+<span class="p">{</span>
+	<span class="p">...</span>
+	<span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">=</span> <span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+	<span class="p">...</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">frag_shader_t</span> <span class="n">fs_in</span><span class="p">){</span>
+	<span class="n">normal</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>   
+	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normal</span><span class="p">);</span>
+	<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>接著我們看看第二種方式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="p">{</span>
+	<span class="p">...</span>
+	<span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">));</span>
+	<span class="p">...</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">frag_shader_t</span> <span class="n">fs_in</span><span class="p">){</span>
+	<span class="n">normal</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>   
+	
+	<span class="n">vec3</span> <span class="n">lightDir</span> <span class="o">=</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">lightPos</span> <span class="o">-</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">FragPos</span><span class="p">);</span>
+	<span class="n">vec3</span> <span class="n">viewDir</span>  <span class="o">=</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">viewPos</span> <span class="o">-</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">FragPos</span><span class="p">);</span>  
+	<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>第二種方法在<code>fragment shader</code>中看似做的更多，但是，第二種方法中將世界坐標系轉換到切空間坐標系的操作并不是一定要在<code>fragment shader</code>中進行，可以將其移到<code>vertex shader</code>中處理。因爲，多數情況下，<code>lightPos</code>和<code>viewPos</code>不是每個<code>fragment</code>處理時都需要更新的，而對於<code>FragPos</code>，同樣也可以在<code>vertex shader</code>中計算出其切空間位置。這樣，在<code>fragment shader</code>中就不需要做空間轉換的工作，而第一種方法沒法做到這一點。基於這點，方法二中就不能將TBN矩陣送入<code>fragment shader</code>中，而是要將切空間中的光源位置、觀測位置和頂點位置送入著色器中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">typedef</span> <span class="k">struct</span><span class="p">{</span>
+	<span class="n">vec3</span> <span class="n">FragPos</span><span class="p">;</span>
+	<span class="n">vec2</span> <span class="n">TexCoords</span><span class="p">;</span>
+	<span class="n">vec3</span> <span class="n">TangentLightPos</span><span class="p">;</span>
+	<span class="n">vec3</span> <span class="n">TangentViewPos</span><span class="p">;</span>
+	<span class="n">vec3</span> <span class="n">TangentFragPos</span><span class="p">;</span>
+<span class="p">}</span><span class="n">frag_shader_t</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="n">vec3</span> <span class="n">lightPos</span><span class="p">;</span>
+	<span class="n">vec3</span> <span class="n">viewPos</span><span class="p">;</span>
+	<span class="n">mat3</span> <span class="n">TBN</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">));</span>
+	<span class="n">frag_shader_t</span> <span class="n">frag_shader</span><span class="p">;</span>
+	
+	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentLightPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">lightPos</span><span class="p">;</span>
+	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentViewPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">viewPos</span><span class="p">;</span>
+	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentFragPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">vec3</span><span class="p">(</span><span class="n">model</span> <span class="o">*</span> <span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">));</span>
+	<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="作業中的tbn">作業中的TBN</h2>
+<p>以上瞭解完TBN矩陣，滿懷期待的回頭閲讀作業三中的代碼，又傻眼了，作業中的TBN矩陣和之前介紹的完全不一樣。下面貼出來作業中TBN計算的提示。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">{
+	...
+	float kh = 0.2, kn = 0.1;
+
+	// TODO: Implement bump mapping here
+	// Let n = normal = (x, y, z)
+	// Vector t = (x*y/sqrt(x*x+z*z),sqrt(x*x+z*z),z*y/sqrt(x*x+z*z))
+	// Vector b = n cross product t
+	// Matrix TBN = [t b n]
+	// dU = kh * kn * (h(u+1/w,v)-h(u,v))
+	// dV = kh * kn * (h(u,v+1/h)-h(u,v))
+	// Vector ln = (-dU, -dV, 1)
+	// Normal n = normalize(TBN * ln)
+	...
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>仔細想想，我們構建TBN矩陣的目的是爲了統一計算時的坐標系，而以平面法向量為z軸，在切平面上構建局部坐標系是有無窮多組基的，所以之前介紹的TBN矩陣構建方式只是其中一種。現在再來看作業中的TBN矩陣構建方式。</p>
+<p>由於平面法向量是已知的，那麽最關鍵的一步是構建出T向量：我們將平面法向量$ \vec{\mathbf{N}} $在$xyz$坐標系中拆分成$ \vec{\mathbf{N}}_{xz} $和$\vec{\mathbf{N}}_{y}$兩個向量，可見下圖，這三個向量均在同一平面$\mathcal{S}$内，那麽只需要將該平面繞其軸（該平面的法向量）旋轉$90^{\circ}$即可，換個思路就是將$\vec{\mathbf{N}}_{xz}$向量旋轉到$\vec{\mathbf{N}}_{y}$向量処。</p>
+<center><img src = "TBN.svg" style="zoom:50%"></img></center>
+<p>具體操作如下，假設$\vec{\mathbf{N}}_{xz}$與$\mathbf{X}$軸夾角為$\theta$，那麽先將$\vec{\mathbf{N}}_{xz}$繞$\mathbf{Y}$軸旋轉$\theta$，再繞$\mathbf{Z}$軸旋轉$\frac{\pi}{2}$，最後繞$\mathbf{Y}$軸旋轉$-\theta$即可。將一系列旋轉操作作用于向量$\vec{\mathbf{N}}$即可得到向量$\vec{\mathbf{T}}$，再利用向量叉乘得到向量$\vec{\mathbf{B}}$，最後需要將$\vec{\mathbf{T}}$和$\vec{\mathbf{B}}$歸一化成單位向量即可。下面給出數學表示：
+$$
+\vec{\mathbf{T}} = rotate_y(-\theta) * rotate_z(90^{\circ}) * rotate_y(\theta)
+$$</p>
+<p>其中，</p>
+<div>
+$$
+\begin{align}
+rotate_y(\theta) &= \begin{bmatrix}
+\cos(\theta) & 0 & \sin{(\theta)} \\
+0 & 1 & 0\\
+-\sin(\theta) & 0 & \cos(\theta)
+\end{bmatrix} \\[2ex]
+rotate_z(90^{\circ}) &= \begin{bmatrix}
+0 & -1 & 0\\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{bmatrix}\\[2ex]
+rotate_y(\theta) &= \begin{bmatrix}
+\cos(\theta) & 0 & -\sin{(\theta)} \\
+0 & 1 & 0\\
+\sin(\theta) & 0 & \cos(\theta)
+\end{bmatrix}
+\end{align}
+$$
+</div>
+<p>由圖像上可知，</p>
+<div>
+$$
+\cos(\theta) = \frac{x}{\sqrt{x^2 + z^2}} \\
+\sin(\theta) = \frac{z}{\sqrt{x^2 + z^2}}
+$$
+</div>
+<p>帶入上面計算可得最終結果為：</p>
+<div>
+$$
+\vec{\mathbf{T}}  = \begin{bmatrix}
+\frac{-xy}{\sqrt{x^2+z^2}}, \sqrt{x^2 + z^2}, \frac{-zy}{\sqrt{x^2+z^2}}
+\end{bmatrix}
+$$
+</div>
+<p>以上就是作業中得到TBN矩陣的方式（另一方面可以看到作業中給出的提示是有錯誤的），其實像最開始説的那樣，形成TBN坐標系的基向量是無窮多的，只要在生成法向量貼圖和使用過程中使用方法統一，無論哪組基向量都行。至此作業中的TBN矩陣怎麽來的就搞明白了。</p>
+<h2 id="bump-mapping">Bump Mapping</h2>
+<p>接著作業提示看，構造完TBN矩陣后不是直接與法向量相乘就是結果了嗎？後面$\mathrm{d}U$和$\mathrm{d}V$都是在算什麽？帶著這個問題，我繼續看了另一種貼圖方式——凹凸貼圖<code>bump mapping</code>。</p>
+<p>所謂凹凸，就是物體表面有上下起伏所形成的溝壑或凸包；但凹凸貼圖本質也并未改變物體表面形狀，而是通過模擬凹凸表面的法向量來獲得視覺上的凹凸感。下面簡單介紹下原理<sup>[5]</sup>，再看代碼就很清楚了。</p>
+<p>假設某曲面上有一點$\mathbf{P}(u, v)$，其法向量可以由以下形式得到：
+$$
+\mathbf{N} = \mathbf{P}_u \times \mathbf{N}_v
+$$</p>
+<p>其中，</p>
+<div>
+$$
+\mathbf{P}_u = \frac{\partial \mathbf{P}}{\partial u}\\
+\mathbf{P}_v = \frac{\partial \mathbf{P}}{\partial v}
+$$
+</div>
+<p>現在，我們在其法向量方向對$\mathbf{P}$點施加一個擾動，我們成該擾動函數為凹凸函數 $b(u,v)$。</p>
+<div>
+$$
+\mathbf{P}^{'}(u, v) = \mathbf{P}(u,v) + b(u, v) \mathbf{n}
+$$
+</div>
+<p>這裏$\mathbf{n} = \mathbf{N} / |\mathbf{N}|$。</p>
+<p>那麽添加擾動后，其法向量也發生相應改變，即：
+$$
+\mathbf{N}^{'} = \mathbf{P}^{'}_u \times \mathbf{P}^{'}_v
+$$</p>
+<p>其中,</p>
+<div>
+$$
+\begin{align}
+\mathbf{P}^{'}_u &= \frac{\partial}{\partial u}(\mathbf{P} + b\mathbf{n})\\[2ex]
+&=  \frac{\partial \mathbf{P}}{\partial u} +  \frac{\partial b}{\partial u} \mathbf{n} + b \frac{\partial \mathbf{n}}{\partial u} \\[2ex]
+&= \mathbf{P}_u + b_u\mathbf{n} + b \mathbf{n}_u
+\end{align}
+$$
+</div>
+<p>假設，$b(u,v)$值非常小，那麽上式中最後一項可以被忽略。
+$$
+\mathbf{P}^{'}_u \approx \mathbf{P}_u + b_u \mathbf{n}
+$$</p>
+<p>同理可得：
+$$
+\mathbf{P}^{'}_v \approx \mathbf{P}_v + b_v \mathbf{n}
+$$</p>
+<p>這樣我們就可以知道經過擾動后的法向量為：</p>
+<div>
+$$
+\begin{align}
+\mathbf{N}^{'} &= \mathbf{P}_u \times \mathbf{P}_v + b_v(\mathbf{P}_u \times \mathbf{n}) + b_u(\mathbf{n}\times\mathbf{P}_v) + b_ub_v(\mathbf{n}\times \mathbf{n}) \\[2ex]
+&= \mathbf{N} + b_v(\mathbf{P}_u \times \mathbf{n}) + b_u(\mathbf{n} \times \mathbf{P}_v)
+\end{align}
+$$
+</div>
+<p>凹凸貼圖中存儲的其實是某個位置中，沿著法向量高度變化的量，原本是一張灰度圖，由於其存儲占用大、信息少，所以凹凸貼圖的方式逐漸被<code>normal mapping</code>取代。如下圖所示，左邊為凹凸貼圖，右邊為法向量貼圖。</p>
+<center><img src = "bump_map_normal_map.png" style="zoom:60%"></img></center>
+<p>現在回到作業中，由於貼圖中的坐標系都是局部坐標系，法向量為其Z-軸， UV為其另兩個軸，高度變化是沿著法向量方向，所以，最終結果是$ (-dU, -dV, 1) $的形式，其中：</p>
+<div>
+$$
+\begin{align}
+-dU &= b_u(\mathbf{n} \times \mathbf{P}_v) \\[2ex]
+-dV &= b_v(\mathbf{P}_u \times \mathbf{n})
+\end{align}
+$$
+</div>
+<p>而利用圖像計算U，V方向的微分的方法也很簡單，即：</p>
+<div>
+$$
+\begin{align}
+dU &= Image[u+\Delta{u}, v] - Image[u, v] \\[2ex]
+dV &= Image[u, v + \Delta{v}] - Image[u, v]
+\end{align}
+$$
+</div>
+<p>高度變化量為紋理圖中RGB像素的模長。這樣就能得到作業中想要的結果。</p>
+<h2 id="displacement-mapping">Displacement Mapping</h2>
+<p>無論是法向量貼圖還是凹凸貼圖，它本質只是修改了法向量的朝向，而并未改變物體表面的幾何形狀，這種方式又被稱爲<code>假位移</code>，那麽<code>真位移</code>自然就是改變了物體表面幾何形狀咯。參考下圖：</p>
+<center><img src = "displacement_mapping_1.png"></img></center>
+<p>假位移貼圖雖然效果不錯，但是還是有一定的失真，比如自陰影的缺失，例如下圖，上圖為displacement mapping結果，下圖為normal mapping結果。</p>
+<center><img src = "displacement_mapping_4.png"></img></center>
+<p>而陰影的缺失并不是光相互作用的唯一可見區別，通過不規則的真實位移，增加了物體表面，這導致更多的反射光，而使用假位移時，會導致暗部區域看起來形成不自然的黑色<sup>[6]</sup>。對比下面兩張圖可以看出兩者閒的區別。</p>
+<center><img src = "displacement_mapping_2.png"></img></center>
+<center><img src = "displacement_mapping_3.png"></img></center>
+<p>那麽對於作業中的displacement mapping的實現也很簡單，基於bump mapping結果，我們得到了TBN矩陣和高度偏移量以及法向量偏移方向。那麽我們只要將著色點移動到新位置即可。</p>
+<h2 id="參考資料">參考資料</h2>
+<p>[1] <a href="https://learnopengl.com/Advanced-Lighting/Normal-Mapping">Normal Mapping</a></p>
+<p>[2] <a href="https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/">Normal vs Displacement vs Bump Maps: Differences and when to use which</a></p>
+<p>[3] <a href="https://wiki.tizen.org/images/0/0c/Chapter_11%28Normal_mapping%29.pdf">Chapter XI Normal Mapping</a></p>
+<p>[4] <a href="http://games-cn.org/forums/topic/zuoye3-bump-mappingzhongtbndet-gongshizenmetuidaode/">作业3 bump mapping中TBN的t 公式怎么推导的</a></p>
+<p>[5] Hearn D, Baker M P, Baker M P. Computer graphics with OpenGL[M]. Upper Saddle River, NJ:: Pearson Prentice Hall, 2004.</p>
+<p>[6] <a href="https://www.artstation.com/blogs/andreasmischok/jzWz/fake-vs-true-displacement-part-12">Fake vs True Displacement - Part 1/2</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-01-07
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/normal-maps/">Normal Maps</a>
+          <a href="/tags/bump-maps/">Bump Maps</a>
+          <a href="/tags/displacement-maps/">Displacement Maps</a>
+          <a href="/tags/tbn-matrix/">TBN Matrix</a>
+          <a href="/tags/texture/">Texture</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2021-11-17-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch15-curves-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列 Ch15-Curves-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html" class="leancloud_visitors" data-flag-title="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vBdmTMoHIxDpTt5GOT8K28gO-9Nh9j0Va',
+        appKey: 'jFsG5CqfpQthJwdx9YEA2rn5',
+        notify:  false ,
+        verify:  true ,
+        avatar:'monsterid',
+        placeholder: '留下你的足跡...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
