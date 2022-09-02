@@ -23,10 +23,10 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
 
 
-<link rel="canonical" href="https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html" />
+<link rel="canonical" href="https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8OpenCV%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91Leptonica.html" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -42,19 +42,15 @@
 <meta property="og:title" content="利用OpenCV第三方库编译Leptonica" />
 <meta property="og:description" content="OpenCV对于做计算机视觉这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8OpenCV%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91Leptonica.html" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2017-06-17T13:39:59+00:00" />
 <meta property="article:modified_time" content="2017-06-17T13:39:59+00:00" />
+
 <meta itemprop="name" content="利用OpenCV第三方库编译Leptonica">
-<meta itemprop="description" content="OpenCV对于做计算机视觉这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教">
-<meta itemprop="datePublished" content="2017-06-17T13:39:59+00:00" />
+<meta itemprop="description" content="OpenCV对于做计算机视觉这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教"><meta itemprop="datePublished" content="2017-06-17T13:39:59+00:00" />
 <meta itemprop="dateModified" content="2017-06-17T13:39:59+00:00" />
 <meta itemprop="wordCount" content="1026">
-
-
-
-<meta itemprop="keywords" content="Leptonica,3rdparty,OpenCV,OpenSource," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Leptonica,3rdparty,OpenCV,OpenSource," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="利用OpenCV第三方库编译Leptonica"/>
 <meta name="twitter:description" content="OpenCV对于做计算机视觉这一行的人肯定非常熟悉，相较于它，另外一个开源库Leptonica就相对小众很多。Leptonica主要是面向教"/>
 
@@ -192,7 +188,7 @@
 <strong>Additional Include Directions:</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -201,82 +197,82 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">..\opencv\sources\3rdparty\zlib;
-..\opencv\sources\3rdparty\libtiff;
-..\opencv\sources\3rdparty\libpng;
-..\opencv\sources\3rdparty\libjpeg;
-..\leptonica\source\src;
-..\$cmake时指定的leptonica工程目录$\src;
-..\include\3rdparty;(这个目录为自建目录，将OpenCV编译后，工程文件夹内3rdparty\zlib和3rdparty\libtiff目录下zconf.h和tif_config.h两个文件拷贝至此)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">..\opencv\sources\3rdparty\zlib;
+</span></span><span class="line"><span class="cl">..\opencv\sources\3rdparty\libtiff;
+</span></span><span class="line"><span class="cl">..\opencv\sources\3rdparty\libpng;
+</span></span><span class="line"><span class="cl">..\opencv\sources\3rdparty\libjpeg;
+</span></span><span class="line"><span class="cl">..\leptonica\source\src;
+</span></span><span class="line"><span class="cl">..\$cmake时指定的leptonica工程目录$\src;
+</span></span><span class="line"><span class="cl">..\include\3rdparty;(这个目录为自建目录，将OpenCV编译后，工程文件夹内3rdparty\zlib和3rdparty\libtiff目录下zconf.h和tif_config.h两个文件拷贝至此)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Additional Library Directions:</strong>　　</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">..\install\x64\vc14\staticlib;(OpenCV重新编译后，生成的lib文件所在目录)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">..\install\x64\vc14\staticlib;(OpenCV重新编译后，生成的lib文件所在目录)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Additional Dependencies:</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Release      or  Debug
-libjpeg.lib  or  libjpegd.lib
-libpng.lib   or  libpngd.lib
-libtiff.lib  or  libtiffd.lib
-zlib.lib     or  zlibd.lib
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Release      or  Debug
+</span></span><span class="line"><span class="cl">libjpeg.lib  or  libjpegd.lib
+</span></span><span class="line"><span class="cl">libpng.lib   or  libpngd.lib
+</span></span><span class="line"><span class="cl">libtiff.lib  or  libtiffd.lib
+</span></span><span class="line"><span class="cl">zlib.lib     or  zlibd.lib
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Preprocessor Definitions</strong>中添加:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">LIBLEPT_EXPORTS
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">LIBLEPT_EXPORTS
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>　　找到<strong>config_auto.h</strong>，修改里面宏定义，添加：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#define HAVE_LIBPNG 1
-#define HAVE_LIBJPEG 1
-#define HAVE_LIBTIFF 1
-#define HAVEL_LIBZ 1
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#define HAVE_LIBPNG 1
+</span></span><span class="line"><span class="cl">#define HAVE_LIBJPEG 1
+</span></span><span class="line"><span class="cl">#define HAVE_LIBTIFF 1
+</span></span><span class="line"><span class="cl">#define HAVEL_LIBZ 1
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>　　此时编译工程会出现&rsquo;INT32&rsquo; redefinition的错误。到<strong>jmorecfg.h</strong>中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */
-typedef long INT32;
-#endif
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */
+</span></span><span class="line"><span class="cl">typedef long INT32;
+</span></span><span class="line"><span class="cl">#endif
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>　　改为</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -288,17 +284,17 @@ typedef long INT32;
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#include &lt;Windows.h&gt;    /* Added by wujiyang 2017.6.13  14:18  complier dlib for leptonica */      
-#ifndef XMD_H           /* X11/xmd.h correctly defines INT32 */      
-#ifndef _BASETSD_H_     /* Microsoft defines it in basetsd.h */      
-#ifndef _BASETSD_H      /* MinGW is slightly different */      
-#ifndef QGLOBAL_H       /* Qt defines it in qglobal.h */      
-typedef long INT32;      
-#endif      
-#endif      
-#endif      
-#endif  
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;Windows.h&gt;    /* Added by wujiyang 2017.6.13  14:18  complier dlib for leptonica */      
+</span></span><span class="line"><span class="cl">#ifndef XMD_H           /* X11/xmd.h correctly defines INT32 */      
+</span></span><span class="line"><span class="cl">#ifndef _BASETSD_H_     /* Microsoft defines it in basetsd.h */      
+</span></span><span class="line"><span class="cl">#ifndef _BASETSD_H      /* MinGW is slightly different */      
+</span></span><span class="line"><span class="cl">#ifndef QGLOBAL_H       /* Qt defines it in qglobal.h */      
+</span></span><span class="line"><span class="cl">typedef long INT32;      
+</span></span><span class="line"><span class="cl">#endif      
+</span></span><span class="line"><span class="cl">#endif      
+</span></span><span class="line"><span class="cl">#endif      
+</span></span><span class="line"><span class="cl">#endif  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>　　至此就完成leptonica工程配置，可以重编工程了。</p>
 <h2 id="使用重编后的库">使用重编后的库</h2>
@@ -332,7 +328,7 @@ typedef long INT32;
           <a href="/tags/opensource/">OpenSource</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html">
+        <a class="prev" href="/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/Camera%20Calibration.html">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">Camera Calibration</span>
             <span class="prev-text nav-mobile">Prev</span>
@@ -348,7 +344,7 @@ typedef long INT32;
         </div>
         
 
-  <span id="/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html" class="leancloud_visitors" data-flag-title="利用OpenCV第三方库编译Leptonica">
+  <span id="/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8OpenCV%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91Leptonica.html" class="leancloud_visitors" data-flag-title="利用OpenCV第三方库编译Leptonica">
 		<span class="post-meta-item-text">文章阅读量 </span>
 		<span class="leancloud-visitors-count">0</span>
 		<p></p>
@@ -412,7 +408,7 @@ typedef long INT32;
 
 
 
-<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

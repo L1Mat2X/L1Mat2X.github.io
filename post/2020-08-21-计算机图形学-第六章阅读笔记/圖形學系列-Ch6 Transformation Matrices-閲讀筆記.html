@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.81.0 with theme even" />
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
 
 
 <link rel="canonical" href="https://blog.matrixs.site/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch6%20Transformation%20Matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
@@ -35,7 +35,7 @@
 
 
 
-<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -43,14 +43,14 @@
 <meta property="og:description" content="6.1 2D-綫性變換 6.1.1 Scaling $$ scale(s_x, s_y) = \begin{bmatrix} s_x,&amp; 0 \\ 0,&amp; s_y \end{bmatrix} $$ 6.1.2 Shearing $$ shear_x(s) = \begin{bmatrix} 1,&amp; s\\ 0,&amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; \tan{\phi}\\ 0,&amp; 1 \end{bmatrix} $$ $$ shear_y(s) = \begin{bmatrix} 1, &amp; 0\\ s, &amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; 0\\ \tan{\phi},&amp; 1 \end{bmatrix} $$ 6.1.3 Rotation $\phi$逆時" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.matrixs.site/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch6%20Transformation%20Matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-08-21T17:15:33&#43;08:00" />
-<meta property="article:modified_time" content="2020-08-21T17:15:33&#43;08:00" />
+<meta property="article:published_time" content="2020-08-21T17:15:33+08:00" />
+<meta property="article:modified_time" content="2020-08-21T17:15:33+08:00" />
 
 <meta itemprop="name" content="圖形學系列-Ch6 Transformation Matrices-閲讀筆記">
-<meta itemprop="description" content="6.1 2D-綫性變換 6.1.1 Scaling $$ scale(s_x, s_y) = \begin{bmatrix} s_x,&amp; 0 \\ 0,&amp; s_y \end{bmatrix} $$ 6.1.2 Shearing $$ shear_x(s) = \begin{bmatrix} 1,&amp; s\\ 0,&amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; \tan{\phi}\\ 0,&amp; 1 \end{bmatrix} $$ $$ shear_y(s) = \begin{bmatrix} 1, &amp; 0\\ s, &amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; 0\\ \tan{\phi},&amp; 1 \end{bmatrix} $$ 6.1.3 Rotation $\phi$逆時"><meta itemprop="datePublished" content="2020-08-21T17:15:33&#43;08:00" />
-<meta itemprop="dateModified" content="2020-08-21T17:15:33&#43;08:00" />
-<meta itemprop="wordCount" content="4498">
-<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="6.1 2D-綫性變換 6.1.1 Scaling $$ scale(s_x, s_y) = \begin{bmatrix} s_x,&amp; 0 \\ 0,&amp; s_y \end{bmatrix} $$ 6.1.2 Shearing $$ shear_x(s) = \begin{bmatrix} 1,&amp; s\\ 0,&amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; \tan{\phi}\\ 0,&amp; 1 \end{bmatrix} $$ $$ shear_y(s) = \begin{bmatrix} 1, &amp; 0\\ s, &amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; 0\\ \tan{\phi},&amp; 1 \end{bmatrix} $$ 6.1.3 Rotation $\phi$逆時"><meta itemprop="datePublished" content="2020-08-21T17:15:33+08:00" />
+<meta itemprop="dateModified" content="2020-08-21T17:15:33+08:00" />
+<meta itemprop="wordCount" content="4520">
+<meta itemprop="keywords" content="2D Transformations,3D Transformations,Translation,Affine,Coordinate Transformations," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="圖形學系列-Ch6 Transformation Matrices-閲讀筆記"/>
 <meta name="twitter:description" content="6.1 2D-綫性變換 6.1.1 Scaling $$ scale(s_x, s_y) = \begin{bmatrix} s_x,&amp; 0 \\ 0,&amp; s_y \end{bmatrix} $$ 6.1.2 Shearing $$ shear_x(s) = \begin{bmatrix} 1,&amp; s\\ 0,&amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; \tan{\phi}\\ 0,&amp; 1 \end{bmatrix} $$ $$ shear_y(s) = \begin{bmatrix} 1, &amp; 0\\ s, &amp; 1 \end{bmatrix} = \begin{bmatrix} 1,&amp; 0\\ \tan{\phi},&amp; 1 \end{bmatrix} $$ 6.1.3 Rotation $\phi$逆時"/>
 
@@ -87,12 +87,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +116,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -120,11 +130,13 @@
       <div class="post-meta">
         <span class="post-time"> 2020-08-21 </span>
         <div class="post-category">
-            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/computer-graphic/"> Computer Graphic </a>
+            <a href="/categories/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 計算機圖形學 </a>
             <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            <a href="/categories/games101/"> Games101 </a>
             </div>
-          <span class="more-meta"> 4498 words </span>
-          <span class="more-meta"> 9 mins read </span>
+          <span class="more-meta"> 4520 words </span>
+          <span class="more-meta"> 10 mins read </span>
         
       </div>
     </header>
@@ -168,26 +180,26 @@
 <h3 id="611-scaling">6.1.1 Scaling</h3>
 <p>$$
 scale(s_x, s_y) = \begin{bmatrix}
-s_x,&amp; 0 \\<br>
+s_x,&amp; 0 \\
 0,&amp; s_y
 \end{bmatrix}
 $$</p>
 <h3 id="612-shearing">6.1.2 Shearing</h3>
 <p>$$
 shear_x(s) = \begin{bmatrix}
-1,&amp; s\\<br>
+1,&amp; s\\
 0,&amp; 1
 \end{bmatrix} = \begin{bmatrix}
-1,&amp; \tan{\phi}\\<br>
+1,&amp; \tan{\phi}\\
 0,&amp; 1
 \end{bmatrix}
 $$
 $$
 shear_y(s) = \begin{bmatrix}
-1, &amp; 0\\<br>
+1, &amp; 0\\
 s, &amp; 1
 \end{bmatrix} = \begin{bmatrix}
-1,&amp; 0\\<br>
+1,&amp; 0\\
 \tan{\phi},&amp; 1
 \end{bmatrix}
 $$</p>
@@ -195,27 +207,27 @@ $$</p>
 <p>$\phi$逆時針爲正，順時針為負。
 $$
 rotate(\phi) = \begin{bmatrix}
-\cos{\phi},&amp;-\sin{\phi}\\<br>
+\cos{\phi},&amp;-\sin{\phi}\\
 \sin{\phi},&amp;\cos{\phi}
 \end{bmatrix}
 $$
 旋转矩阵有一个很好的特性
 $$
 R^T = \begin{bmatrix}
-\cos{\phi},&amp;\sin{\phi}\\<br>
+\cos{\phi},&amp;\sin{\phi}\\
 -\sin{\phi},&amp;\cos{\phi}
 \end{bmatrix} = R^{-1}
 $$</p>
 <h3 id="614-reflection">6.1.4 Reflection</h3>
 <p>$$
 \text{reflect-x} = \begin{bmatrix}
-1,&amp;0\\<br>
+1,&amp;0\\
 0,&amp;-1
 \end{bmatrix}
 $$
 $$
 \text{reflect-y} = \begin{bmatrix}
--1,&amp;0\\<br>
+-1,&amp;0\\
 0,&amp;1
 \end{bmatrix}
 $$</p>
@@ -272,124 +284,142 @@ $$
 </ol>
 <p>奇異值分解與特徵值分解的區別除了兩個不同的正交矩陣和單個旋轉矩陣外，還有另外一個區別。由於奇異值分解后有不同的奇異值向量，我們可以通過翻轉符號來保持奇異值非負，同時需要翻轉奇異值向量的方向來保證結果不變，這樣就導致矩陣$\mathbf{U}$和矩陣$\mathbf{V}$不再是單純的旋轉矩陣，它們還包含了$reflection$操作。雖然看起來在使用過程中不太方便，但是通過矩陣的行列式的值就能判斷是旋轉（$+1$）還是鏡像（$-1$）。</p>
 <h4 id="paeth-decomposition-of-rotations">Paeth Decomposition of Rotations</h4>
-<p>旋轉矩陣可分解爲一系列斜切操作：
+<p>旋轉矩陣可分解爲一系列斜切操作：</p>
+<div>
 $$
 \begin{bmatrix}
-\cos{\phi},&amp;-\sin{\phi}\\<br>
-\sin{\phi},&amp;\cos{\phi}
+\cos{\phi},&-\sin{\phi}\\\\
+\sin{\phi},&\cos{\phi}
 \end{bmatrix} = \begin{bmatrix}
-1,&amp;\frac{\cos{\phi}-1}{\sin{\phi}}\\<br>
-0,&amp;1
+1,&\frac{\cos{\phi}-1}{\sin{\phi}}\\\\
+0,&1
 \end{bmatrix} \begin{bmatrix}
-1,&amp;0\<br>
-\sin{\phi},&amp;1
+1,&0\\
+\sin{\phi},&1
 \end{bmatrix} \begin{bmatrix}
-1,&amp;\frac{\cos{\phi}-1}{\sin{\phi}}\\<br>
-0,&amp;1
+1,&\frac{\cos{\phi}-1}{\sin{\phi}}\\\\
+0,&1
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <center><img src = "figure6.16.png"></img></center>
 <h2 id="62-3d-綫性變換">6.2 3D-綫性變換</h2>
 <p>類似2D的綫性變換，其中旋轉操作因爲多了兩個自由度，所以略有不同：
 $$
-\text{scale}(s_x, s_y, s_z) = \begin{bmatrix}
-s_x &amp; 0 &amp; 0\\<br>
-0 &amp; s_y &amp; 0\\<br>
+\begin{align}
+\text{scale}(s_x, s_y, s_z) &amp;= \begin{bmatrix}
+s_x &amp; 0 &amp; 0\\
+0 &amp; s_y &amp; 0\\
 0 &amp; 0 &amp; s_z
 \end{bmatrix} \\[3ex]
-\text{rotate-z}(\alpha) = \begin{bmatrix}
-\cos{\alpha} &amp; -\sin{\alpha} &amp; 0\\<br>
-\sin{\alpha} &amp; \cos{\alpha} &amp; 0\\<br>
+\text{rotate-z}(\alpha) &amp;= \begin{bmatrix}
+\cos{\alpha} &amp; -\sin{\alpha} &amp; 0\\
+\sin{\alpha} &amp; \cos{\alpha} &amp; 0\\
 0 &amp; 0 &amp; 1
 \end{bmatrix} \\[3ex]
-\text{rotate-x}(\beta) = \begin{bmatrix}
-1 &amp; 0 &amp; 0\\<br>
-0 &amp; \cos{\beta} &amp; -\sin{\beta}\\<br>
+\text{rotate-x}(\beta) &amp;= \begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+0 &amp; \cos{\beta} &amp; -\sin{\beta}\\
 0 &amp; \sin{\beta} &amp; \cos{\beta}
 \end{bmatrix} \\[3ex]
-\text{rotate-y}(\gamma) = \begin{bmatrix}
-\cos{\gamma} &amp; 0 &amp; \sin{\gamma}\\<br>
-0 &amp; 1 &amp; 0\\<br>
+\text{rotate-y}(\gamma) &amp;= \begin{bmatrix}
+\cos{\gamma} &amp; 0 &amp; \sin{\gamma}\\
+0 &amp; 1 &amp; 0\\
 -\sin{\gamma} &amp; 0 &amp; \cos{\gamma}
 \end{bmatrix} \\[3ex]
-\text{shear-x}(d_y, d_z) = \begin{bmatrix}
-1 &amp; d_y &amp; d_z\\<br>
-0 &amp; 1 &amp; 0\\<br>
+\text{shear-x}(d_y, d_z) &amp;= \begin{bmatrix}
+1 &amp; d_y &amp; d_z\\
+0 &amp; 1 &amp; 0\\
 0 &amp; 0 &amp; 1
 \end{bmatrix} \\[3ex]
-\text{shear-y}(d_x, d_z) = \begin{bmatrix}
-1 &amp; 0 &amp; 0\\<br>
-d_x &amp; 1 &amp; d_z\\<br>
+\text{shear-y}(d_x, d_z) &amp;= \begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+d_x &amp; 1 &amp; d_z\\
 0 &amp; 0 &amp; 1
 \end{bmatrix} \\[3ex]
-\text{shear-z}(d_x, d_y) = \begin{bmatrix}
-1 &amp; 0 &amp; 0\\<br>
-0 &amp; 1 &amp; 0\\<br>
+\text{shear-z}(d_x, d_y) &amp;= \begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0\\
 d_x &amp; d_y &amp; 1
 \end{bmatrix}
+\end{align}
 $$</p>
 <p>與2D綫性變換類型，3D綫性變換也能通過矩陣乘法將多種變換組合成一個矩陣，同樣也能通過SVD變換將變換矩陣分解成任意旋轉和縮放；3D旋轉也同樣能分解成3D錯切變換的組合。</p>
 <h3 id="621-任意3d旋轉">6.2.1 任意3D旋轉</h3>
 <p>通過上面三個軸的旋轉矩陣可以發現，3D旋轉矩陣是<strong>正交陣</strong>，現假設笛卡爾坐標系下，三軸為$\mathbf{x}$、$\mathbf{y}$和$\mathbf{z}$ ，可以通過一個旋轉矩陣$\mathbf{R}_{uvw}$獲得新的基坐標軸$\mathbf{u}$, $\mathbf{v}$和$\mathbf{w}$，這三個基坐標軸滿足：</p>
-<p>$$
-\mathbf{u} = x_u\mathbf{x} + y_u\mathbf{y} + z_u\mathbf{z}\\<br>
-\mathbf{v} = x_v\mathbf{x} + y_v\mathbf{y} + z_v\mathbf{z}\\<br>
-\mathbf{w} = x_w\mathbf{x} + y_w\mathbf{y} + z_w\mathbf{z}\\<br>
-\mathbf{u}\cdot\mathbf{u} = \mathbf{v}\cdot\mathbf{v} = \mathbf{w}\cdot \mathbf{w} = 1\\<br>
-\mathbf{u}\cdot\mathbf{v} = \mathbf{v}\cdot\mathbf{w} = \mathbf{w}\cdot \mathbf{u} = 0
-$$</p>
+<div>
+$$
+\begin{align}
+\mathbf{u} &= x_u\mathbf{x} + y_u\mathbf{y} + z_u\mathbf{z} \\[2ex]
+\mathbf{v} &= x_v\mathbf{x} + y_v\mathbf{y} + z_v\mathbf{z} \\[2ex]
+\mathbf{w} &= x_w\mathbf{x} + y_w\mathbf{y} + z_w\mathbf{z} \\[2ex]
+\mathbf{u}\cdot\mathbf{u} &= \mathbf{v}\cdot\mathbf{v} = \mathbf{w}\cdot \mathbf{w} = 1 \\[2ex]
+\mathbf{u}\cdot\mathbf{v} &= \mathbf{v}\cdot\mathbf{w} = \mathbf{w}\cdot \mathbf{u} = 0
+\end{align}
+$$
+</div>
 <p>這個旋轉矩陣$\mathbf{R}_{uvw}$就可用如下方式表示：</p>
-<p>$$
+<div>
+$$
 \mathbf{R}_{uvw} = \begin{bmatrix}
-x_u &amp; y_u &amp; z_u\\<br>
-x_v &amp; y_v &amp; z_v\\<br>
-x_w &amp; y_w &amp; z_w
+x_u & y_u & z_u\\
+x_v & y_v & z_v\\
+x_w & y_w & z_w
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <p>很容易驗證得出：</p>
-<p>$$
+<div>
+$$
 \mathbf{R}_{uvw}\mathbf{u} = \begin{bmatrix}
-\mathbf{u}\cdot \mathbf{u}\\<br>
-\mathbf{u}\cdot\mathbf{v}\\<br>
+\mathbf{u}\cdot \mathbf{u}\\
+\mathbf{u}\cdot\mathbf{v}\\
 \mathbf{u}\cdot\mathbf{w}
 \end{bmatrix} = \begin{bmatrix}
-1\\<br>
-0\\<br>
+1\\
+0\\
 0
 \end{bmatrix} = \mathbf{x}
-$$</p>
+$$
+</div>
 <p>同理可得：</p>
 <div>
 $$
-\mathbf{R}_{uvw}\mathbf{v} = \mathbf{y}\\\\
-\mathbf{R}_{uvw}\mathbf{w} = \mathbf{z}
+\begin{align}
+\mathbf{R}_{uvw}\mathbf{v} &= \mathbf{y}\\
+\mathbf{R}_{uvw}\mathbf{w} &= \mathbf{z}
+\end{align}
 $$
 </div>
 <p>由於$\mathbf{R}_{uvw}$是正交矩陣，那麽$\mathbf{R}^T = \mathbf{R}^{-1}$，這就説明：</p>
 <div>
 $$
-\mathbf{R}_{uvw}^T\mathbf{x} = \mathbf{u} \\\\
-\mathbf{R}_{uvw}^T\mathbf{y} = \mathbf{v} \\\\
-\mathbf{R}_{uvw}^T\mathbf{z} = \mathbf{w}
+\begin{align}
+\mathbf{R}_{uvw}^T\mathbf{x} &= \mathbf{u} \\
+\mathbf{R}_{uvw}^T\mathbf{y} &= \mathbf{v} \\
+\mathbf{R}_{uvw}^T\mathbf{z} &= \mathbf{w}
+\end{align}
 $$
 </div>
 <p>舉例：假設需要將物體繞坐標系$\mathbf{xyz}$下的任一向量$\mathbf{a}$旋轉$\phi$度，該旋轉矩陣如何求？
 解答：先令$\mathbf{w} = \mathbf{a}$，再通過單向量構建基向量的方式構建出$\mathbf{u}$和$\mathbf{v}$，然後先將物體旋轉至基向量$\mathbf{uvw}$的坐標系下，再用繞$\mathbf{z}$軸的旋轉矩陣進行變換，最後變換囘原坐標係$\mathbf{xyz}$下即可，變換矩陣為：</p>
-<p>$$
+<div>
+$$
 \begin{bmatrix}
-x_u &amp; x_v &amp; x_w\\<br>
-y_u &amp; y_v &amp; y_w\\<br>
-z_u &amp; z_v &amp; z_w
+x_u & x_v & x_w\\
+y_u & y_v & y_w\\
+z_u & z_v & z_w
 \end{bmatrix} \begin{bmatrix}
-\cos{\phi} &amp; -\sin{\phi} &amp; 0\\<br>
-\sin{\phi} &amp; \cos{\phi} &amp; 0\\<br>
-0 &amp; 0 &amp; 1
+\cos{\phi} & -\sin{\phi} & 0\\
+\sin{\phi} & \cos{\phi} & 0\\
+0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-x_u &amp; y_u &amp; z_u\\<br>
-x_v &amp; y_v &amp; z_v\\<br>
-x_w &amp; y_w &amp; z_w
+x_u & y_u & z_u\\
+x_v & y_v & z_v\\
+x_w & y_w & z_w
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <p><font color = #27B2E6><strong>這個例子説明在空間中繞旋轉任意軸旋轉，可以先構造新的坐標系，將現有坐標系變換到新坐標系后，再做旋轉，最後變換囘原坐標系。</strong></font></p>
 <h3 id="622-transforming-normal-vectors">6.2.2 Transforming Normal Vectors</h3>
 <p>對於3維向量，可以表示位置、偏移量、方向等，同樣也可以用於表示物體表面的法向量。表面法向量垂直于該位置表面的切平面。而在對3維表面進行變換時，表面法向量若使用相同的變換矩陣往往會得到與其定義不一樣的結果，即變換後的法向量不垂直與切平面。如下圖：</p>
@@ -401,94 +431,114 @@ $$
 $$
 </div>
 <p>先從原始等式$\mathbf{n}^T \mathbf{t} = 0$出發，令$\mathbf{I} = \mathbf{M}^{-1}\mathbf{M}$:</p>
-<p>$$
-\mathbf{n}^T\mathbf{t} = \mathbf{n}^T\mathbf{I}\mathbf{t} = \mathbf{n}^T\mathbf{M}^{-1}\mathbf{M}\mathbf{t} = 0 \\<br>
-\Rightarrow \left(\mathbf{n}^T\mathbf{M}^{-1}\right)\left(\mathbf{M}\mathbf{t}\right) = \left(\mathbf{n}^T\mathbf{M}^{-1}\right)\mathbf{t}_M = 0
-$$</p>
+<div>
+$$
+\begin{align}
+&\mathbf{n}^T\mathbf{t} = \mathbf{n}^T\mathbf{I}\mathbf{t} = \mathbf{n}^T\mathbf{M}^{-1}\mathbf{M}\mathbf{t} = 0 \\
+\Rightarrow &\left(\mathbf{n}^T\mathbf{M}^{-1}\right)\left(\mathbf{M}\mathbf{t}\right) = \left(\mathbf{n}^T\mathbf{M}^{-1}\right)\mathbf{t}_M = 0
+\end{align}
+$$
+</div>
 <p>這樣可得到：</p>
-<p>$$
-\mathbf{n}_N^T = \mathbf{n}^T\mathbf{M}^{-1}\\<br>
-\Rightarrow \mathbf{n}_N = \left(\mathbf{n}^T\mathbf{M}^{-1}\right)^T = \left(\mathbf{M}^{-1}\right)^T\mathbf{n}
-$$</p>
+<div>
+$$
+\begin{align}
+\mathbf{n}_N^T &= \mathbf{n}^T\mathbf{M}^{-1}\\
+\Rightarrow \mathbf{n}_N &= \left(\mathbf{n}^T\mathbf{M}^{-1}\right)^T = \left(\mathbf{M}^{-1}\right)^T\mathbf{n}
+\end{align}
+$$
+</div>
 <p>這樣就可以得到我們需要的$\mathbf{N} = \left(\mathbf{M}^{-1}\right)^T$。
 還可以進一步簡化，由於對於法向量，我們只使用其方向，而不關心其長度，所以在計算$\mathbf{N}$時可以忽略矩陣逆變換的行列式計算，這樣就能得到$\mathbf{N}$的值爲：</p>
 <center><img src = "ch6-6.2.2_N.png"></img></center>
 <h2 id="63-平移和仿射變換">6.3 平移和仿射變換</h2>
 <p>前面介紹的利用矩陣對物體進行變換，只能實現縮放和旋轉操作，無法實現平移。若要實現平移，需要在之後添加平移向量。</p>
-<p>$$
+<div>
+$$
 \begin{bmatrix}
-x'\\<br>
+x'\\
 y'
 \end{bmatrix} = \begin{bmatrix}
-m_{00} &amp; m_{01}\\<br>
-m_{10} &amp; m_{11}
+m_{00} & m_{01}\\
+m_{10} & m_{11}
 \end{bmatrix} \begin{bmatrix}
-x\\<br>
+x\\
 y
 \end{bmatrix} + \begin{bmatrix}
-x_t\\<br>
+x_t\\
 y_t
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <p>這樣表示顯然不夠優雅，我們希望用一個矩陣就能同時實現綫性變換和平移變換。爲達到這個目的，齊次坐標表示就顯得非常有用。將二維空間中的點用三維向量表示，就可實現：</p>
-<p>$$
+<div>
+$$
 \begin{bmatrix}
-x'\\<br>
-y'\\<br>
+x'\\
+y'\\
 1
 \end{bmatrix} = \begin{bmatrix}
-m_{00} &amp; m_{01} &amp; x_t\\<br>
-m_{10} &amp; m_{11} &amp; y_t\\<br>
-0 &amp; 0 &amp; 1
+m_{00} & m_{01} & x_t\\
+m_{10} & m_{11} & y_t\\
+0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-x\\<br>
-y\\<br>
+x\\
+y\\
 1
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <p>之後就將這種合并了綫性變換和平移變換的矩陣統稱為仿射變換矩陣(Affine Transformation)。
 齊次坐標表示有兩種：$\begin{bmatrix}x\\y\\1\end{bmatrix}$和$\begin{bmatrix}x\\y\\0\end{bmatrix}$，前者表示點的位置，後者表示方向或位移。
 同樣，利用矩陣乘法，也能將平移變換和綫性變換組合成一個矩陣形式，而單純的平移變換矩陣如下：</p>
-<p>$$
+<div>
+$$
 \text{translate}(x_t, y_t, z_t) = \begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; x_t\\<br>
-0 &amp; 1 &amp; 0 &amp; y_t\\<br>
-0 &amp; 0 &amp; 1 &amp; z_t\\<br>
-0 &amp; 0 &amp; 0 &amp; 1
+1 & 0 & 0 & x_t\\
+0 & 1 & 0 & y_t\\
+0 & 0 & 1 & z_t\\
+0 & 0 & 0 & 1
 \end{bmatrix}
-$$</p>
+$$
+</div>
 <p>例如，對下圖窗口進行一系列變換：</p>
 <center><img src = "figure6.18.png" style="zoom:70%"></img></center>
-<p>$$
+<div>
+$$
 \begin{align}
-\text{window} &amp;= \text{translate}(x_l',y_l')\text{scale}\left(\frac{x_h' - x_l'}{x_h-x_l}, \frac{y_h'-y_l'}{y_h-y_l}\right)\text{translate}(-x_l,-y_l)\\<br>
-&amp;= \begin{bmatrix}
-1 &amp; 0 &amp; x_l'\\<br>
-0 &amp; 1 &amp; y_l'\\<br>
-0 &amp; 0 &amp; 1
+\text{window} &= \text{translate}(x_l',y_l')\text{scale}\left(\frac{x_h' - x_l'}{x_h-x_l}, \frac{y_h'-y_l'}{y_h-y_l}\right)\text{translate}(-x_l,-y_l)\\
+&= \begin{bmatrix}
+1 & 0 & x_l'\\
+0 & 1 & y_l'\\
+0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-\frac{x_h' - x_l'}{x_h-x_l} &amp; 0 &amp; 0\\<br>
-0 &amp; \frac{y_h'-y_l'}{y_h-y_l} &amp; 0\\<br>
-0 &amp; 0 &amp; 1
+\frac{x_h' - x_l'}{x_h-x_l} & 0 & 0\\
+0 & \frac{y_h'-y_l'}{y_h-y_l} & 0\\
+0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-1 &amp; 0 &amp; -x_l\\<br>
-0 &amp; 1 &amp; -y_l\\<br>
-0 &amp; 0 &amp; 1
-\end{bmatrix}\\<br>
-&amp; = \begin{bmatrix}
-\frac{x_h' - x_l'}{x_h-x_l} &amp; 0 &amp; \frac{x_l&rsquo;x_h - x_h&rsquo;x_l}{x_h - x_l}\\<br>
-0 &amp; \frac{y_h'-y_l'}{y_h-y_l} &amp; \frac{y_l&rsquo;y_h - y_h&rsquo;y_l}{y_h-y_l}\\<br>
-0 &amp; 0 &amp; 1
+1 & 0 & -x_l\\
+0 & 1 & -y_l\\
+0 & 0 & 1
+\end{bmatrix}\\
+& = \begin{bmatrix}
+\frac{x_h' - x_l'}{x_h-x_l} & 0 & \frac{x_l'x_h - x_h'x_l}{x_h - x_l}\\
+0 & \frac{y_h'-y_l'}{y_h-y_l} & \frac{y_l'y_h - y_h'y_l}{y_h-y_l}\\
+0 & 0 & 1
 \end{bmatrix}
 \end{align}
-$$</p>
+$$
+</div>
 <h2 id="64-變換矩陣的逆">6.4 變換矩陣的逆</h2>
 <p>從幾何角度看：</p>
-<p>$$
-\text{scale}(s_x, s_y, s_z)^{-1} = \text{scale}(1/s_x, 1/s_y, 1/s_z)\\<br>
-\text{rotate}(\phi)^{-1} = \text{rotate}(-\phi)\\<br>
-\text{translate}(x_t,y_t,z_t)^{-1} = \text{translate}(-x_t,-y_t,-z_t)
-$$</p>
+<div>
+$$
+\begin{align}
+\text{scale}(s_x, s_y, s_z)^{-1} &= \text{scale}(1/s_x, 1/s_y, 1/s_z)\\[2ex]
+\text{rotate}(\phi)^{-1} &= \text{rotate}(-\phi)\\[2ex]
+\text{translate}(x_t,y_t,z_t)^{-1} &= \text{translate}(-x_t,-y_t,-z_t)
+\end{align}
+$$
+</div>
 <p>而對於一系列變換組合</p>
 <div>$$
 \mathbf{M} = \mathbf{M}_{1}\mathbf{M}_{2}\cdots\mathbf{M}_n
@@ -528,34 +578,36 @@ $$</p>
 <p>我們可以通過以下變換，將點$\mathbf{p}$坐標在兩個坐標系閒切換：</p>
 <div>
 $$
-\begin{bmatrix}
-x_p\\\\
-y_p\\\\
+\begin{align}
+&\begin{bmatrix}
+x_p\\
+y_p\\
 1
 \end{bmatrix} = \begin{bmatrix}
-1 & 0 & x_e\\\\
-0 & 1 & y_e\\\\
+1 & 0 & x_e\\
+0 & 1 & y_e\\
 0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-x_u & x_v & 0 \\\\
+x_u & x_v & 0 \\
 0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-u_p\\\\
-v_p\\\\
+u_p\\
+v_p\\
 1
 \end{bmatrix} = \begin{bmatrix}
-x_u & x_v & x_e\\\\
-y_u & y_v & y_e\\\\
+x_u & x_v & x_e\\
+y_u & y_v & y_e\\
 0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-u_p\\\\
-v_p\\\\
+u_p\\
+v_p\\
 1
-\end{bmatrix} \\\\
-\Rightarrow \mathbf{P}_{xy} = \begin{bmatrix}
-\mathbf{u} & \mathbf{v} & \mathbf{e}\\\\
+\end{bmatrix} \\
+\Rightarrow &\mathbf{P}_{xy} = \begin{bmatrix}
+\mathbf{u} & \mathbf{v} & \mathbf{e}\\
 0 & 0 & 1
 \end{bmatrix}\mathbf{P}_{uv}
+\end{align}
 $$
 </div>
 <p>上面這種坐標系閒變換的矩陣稱爲<code>frame-to-canonical</code>矩陣。</p>
@@ -563,27 +615,29 @@ $$
 <p>同樣，其逆變換如下：</p>
 <div>
 $$
-\begin{bmatrix}
-u_p\\\\
-v_p\\\\
+\begin{align}
+&\begin{bmatrix}
+u_p\\
+v_p\\
 1
 \end{bmatrix} = \begin{bmatrix}
-x_u & x_v & 0 \\\\
-y_u & y_v & 0 \\\\
+x_u & x_v & 0 \\
+y_u & y_v & 0 \\
 0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-1 & 0 & -x_e\\\\
-0 & 1 & -y_e\\\\
+1 & 0 & -x_e\\
+0 & 1 & -y_e\\
 0 & 0 & 1
 \end{bmatrix} \begin{bmatrix}
-x_p\\\\
-y_p\\\\
+x_p\\
+y_p\\
 1
-\end{bmatrix} \\\\
-\Rightarrow \mathbf{P}_{uv} = \begin{bmatrix}
-\mathbf{u} & \mathbf{v} & \mathbf{e}\\\\
+\end{bmatrix} \\
+\Rightarrow &\mathbf{P}_{uv} = \begin{bmatrix}
+\mathbf{u} & \mathbf{v} & \mathbf{e}\\
 0 & 0 & 1
 \end{bmatrix}^{-1}\mathbf{P}_{xy}
+\end{align}
 $$
 </div>
 <p>這種逆變換稱爲<code>canonical-to-frame</code>矩陣。
@@ -592,7 +646,7 @@ $$
 <div>
 $$
 \mathbf{P}_{uv} = \begin{bmatrix}
-\mathbf{x}_{uv} & \mathbf{y}_{uv} & \mathbf{o}_{uv}\\\\
+\mathbf{x}_{uv} & \mathbf{y}_{uv} & \mathbf{o}_{uv}\\
 0 & 0 & 1
 \end{bmatrix}\mathbf{P}_{xy}
 $$
@@ -624,10 +678,11 @@ $$
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/computer-graphic/">Computer Graphic</a>
-          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
-          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
-          <a href="/tags/games101/">Games101</a>
+          <a href="/tags/2d-transformations/">2D Transformations</a>
+          <a href="/tags/3d-transformations/">3D Transformations</a>
+          <a href="/tags/translation/">Translation</a>
+          <a href="/tags/affine/">Affine</a>
+          <a href="/tags/coordinate-transformations/">Coordinate Transformations</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch7%20Viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
@@ -646,7 +701,26 @@ $$
         </div>
         
 
-  
+  <span id="/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch6%20Transformation%20Matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" class="leancloud_visitors" data-flag-title="圖形學系列-Ch6 Transformation Matrices-閲讀筆記">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vBdmTMoHIxDpTt5GOT8K28gO-9Nh9j0Va',
+        appKey: 'jFsG5CqfpQthJwdx9YEA2rn5',
+        notify:  false ,
+        verify:  true ,
+        avatar:'monsterid',
+        placeholder: '留下你的足跡...',
+        visitor:  true 
+    });
+  </script>
 
   
 
@@ -674,13 +748,10 @@ $$
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -694,15 +765,15 @@ $$
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

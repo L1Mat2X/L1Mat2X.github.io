@@ -6,26 +6,22 @@
     <description>Recent content in Computer Vision on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 14 Feb 2019 10:07:06 +0800</lastBuildDate>
-    
-	<atom:link href="https://blog.matrixs.site/categories/computer-vision/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 14 Feb 2019 10:07:06 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/categories/computer-vision/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blob特征提取介紹</title>
-      <link>https://blog.matrixs.site/post/2019-02-19_blog_analysis/blog-analysis.html</link>
+      <link>https://blog.matrixs.site/post/2019-02-19_Blog_Analysis/Blog%20Analysis.html</link>
       <pubDate>Thu, 14 Feb 2019 10:07:06 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2019-02-19_blog_analysis/blog-analysis.html</guid>
+      <guid>https://blog.matrixs.site/post/2019-02-19_Blog_Analysis/Blog%20Analysis.html</guid>
       <description>原点矩、中心距、Hu矩 最早接触矩是在《概率论与数理统计》中，下面给出书中的对于矩的定义： 设$X$为随机变量，$c$为常数，$k$为正整数。则</description>
     </item>
     
     <item>
       <title>Camera Calibration</title>
-      <link>https://blog.matrixs.site/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</link>
+      <link>https://blog.matrixs.site/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/Camera%20Calibration.html</link>
       <pubDate>Fri, 27 Apr 2018 10:40:53 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</guid>
+      <guid>https://blog.matrixs.site/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/Camera%20Calibration.html</guid>
       <description>符号约定 WCS —— 世界坐标系 CCS —— 相机坐标系 IPCS——像平面坐标系 ICS——图像坐标系 $(x_w, y_w, z_w)$ ——世界坐标系点坐标 $(x_c, y_c, z_c)$——相机坐标系点</description>
     </item>
     

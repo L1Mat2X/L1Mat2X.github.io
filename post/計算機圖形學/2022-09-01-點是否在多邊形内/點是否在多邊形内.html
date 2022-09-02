@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>點是否在多邊形内 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="這是最近做項目過程中延申思考的一個問題——在平面上如何快速判斷點與任意多邊形的關係？上網查找一些相關資料，其中《Graphic GEM IV》中的論文《Point in Polygon Strategies》做了許多介紹與總結，特此記錄。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/2022-09-01-%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85/%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="點是否在多邊形内" />
+<meta property="og:description" content="這是最近做項目過程中延申思考的一個問題——在平面上如何快速判斷點與任意多邊形的關係？上網查找一些相關資料，其中《Graphic GEM IV》中的論文《Point in Polygon Strategies》做了許多介紹與總結，特此記錄。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/2022-09-01-%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85/%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-09-01T09:52:51+08:00" />
+<meta property="article:modified_time" content="2022-09-01T09:52:51+08:00" />
+
+<meta itemprop="name" content="點是否在多邊形内">
+<meta itemprop="description" content="這是最近做項目過程中延申思考的一個問題——在平面上如何快速判斷點與任意多邊形的關係？上網查找一些相關資料，其中《Graphic GEM IV》中的論文《Point in Polygon Strategies》做了許多介紹與總結，特此記錄。"><meta itemprop="datePublished" content="2022-09-01T09:52:51+08:00" />
+<meta itemprop="dateModified" content="2022-09-01T09:52:51+08:00" />
+<meta itemprop="wordCount" content="4491">
+<meta itemprop="keywords" content="Polygon,Convex Polygon,Point,Algorithm," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="點是否在多邊形内"/>
+<meta name="twitter:description" content="這是最近做項目過程中延申思考的一個問題——在平面上如何快速判斷點與任意多邊形的關係？上網查找一些相關資料，其中《Graphic GEM IV》中的論文《Point in Polygon Strategies》做了許多介紹與總結，特此記錄。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">點是否在多邊形内</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-09-01 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/faq/"> FAQ </a>
+            </div>
+          <span class="more-meta"> 4491 words </span>
+          <span class="more-meta"> 9 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#基本概念">基本概念</a>
+          <ul>
+            <li><a href="#winding-number">Winding Number</a></li>
+            <li><a href="#jordan-curve">Jordan Curve</a></li>
+          </ul>
+        </li>
+        <li><a href="#general-algorithms">General Algorithms</a>
+          <ul>
+            <li><a href="#crossings-test">Crossings Test</a></li>
+            <li><a href="#winding-number-1">Winding Number</a></li>
+            <li><a href="#triangle-fan-test">Triangle Fan Test</a></li>
+            <li><a href="#half-plane-test">Half-Plane Test</a></li>
+            <li><a href="#grid-method">Grid Method</a></li>
+            <li><a href="#pixel-based-testing">Pixel Based Testing</a></li>
+          </ul>
+        </li>
+        <li><a href="#convex-polygons">Convex Polygons</a>
+          <ul>
+            <li><a href="#hybird-half-plane">Hybird Half-Plane</a></li>
+          </ul>
+        </li>
+        <li><a href="#statistics">Statistics</a></li>
+        <li><a href="#conclusions">Conclusions</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>這是最近做項目過程中延申思考的一個問題——在平面上如何快速判斷點與任意多邊形的關係？上網查找一些相關資料，其中《Graphic GEM IV》中的論文《Point in Polygon Strategies》做了許多介紹與總結，特此記錄。</p>
+<h2 id="基本概念">基本概念</h2>
+<h3 id="winding-number">Winding Number</h3>
+<p>以下介紹來自<a href="https://en.wikipedia.org/wiki/Winding_number">維基百科</a>:</p>
+<blockquote>
+<p>Suppose we are given a closed, oriented curve in the xy plane. We can imagine the curve as the path of motion of some object, with the orientation indicating the direction in which the object moves. Then the winding number of the curve is equal to the total number of counterclockwise turns that the object makes around the origin.</p>
+</blockquote>
+<blockquote>
+<p>假设在xy平面上有一条有向的闭曲线。可以把曲线想象为某个物体的运动轨迹，运动方向就是曲线的方向。曲线的卷绕数就是物体逆时针绕过原点的总次数。</p>
+</blockquote>
+<p>下面兩圖很形象的描述了<code>Winding Number</code>，圖片同樣來自<a href="https://en.wikipedia.org/wiki/Winding_number">維基百科</a>。計算繞過原點的總次數時，逆時針方向的運動算正數，順時針方向的運動算負數。</p>
+<center><img src = "winding_number_example.png"> <img src = "Winding_Number_Animation_Small.gif"></center>
+<h3 id="jordan-curve">Jordan Curve</h3>
+<p>以下介紹來自<a href="https://en.wikipedia.org/wiki/Jordan_curve_theorem">維基百科</a></p>
+<blockquote>
+<p>In topology, the Jordan curve theorem asserts that every Jordan curve (a plane simple closed curve) divides the plane into an &ldquo;interior&rdquo; region bounded by the curve and an &ldquo;exterior&rdquo; region containing all of the nearby and far away exterior points.</p>
+</blockquote>
+<blockquote>
+<p>在拓扑学中，若尔当曲线（英语：Jordan curve）是平面上的非自交环路（又称为简单闭曲线，英语：simple closed curve）。若尔当曲线定理（英语：Jordan curve theorem）说明每一条若尔当曲线都把平面分成一个“内部”区域和一个“外部”区域，且任何从一个区域到另一个区域的道路都必然在某处与环路相交。</p>
+</blockquote>
+<p>下圖同樣來自<a href="https://en.wikipedia.org/wiki/Jordan_curve_theorem">維基百科</a>，黑色曲綫即爲<code>Jordan Curve</code>，它將平面區域劃分爲外部區域(紅色部分)和内部區域(藍色部分)。</p>
+<center><img src = "Jordan_curve_theorem.png"></center>
+<h2 id="general-algorithms">General Algorithms</h2>
+<h3 id="crossings-test">Crossings Test</h3>
+<p>相交測試，這個方法原理非常簡單，但是細節上需要小心處理，特別是使用整型表示點時候。</p>
+<p>相交測試，從測試點沿坐標軸（通常采用X軸正向）引出一條射綫，判斷該射綫與多邊形的邊的交點數的奇偶性，就能得到測試點是否落在多邊形内。</p>
+<p>如下圖所示，一般性的情況下，交點數為奇數時，測試點在多邊形内；交點數為偶數時，測試點在多邊形外。</p>
+<center><img src  = "crossing_test_1.png" style = "zoom:50%"><img src = ""></center>
+<p>論文中給出了加速的做法，我們其實並不需要準確的計算出交點，所以只要判斷測試射綫和多邊形邊界有交點就行。那麽有以下情況：</p>
+<ol>
+<li>儅多邊形邊界綫段兩個端點X軸坐標同時位於測試點右側（即沿X軸正向），<strong>兩個端點Y坐標異號，則增加交點數，否則不增加交點數</strong>；</li>
+<li>儅多邊形邊界綫段兩個端點X軸坐標位於測試點兩側，<strong>計算交點坐標，若交點位於測試點右側，則增加交點，否則不增加交點數</strong>；</li>
+</ol>
+<center><img src = "crossing_test_3.png" style = "zoom:50%"></center>
+<p>下面討論下一些特殊情況，如果所有點都是浮點數表示的話，那麽測試點和測試射綫恰好與多邊形頂點重合或相交概率是很小的，一般情況下不單獨考慮。但是儅點為整型時，這些情況需要精心設計處理，否則會得到錯誤的結果。</p>
+<ol>
+<li>測試射綫恰好經過多邊形頂點時；</li>
+<li>測試點恰好為多邊形的頂點；</li>
+<li>測試射綫與多邊形一條或多條邊重合；</li>
+</ol>
+<p>情況1處理方式：
+論文中給處理意見是：無論射綫何時與頂點相交，都假設頂點在射綫上方無限小的位置。如下圖所示。這樣處理，相當於同時加、減兩個交點，并不改變交點個數的奇偶性。</p>
+<center><img src = "crossing_test_2.png" style = "zoom:50%"></center>
+<p>情況2處理方式：
+如果能判定測試點和多邊形頂點重合，那麽直接判定其在多邊形内即可；</p>
+<p>情況3處理方式：
+下圖列舉了情況3的八種情況（A~H）。其中綠綫為多邊形的邊，藍色點為多邊形頂點，紅色點為測試點，黑色射綫為測試綫。</p>
+<center><img src = "crossing_test_4.png" style = "zoom:30%"></center>
+<p>對於A~D四種樣式，我們可以將其退化成情況1 處理，即將水平邊看作一個多邊形頂點處理；但對於E~H四種樣式，若退化成情況1處理的話就會出錯，因此個人想法是類似情況2處理，如果判斷出其在一條多邊形邊上，直接返回點在多邊形内。</p>
+<p>論文中<code>crossing test</code>代碼可以在<a href="https://github.com/erich666/GraphicsGems/blob/master/gemsiv/ptpoly_haines/ptinpoly.cpp">Github</a>中找到。</p>
+<h3 id="winding-number-1">Winding Number</h3>
+<p>根據<code>winding number</code>介紹可知，我們只需以多邊形邊為運動軌跡，獲得測試點的<code>winding number</code>就能判斷點是否能落在多邊形内。這樣，<code>winding number test</code>就追蹤多邊形邊相對於測試綫，是從$Y+$平面到$Y-$平面（<code>winding number</code> $+1$），還是從$Y-$平面到$Y+$平面（<code>winding number</code>$-1$）。最後利用它的值判斷點是否在多邊形内。</p>
+<p>而另一種更精確，但效率低的做法是纍加計算測試點與多邊形頂點連綫與$X$軸的夾角。如果纍加夾角趨近於$360^\circ$的倍數（$0$除外），則説明點落在多邊形内；如果纍加夾角趨近為$0^\circ$，則點落在多邊形外。</p>
+<p>由於計算角度會用到大量三角函數的調用，所以論文<a href="https://dl.acm.org/doi/10.5555/180895.180898">《An incremental angle point in polygon test》</a>介紹了加速方法，有興趣可以自行詳細閲讀。但相比與<code>crossing test</code>而已，該方法效率依舊遜色不少。當然，仔細看的話，計算<code>winding number</code>與<code>crossing test</code>本質是一樣的，只是統計的東西不同而已，所以最終算法都可以用相同的方式實現（論文中提供的代碼也是這麽做的）。</p>
+<h3 id="triangle-fan-test">Triangle Fan Test</h3>
+<p>該方法是將多邊形當作由多個三角形扇區構成的，利用三角形重心公式測試點是否落在多邊形内。所謂三角形重心坐標測試即滿足以下條件，則判斷點落在三角形内，其中$v_0、v_1、v_2$為三角形頂點：</p>
+<div>
+$$
+\begin{cases}
+p = (1-s-t) * v_0 + s*v_1 + t * v_2\\
+0 \leq s \leq 1 \\
+0 \leq t \leq 1
+\end{cases}
+$$
+</div>
+<p>對於凸多邊形，儅某個三角形與測試點重叠（即點在三角形内），測試即可終止，判定點落在該多邊形内；對於非凸多邊形（即任意多邊形），需要測試完所有三角形，然後統計點與三角形的重叠數，若該數為奇數，則點落在多邊形内，否則，點在多邊形外。</p>
+<h3 id="half-plane-test">Half-Plane Test</h3>
+<p>重心測試在多邊形邊數量增多時，效率會顯著下降。如果預先歸一化重心公式，并且記錄預先計算的值，能獲得更好的性能。《Ray tracing News》中<a href="https://www.realtimerendering.com/resources/RTNews/html/rtnv6n1.html#art6">“Simple, Fast Triangle Intersection”</a>提到了一個更快的測試方法，描述如下：</p>
+<blockquote>
+<p>Store with each triangle $2$ indices, $i_1$ and $i_2$. These are the coordinate offsets for the two axes that will be considered in the test. (the axis with the largest component in the normal vector is dropped, as usual). Store the $2$ coefficients and the $1$ constant of the &ldquo;inside-outside&rdquo; equation of each edge.</p>
+</blockquote>
+<blockquote>
+<p>To test for intersection, calculate $C[0]*X[i_1]+C[1]*X[i_2]+C[2]$ ($X$ is the intersection coordinate, and $C$ are the $3$ constants for the linear equation calculated at setup time) over all $3$ edges. If any of them have a negative (or positive depending upon which convention you choose) result, return NO_INTERSECTION.</p>
+</blockquote>
+<p>其主要思路就是利用三角形三條邊的直綫方程，判斷測試點在這些方程的哪一側，如果都在同一側，則説明測試點落在三角形内；否則，測試點落在三角形外。</p>
+<p><a href="https://www.realtimerendering.com/resources/RTNews/html/rtnv6n2.html#art4">“Simple, Fast Triangle Intersection, part II”</a>有對這一方法做了補充。他指出，三角形重心法本質也是一種<code>Half-Plane Test</code>，利用<code>Half-Plane Test</code>的一個額外好處是，其<code>Half-Plane</code>的高度是歸一化的，如下圖所示。</p>
+<center><img src = "rtnews_spackman_halfplane_test_1.png"></center>
+<p>從上圖可以看出，$\Delta ABC$其實是由三個<code>half-plane</code>的交集（<code>Half-Plane Test</code>），或是三個雙界的交集（重心法）。所以，這兩者本質是一樣的，只是使用過程中，提前退出條件不同，對於<code>Half-Plane Test</code>，$\alpha &lt; 0.0$爲其退出條件，而對於重心法的退出條件為：$\alpha &lt; 0.0 $ 或$ \alpha &gt; 1.0$。</p>
+<h3 id="grid-method">Grid Method</h3>
+<p>該方法是一種時間複雜度低，而空間複雜度高的方法。該方法將多邊形的外包矩形(<code>bounding box</code>)劃分爲$m \times n$個<code>cell</code>，這些<code>cell</code>與多邊形的關係只有以下三種：完全在多邊形内、完全在多邊形外以及中間狀態。對於中間狀態，每個<code>cell</code>保存一個被多邊形重叠的邊緣列表，并且該<code>cell</code>有一個或多個角會落在多邊形内或多邊形外。最後我們通過查詢測試點落在哪個<code>cell</code>中，就可以知道該點是否落在多邊形内。</p>
+<p>根據該方法的描述可以知道，該方法之所以快，是因爲它本質只是查表操作，但對於查表操作是需要一定的預處理操作的。對於多邊形而言，大多數<code>cell</code>的狀態要麽完全落在多邊形内，要麽完全落在多邊形外，因此對於包含多邊形邊界的<code>cell</code>，只需要檢查測試點與<code>cell</code>的角的連綫是否與該<code>cell</code>中邊界列表相交次數即可。</p>
+<p>需要注意的是，儅選擇<code>cell</code>尺度不理想時，會導致多邊形恰好（或幾乎完全）經過<code>cell</code>的角，此時該角是無法分類的。與其處理拓撲結構和數值精度問題，一種更簡單有效的方法是換個尺度重新對<code>bounding box</code>進行劃分並計算<code>cell</code>分類。此外，儅測試綫段與邊緣列表相交時，邊緣端點的精確交點只能統計一次。</p>
+<p>還有一個額外的方式對該問題進行改進。每個<code>cell</code>有四條邊，如果其中一條邊沒有與多邊形任意邊界相交，那麽該邊要麽完全落在多邊形内，要麽完全落在多邊形外。從測試點相該<code>cell</code>邊引出水平或垂直的測試綫段，利用快速相交測試判定與該<code>cell</code>内的多邊形邊界相交情況。值得一提的是，相交測試對於端點的相交是具有魯棒性的。</p>
+<p>論文中<code>Grid Test</code>代碼可以在<a href="https://github.com/erich666/GraphicsGems/blob/master/gemsiv/ptpoly_haines/ptinpoly.cpp">Github</a>中找到。</p>
+<h3 id="pixel-based-testing">Pixel Based Testing</h3>
+<p><code>Grid Method</code>的一個極端做法就是將<code>cell</code>退化成像素尺寸，儅多邊形在圖像上顯示時，我們構建一個與圖像相同的空間，該空間用於記錄每個像素與多邊形的關係。那麽在進行測試點判斷時，也只需要進行查詢就能獲得結果。</p>
+<h2 id="convex-polygons">Convex Polygons</h2>
+<p>對於<a href="https://en.wikipedia.org/wiki/Convex_polygon">凸多邊形</a>，由於其幾何性質，在判定時能夠做的更快。例如，利用相交測試時，儅檢測到兩次$Y$值符號變化即可停止，因爲凸多邊形的性質決定了$Y$值符號變化最多為兩次。對於<code>triangle fan test</code>，同樣只要檢測到點在其中一個三角形内即可退出。</p>
+<p>儅利用<code>half-plane</code>方式判斷點是否落在凸多邊形内，通常只要判定點是否落在任意邊界外。這個算法相比於<code>triangle fan test</code>不需要額外的存儲空間，而且代碼簡單明瞭。但是該算法速度受到测试邊緣順序的影響，截斷多邊形所在<code>bounding box</code>越多區域的邊緣越早被測試越好。但是要找到最優的順序是很困難的，而按順序測試邊緣這一策略同樣糟糕。隨機化邊緣順序可以使得該算法對於一般多邊形整體性能有$10%$的提升。</p>
+<h3 id="hybird-half-plane">Hybird Half-Plane</h3>
+<p><a href="https://books.google.com/books?hl=zh-CN&amp;lr=&amp;id=_p3eBwAAQBAJ&amp;oi=fnd&amp;pg=PA1&amp;dq=Computational+geometry+An+introduction&amp;ots=BcXso5Yfj_&amp;sig=IeOGvbotNrxQpfUP0FqmNh1C-uA#v=onepage&amp;q=Computational%20geometry%20An%20introduction&amp;f=false">《Computational Geometry: An Introduction》</a>中提到一種測試方式，其時間複雜度為$O(logN)$，空間複雜度為$O(N)$，預處理複雜度為$O(N)$。具體做法是，在凸多邊形内部添加一個中點，該中點與多邊形頂點的連綫稱爲<code>wedge</code>，選定其中一條<code>wedge</code>為錨定邊(anchor edge)，從該邊出發，利用二分查找找到測試點落在哪兩條<code>wedge</code>之間，再利用<code>half-plane</code>方式判斷點落在多邊形内還是多邊形外。如下圖所示。</p>
+<center><img src = "point_in_polygons_1.png"></center>
+<h2 id="statistics">Statistics</h2>
+<p>下面三圖為論文中提及的各種算法對比，具體耗時請自行在目標機器上測試，圖中只展示不同算法閒的差別。</p>
+<center><img src = "point_in_polygons_table1.png"></center>
+<center><img src = "point_in_polygons_table2.png"></center>
+<center><img src = "point_in_polygons_table3.png"></center>
+<h2 id="conclusions">Conclusions</h2>
+<p>論文中總結了各類算法的適用場景。</p>
+<ul>
+<li>如果沒有額外的存儲空間或不能進行預處理，則使用<code>Crossing Test</code>方法；</li>
+<li>如果能有少量額外存儲空間，并能進行一定預處理：
+<ul>
+<li>對於任意多邊形
+<ul>
+<li>多邊形邊數較少，使用<code>Half-Plane</code>或<code>Spackman</code>方法；</li>
+<li>多邊形邊數較多，使用<code>Crossing Test</code>方法；</li>
+</ul>
+</li>
+<li>對於凸多邊形
+<ul>
+<li>多邊形邊數較少，使用<code>Hybrid Half-Plane</code>方法；</li>
+<li>多邊形邊數較多，使用<code>Inclusion</code>方法；</li>
+<li>但是，如果$\frac{\text{bounding box}}{\text{polygon}}$比例較高，使用<code>Exterior Edges</code>方法；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如果允許進行預處理，并且存儲空間充足，則使用<code>Grid Test</code>方法（除了三角形外）。</li>
+</ul>
+<p>這些總結不是一定的，還需要根據自身機器架構和編譯器優化進行調整，換而言之，沒有最好的算法，挑選合適自身需求的就行。</p>
+<h2 id="code">Code</h2>
+<p>作者代碼發佈在<a href="https://github.com/erich666/GraphicsGems/blob/master/gemsiv/ptpoly_haines/ptinpoly.cpp">Github</a>上，可自行下載學習。</p>
+<h2 id="references">References</h2>
+<p>[1] <a href="https://erich.realtimerendering.com/ptinpoly/">Point in Polygon Strategies</a></p>
+<p>[2] <a href="http://www.realtimerendering.com/resources/RTNews/html//rtnv6n1.html#art6">Simple, Fast Triangle Intersection</a></p>
+<p>[3] <a href="https://www.realtimerendering.com/resources/RTNews/html/rtnv6n2.html#art4">Simple, Fast Triangle Intersection, part II</a></p>
+<p>[4] <a href="https://github.com/erich666/GraphicsGems/blob/master/gemsiv/ptpoly_haines/ptinpoly.cpp">C-Code</a></p>
+<p>[5] <a href="https://books.google.com/books?hl=zh-CN&amp;lr=&amp;id=_p3eBwAAQBAJ&amp;oi=fnd&amp;pg=PA1&amp;dq=Computational+geometry+An+introduction&amp;ots=BcXso5Yfj_&amp;sig=IeOGvbotNrxQpfUP0FqmNh1C-uA#v=onepage&amp;q=Computational%20geometry%20An%20introduction&amp;f=false">《Computational Geometry: An Introduction》Section 2.2</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-09-01
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/polygon/">Polygon</a>
+          <a href="/tags/convex-polygon/">Convex Polygon</a>
+          <a href="/tags/point/">Point</a>
+          <a href="/tags/algorithm/">Algorithm</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html">
+            <span class="next-text nav-default">圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/2022-09-01-%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85/%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85.html" class="leancloud_visitors" data-flag-title="點是否在多邊形内">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vBdmTMoHIxDpTt5GOT8K28gO-9Nh9j0Va',
+        appKey: 'jFsG5CqfpQthJwdx9YEA2rn5',
+        notify:  false ,
+        verify:  true ,
+        avatar:'monsterid',
+        placeholder: '留下你的足跡...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

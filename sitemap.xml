@@ -2,14 +2,84 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.matrixs.site/tags/bump-maps/</loc>
-    <lastmod>2022-01-07T10:32:35+08:00</lastmod>
+    <loc>https://blog.matrixs.site/tags/algorithm/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://blog.matrixs.site/categories/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/convex-polygon/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/faq/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/point/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/polygon/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/post/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/post/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/2022-09-01-%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85/%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85.html</loc>
+    <lastmod>2022-09-01T09:52:51+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/tags/bump-maps/</loc>
     <lastmod>2022-01-07T10:32:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -30,28 +100,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/</loc>
-    <lastmod>2022-01-07T10:32:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.matrixs.site/tags/normal-maps/</loc>
-    <lastmod>2022-01-07T10:32:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/post/</loc>
-    <lastmod>2022-01-07T10:32:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/tags/</loc>
     <lastmod>2022-01-07T10:32:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -73,13 +122,6 @@
   
   <url>
     <loc>https://blog.matrixs.site/categories/%E4%BD%9C%E6%A5%AD/</loc>
-    <lastmod>2022-01-07T10:32:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/</loc>
     <lastmod>2022-01-07T10:32:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -142,7 +184,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-11-17-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch15-curves-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-11-17-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch15-Curves-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2021-11-17T09:17:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -205,15 +247,8 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-06-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch24-reflection-models-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-06-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch24-Reflection%20Models-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2021-06-22T09:37:16+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/tags/algorithm/</loc>
-    <lastmod>2021-05-20T11:13:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -254,7 +289,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-05-15-%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B%E7%AE%97%E6%B3%95%E5%AD%B8%E7%BF%92.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-05-15-%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B%E7%AE%97%E6%B3%95%E5%AD%B8%E7%BF%92.html</loc>
     <lastmod>2021-05-20T11:13:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -303,7 +338,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97-timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html</loc>
     <lastmod>2021-04-27T14:16:53+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -352,7 +387,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch14-sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch14-Sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2021-04-19T08:56:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -415,7 +450,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-03-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E4%B8%9A5%E8%A1%A5%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-game101-homework5-generating-camera-rays.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-03-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E4%B8%9A5%E8%A1%A5%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Game101-Homework5%20Generating%20Camera%20Rays.html</loc>
     <lastmod>2021-03-29T10:30:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -457,7 +492,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-03-23-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch23-global-illumination-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-03-23-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch23-Global%20Illumination-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2021-03-23T10:35:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -506,7 +541,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-03-21-%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7openwrt/%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F%E7%B3%BB%E5%88%97-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7openwrt%E5%9B%BA%E4%BB%B6.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-03-21-%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt/%E8%B1%90%E8%A1%A3%E8%B6%B3%E9%A3%9F%E7%B3%BB%E5%88%97-%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E5%99%A84%E5%88%B7OpenWrt%E5%9B%BA%E4%BB%B6.html</loc>
     <lastmod>2021-03-21T10:35:51+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -541,7 +576,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch18-light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch18-Light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2021-02-25T09:17:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -555,7 +590,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2021-01-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch13-more-ray-tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2021-01-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch13-More%20Ray%20Tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2021-01-21T09:19:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -569,7 +604,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch12-data-structures-for-graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch12-Data%20Structures%20for%20Graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-11-26T09:34:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -583,28 +618,28 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch11-texture-mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch11-Texture%20Mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-09-29T10:26:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch10-surface-shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch10-Surface%20Shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-09-29T09:46:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch9-signal-processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch9-Signal%20Processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-09-25T08:10:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch8-the-graphic-pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch8-the%20Graphic%20Pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-09-03T19:08:03+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -639,7 +674,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch7-viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch7%20Viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-08-31T14:41:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -681,7 +716,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch6-transformation-matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-08-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AD%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch6%20Transformation%20Matrices-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-08-21T17:15:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -716,21 +751,21 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2020-08-18-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch4-ray-tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
+    <loc>https://blog.matrixs.site/post/2020-08-18-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch4%20Ray%20Tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</loc>
     <lastmod>2020-08-18T09:56:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2019-08-20_ellipse_fitting/ellipse-fitting.html</loc>
+    <loc>https://blog.matrixs.site/tags/ellipse-fitting/</loc>
     <lastmod>2019-08-20T10:16:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/tags/ellipse-fitting/</loc>
+    <loc>https://blog.matrixs.site/post/2019-08-20_Ellipse_Fitting/Ellipse%20Fitting.html</loc>
     <lastmod>2019-08-20T10:16:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -758,7 +793,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2019-02-19_blog_analysis/blog-analysis.html</loc>
+    <loc>https://blog.matrixs.site/post/2019-02-19_Blog_Analysis/Blog%20Analysis.html</loc>
     <lastmod>2019-02-14T10:07:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -793,7 +828,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/camera-calibration.html</loc>
+    <loc>https://blog.matrixs.site/post/2018-04-27_%E7%9B%B8%E6%A9%9F%E6%A8%99%E5%AE%9A/Camera%20Calibration.html</loc>
     <lastmod>2018-04-27T10:40:53+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -814,14 +849,14 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/categories/leptonica/</loc>
+    <loc>https://blog.matrixs.site/tags/leptonica/</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/tags/leptonica/</loc>
+    <loc>https://blog.matrixs.site/categories/leptonica/</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -842,15 +877,8 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8opencv%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91leptonica.html</loc>
+    <loc>https://blog.matrixs.site/post/2017-06-17-leptonica-%E7%BC%96%E8%AF%91leptonica/%E5%88%A9%E7%94%A8OpenCV%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%BC%96%E8%AF%91Leptonica.html</loc>
     <lastmod>2017-06-17T13:39:59+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.matrixs.site/categories/ocr/</loc>
-    <lastmod>2016-07-06T14:08:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -863,7 +891,7 @@
   </url>
   
   <url>
-    <loc>https://blog.matrixs.site/categories/tesseract/</loc>
+    <loc>https://blog.matrixs.site/categories/ocr/</loc>
     <lastmod>2016-07-06T14:08:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -871,6 +899,13 @@
   
   <url>
     <loc>https://blog.matrixs.site/tags/tesseract/</loc>
+    <lastmod>2016-07-06T14:08:16+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.matrixs.site/categories/tesseract/</loc>
     <lastmod>2016-07-06T14:08:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

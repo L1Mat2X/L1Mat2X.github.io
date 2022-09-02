@@ -6,54 +6,50 @@
     <description>Recent content in 計算機圖形學 on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Apr 2021 08:56:20 +0800</lastBuildDate>
-    
-	<atom:link href="https://blog.matrixs.site/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 19 Apr 2021 08:56:20 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>圖形學系列 Ch14-Sampling-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch14-sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch14-Sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Mon, 19 Apr 2021 08:56:20 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch14-sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch14-Sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;本章又是數學的内容，主要介紹采樣相關的方法與數學工具——蒙特卡洛積分、Metropolis方法等。這些技術在全局光照和路徑追蹤等方面得到有效利用。本章二十幾頁的内容其實并沒有説清楚很多事，所以需要自行查找或補充一些知識才能搞懂。比如，&lt;code&gt;Measure（測度）&lt;/code&gt;這個概念，在原書第二版中文版中，被翻譯成&lt;code&gt;度量&lt;/code&gt;，通篇讀下來感覺非常怪異，最後查找資料發現應該稱它為&lt;code&gt;測度&lt;/code&gt;，可以說&lt;code&gt;測度論&lt;/code&gt;是現代概率論的基石&lt;sup&gt;[1]&lt;/sup&gt;，兩者的關係可以類比成微積分和數學分析閒的關係，這裏就不多説了，有興趣可以自行查找資料。之後的内容我會盡量表達清楚，并把查閲的相關資料補充在後面，也限制於自己的能力，如有錯誤或不足歡迎指正。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>圖形學系列 Ch18-Light-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch18-light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch18-Light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Thu, 25 Feb 2021 09:17:56 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch18-light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2021-02-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch18-Light-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;本章節介紹測量光綫的一個工具 —— &lt;code&gt;Radiometry&lt;/code&gt;，該工具對於計算機圖形學來説非常重要。本章節還包含&lt;code&gt;Photometry&lt;/code&gt;，它用於量化Radiometry，並通過縮放來估計有多少“有用”的光綫。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>圖形學系列 Ch13-More Ray Tracing-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2021-01-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch13-more-ray-tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2021-01-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch13-More%20Ray%20Tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Thu, 21 Jan 2021 09:19:39 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2021-01-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch13-more-ray-tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2021-01-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch13-More%20Ray%20Tracing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>光綫追蹤技術是產生一些高級渲染效果的基礎，在第四章已經介紹了光綫追蹤的框架，本章節將討論光綫追蹤一些有趣的使用，比如光綫與不同材質物體是如何</description>
     </item>
     
     <item>
       <title>圖形學系列 Ch12-Data Structures for Graphics-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch12-data-structures-for-graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch12-Data%20Structures%20for%20Graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Thu, 26 Nov 2020 09:34:30 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch12-data-structures-for-graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2020-11-26-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch12-Data%20Structures%20for%20Graphics-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;本節介紹圖形學中最基本的，最常用的幾種數據結構：網格結構(&lt;code&gt;mesh structures&lt;/code&gt;)，空間數據結構(&lt;code&gt;spatial data structures&lt;/code&gt;)，場景圖(&lt;code&gt;scene graphs&lt;/code&gt;)和平鋪多維數組(&lt;code&gt;tiled multidimensional arrays&lt;/code&gt;)。&lt;/p&gt;
 &lt;p&gt;網格結構中將介紹“翼邊”結構(&lt;code&gt;the winged-edge data structure&lt;/code&gt;)和“半邊”結構(&lt;code&gt;the half-edge structure&lt;/code&gt;)。這兩種結構在管理模型時非常有效，特別是在模型簡化或細分時；場景圖主要用於管理場景中物體閒的關係與變換等；對於空間數據結構，主要介紹三種管理空間物體的方法——BVH、層級空間細分和均匀空間細分；最後平鋪多維數組介紹如何提高内存訪問效率。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>圖形學系列 Ch11-Texture Mapping-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch11-texture-mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch11-Texture%20Mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Tue, 29 Sep 2020 10:26:56 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch11-texture-mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2020-09-29-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch11-Texture%20Mapping-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;何爲紋理？在圖形學中，定義物體表面空間變化屬性，即隨著空間位置變換，物體表面呈現出不同屬性，但這種屬性并未真的改變整個物體表面形狀，我們將這種變換的屬性稱爲物體表面紋理。&lt;/p&gt;
 &lt;p&gt;圖形學中，爲了在物體表面獲得紋理效果，會使用&lt;strong&gt;紋理映射(texture mapping)&lt;strong&gt;技術：該技術使用一幅圖像，稱爲紋理圖（&lt;code&gt;texture map&lt;/code&gt;、&lt;code&gt;texture image&lt;/code&gt;或&lt;code&gt;texture&lt;/code&gt;），該圖像包含所有物體表面紋理信息，然後通過數學上的&lt;/strong&gt;映射&lt;/strong&gt;，將該圖像“放置”到物體表面。&lt;/p&gt;
 &lt;p&gt;本章討論紋理表示物體表面細節、陰影和反射。基本思想比較簡單，但是在實際應用中會遇到一些問題。第一，紋理圖通常需要扭曲使用，因此設計紋理圖到物體表面的函數映射關係是一個巨大的挑戰；第二，紋理映射是一個重采樣過程，重采樣就容易出現走樣現象，許多紋理映射器的複雜度高就是爲了解決這些走樣失真導致的。&lt;/p&gt;</description>
@@ -61,29 +57,29 @@
     
     <item>
       <title>圖形學系列 Ch10-Surface Shading-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch10-surface-shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch10-Surface%20Shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Tue, 29 Sep 2020 09:46:22 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch10-surface-shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2020-09-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch10-Surface%20Shading-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>在第四章的4.5節已經簡單介紹過兩個shading模型，Lambertian Shading和Blinn-Phong Shading，以及Amb</description>
     </item>
     
     <item>
       <title>圖形學系列 Ch9-Signal Processing-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch9-signal-processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch9-Signal%20Processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Fri, 25 Sep 2020 08:10:58 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch9-signal-processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2020-09-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch9-Signal%20Processing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;在圖形學中，經常需要處理連續函數，但是，計算機只能處理離散的數據，通常的做法就是將連續函數離散化后交給計算機處理，之後在重建出連續函數。生活中也有許多離散化的例子，例如數碼相機拍照、手寫數位板以及CT掃描等。&lt;/p&gt;
 &lt;p&gt;本章將先從一維數字信號的采樣和重建。然後介紹一維和二維采樣和重建背後的數學原理和算法。最後將從頻域的角度深入討論。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>圖形學系列 Ch8-the Graphic Pipeline-閲讀筆記</title>
-      <link>https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch8-the-graphic-pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <link>https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch8-the%20Graphic%20Pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
       <pubDate>Thu, 03 Sep 2020 19:08:03 +0800</pubDate>
       
-      <guid>https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch8-the-graphic-pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <guid>https://blog.matrixs.site/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch8-the%20Graphic%20Pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
       <description>&lt;p&gt;本章节介绍第二种（第一种是第四章中的&lt;code&gt;ray tracing&lt;/code&gt;）渲染方式：逐个将物体绘制到屏幕上。两者的不同在于：&lt;code&gt;ray tracing&lt;/code&gt;是&lt;strong&gt;每个像素&lt;/strong&gt;会被哪些几何图元影响，而本章节中的渲染方式是&lt;strong&gt;每个几何图元&lt;/strong&gt;影响哪些像素。这种处理几何图元占据图像像素的过程称为&lt;strong&gt;光栅化&lt;/strong&gt;，这种对物体逐个光栅化的过程称为&lt;strong&gt;光柵化渲染&lt;/strong&gt;。這種起始於物體，終止于圖像像素更新的流程稱爲&lt;strong&gt;圖形化管綫(graphic pipeline)&lt;/strong&gt;。本章先從光柵化開始，在介紹其前後的流程分別如何進行的。&lt;code&gt;Graphic pipeline&lt;/code&gt;整個過程如下圖所示。&lt;/p&gt;
 &lt;center&gt;&lt;img src = &#34;figure8.1.png&#34; style = &#34;zoom:70%&#34;&gt;&lt;/img&gt;&lt;/center&gt;</description>
     </item>

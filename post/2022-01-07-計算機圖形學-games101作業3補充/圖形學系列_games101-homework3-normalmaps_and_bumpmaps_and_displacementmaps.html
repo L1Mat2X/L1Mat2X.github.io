@@ -24,7 +24,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
 
 
 <link rel="canonical" href="https://blog.matrixs.site/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html" />
@@ -43,19 +43,15 @@
 <meta property="og:title" content="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps" />
 <meta property="og:description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.matrixs.site/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2022-01-07-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-games101%E4%BD%9C%E6%A5%AD3%E8%A3%9C%E5%85%85/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97_games101-homework3-normalmaps_and_bumpmaps_and_displacementmaps.html" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-01-07T10:32:35+08:00" />
 <meta property="article:modified_time" content="2022-01-07T10:32:35+08:00" />
+
 <meta itemprop="name" content="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps">
-<meta itemprop="description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。">
-<meta itemprop="datePublished" content="2022-01-07T10:32:35+08:00" />
+<meta itemprop="description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。"><meta itemprop="datePublished" content="2022-01-07T10:32:35+08:00" />
 <meta itemprop="dateModified" content="2022-01-07T10:32:35+08:00" />
 <meta itemprop="wordCount" content="5684">
-
-
-
-<meta itemprop="keywords" content="Normal Maps,Bump Maps,Displacement Maps,TBN Matrix,Texture," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Normal Maps,Bump Maps,Displacement Maps,TBN Matrix,Texture," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="圖形學系列 Games101-Homework3-NormalMaps and BumpMaps and DisplacementMaps"/>
 <meta name="twitter:description" content="最近重新做了games101課程作業3，發現裏面bump_fragment_shader其實並不理解其原理，特別是TBN矩陣的使用，因此查詢資料補充，特此記錄。"/>
 
@@ -189,11 +185,11 @@ $$</p>
 <p>我們通常采用RGB圖像來存儲紋理，相似的，可以采用RGB圖像來存儲法向量信息：利用R、G、B三值分別表示法向量的X、Y、Z三個軸。由於法向量通常是單位向量，每個方向取值範圍為[-1, 1]，而RGB取值範圍為[0, 1]，因此在存儲時需要做映射：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">vec3</span> <span class="n">rgb_normal</span> <span class="o">=</span> <span class="n">normal</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">;</span>	<span class="c1">// transforms from [-1, 1] to [0, 1]
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="n">vec3</span> <span class="n">rgb_normal</span> <span class="o">=</span> <span class="n">normal</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">;</span>	<span class="c1">// transforms from [-1, 1] to [0, 1]
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>基於這個方式可得到上面墻面例子中的法向量圖。</p>
 <center><img src = "normal_mapping_normal_map.png"></img></center>
@@ -302,7 +298,7 @@ $$
 <p>從直覺出發，將法向量從切向量空間轉換到世界坐標系空間只需要轉換一個向量，非常簡單！從代碼角度看，對於每個三角形，TBN矩陣在<code>fragment shader</code>外計算好后傳入像素著色器，而在<code>fragment shader</code>内部需要對每個像素的法向量進行變換。例如下面代碼：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -324,32 +320,32 @@ $$
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-	<span class="n">vec3</span> <span class="n">FragPos</span><span class="p">;</span>
-	<span class="n">vec2</span> <span class="n">TexCoords</span><span class="p">;</span>
-	<span class="n">mat3</span> <span class="n">TBN</span><span class="p">;</span>
-	<span class="n">vec3</span> <span class="n">lightPos</span><span class="p">;</span>
-	<span class="n">vec3</span> <span class="n">viewPos</span><span class="p">;</span>
-<span class="p">}</span><span class="n">frag_shader_t</span><span class="p">;</span>
-
-<span class="p">{</span>
-	<span class="p">...</span>
-	<span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">=</span> <span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
-	<span class="p">...</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">frag_shader_t</span> <span class="n">fs_in</span><span class="p">){</span>
-	<span class="n">normal</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
-	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>   
-	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normal</span><span class="p">);</span>
-	<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">FragPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec2</span> <span class="n">TexCoords</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">mat3</span> <span class="n">TBN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">lightPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">viewPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">frag_shader_t</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">=</span> <span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">frag_shader_t</span> <span class="n">fs_in</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">normal</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>   
+</span></span><span class="line"><span class="cl">	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normal</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>接著我們看看第二種方式。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -365,26 +361,26 @@ $$
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="p">{</span>
-	<span class="p">...</span>
-	<span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">));</span>
-	<span class="p">...</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">frag_shader_t</span> <span class="n">fs_in</span><span class="p">){</span>
-	<span class="n">normal</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
-	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>   
-	
-	<span class="n">vec3</span> <span class="n">lightDir</span> <span class="o">=</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">lightPos</span> <span class="o">-</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">FragPos</span><span class="p">);</span>
-	<span class="n">vec3</span> <span class="n">viewDir</span>  <span class="o">=</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">viewPos</span> <span class="o">-</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">FragPos</span><span class="p">);</span>  
-	<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">fragment_shader</span><span class="p">(</span><span class="n">frag_shader_t</span> <span class="n">fs_in</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">normal</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">normalMap</span><span class="p">,</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">normal</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>   
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">lightDir</span> <span class="o">=</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">lightPos</span> <span class="o">-</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">FragPos</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">viewDir</span>  <span class="o">=</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">TBN</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">viewPos</span> <span class="o">-</span> <span class="n">fs_in</span><span class="p">.</span><span class="n">FragPos</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>第二種方法在<code>fragment shader</code>中看似做的更多，但是，第二種方法中將世界坐標系轉換到切空間坐標系的操作并不是一定要在<code>fragment shader</code>中進行，可以將其移到<code>vertex shader</code>中處理。因爲，多數情況下，<code>lightPos</code>和<code>viewPos</code>不是每個<code>fragment</code>處理時都需要更新的，而對於<code>FragPos</code>，同樣也可以在<code>vertex shader</code>中計算出其切空間位置。這樣，在<code>fragment shader</code>中就不需要做空間轉換的工作，而第一種方法沒法做到這一點。基於這點，方法二中就不能將TBN矩陣送入<code>fragment shader</code>中，而是要將切空間中的光源位置、觀測位置和頂點位置送入著色器中。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -405,32 +401,32 @@ $$
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">typedef</span> <span class="k">struct</span><span class="p">{</span>
-	<span class="n">vec3</span> <span class="n">FragPos</span><span class="p">;</span>
-	<span class="n">vec2</span> <span class="n">TexCoords</span><span class="p">;</span>
-	<span class="n">vec3</span> <span class="n">TangentLightPos</span><span class="p">;</span>
-	<span class="n">vec3</span> <span class="n">TangentViewPos</span><span class="p">;</span>
-	<span class="n">vec3</span> <span class="n">TangentFragPos</span><span class="p">;</span>
-<span class="p">}</span><span class="n">frag_shader_t</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="n">vec3</span> <span class="n">lightPos</span><span class="p">;</span>
-	<span class="n">vec3</span> <span class="n">viewPos</span><span class="p">;</span>
-	<span class="n">mat3</span> <span class="n">TBN</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">));</span>
-	<span class="n">frag_shader_t</span> <span class="n">frag_shader</span><span class="p">;</span>
-	
-	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentLightPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">lightPos</span><span class="p">;</span>
-	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentViewPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">viewPos</span><span class="p">;</span>
-	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentFragPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">vec3</span><span class="p">(</span><span class="n">model</span> <span class="o">*</span> <span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">));</span>
-	<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">FragPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec2</span> <span class="n">TexCoords</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">TangentLightPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">TangentViewPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">TangentFragPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">frag_shader_t</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">lightPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">vec3</span> <span class="n">viewPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">mat3</span> <span class="n">TBN</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">mat3</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="n">frag_shader_t</span> <span class="n">frag_shader</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentLightPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">lightPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentViewPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">viewPos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">frag_shader</span><span class="p">.</span><span class="n">TangentFragPos</span> <span class="o">=</span> <span class="n">TBN</span> <span class="o">*</span> <span class="n">vec3</span><span class="p">(</span><span class="n">model</span> <span class="o">*</span> <span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="作業中的tbn">作業中的TBN</h2>
 <p>以上瞭解完TBN矩陣，滿懷期待的回頭閲讀作業三中的代碼，又傻眼了，作業中的TBN矩陣和之前介紹的完全不一樣。下面貼出來作業中TBN計算的提示。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -447,22 +443,22 @@ $$
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">{
-	...
-	float kh = 0.2, kn = 0.1;
-
-	// TODO: Implement bump mapping here
-	// Let n = normal = (x, y, z)
-	// Vector t = (x*y/sqrt(x*x+z*z),sqrt(x*x+z*z),z*y/sqrt(x*x+z*z))
-	// Vector b = n cross product t
-	// Matrix TBN = [t b n]
-	// dU = kh * kn * (h(u+1/w,v)-h(u,v))
-	// dV = kh * kn * (h(u,v+1/h)-h(u,v))
-	// Vector ln = (-dU, -dV, 1)
-	// Normal n = normalize(TBN * ln)
-	...
-}
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">	...
+</span></span><span class="line"><span class="cl">	float kh = 0.2, kn = 0.1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	// TODO: Implement bump mapping here
+</span></span><span class="line"><span class="cl">	// Let n = normal = (x, y, z)
+</span></span><span class="line"><span class="cl">	// Vector t = (x*y/sqrt(x*x+z*z),sqrt(x*x+z*z),z*y/sqrt(x*x+z*z))
+</span></span><span class="line"><span class="cl">	// Vector b = n cross product t
+</span></span><span class="line"><span class="cl">	// Matrix TBN = [t b n]
+</span></span><span class="line"><span class="cl">	// dU = kh * kn * (h(u+1/w,v)-h(u,v))
+</span></span><span class="line"><span class="cl">	// dV = kh * kn * (h(u,v+1/h)-h(u,v))
+</span></span><span class="line"><span class="cl">	// Vector ln = (-dU, -dV, 1)
+</span></span><span class="line"><span class="cl">	// Normal n = normalize(TBN * ln)
+</span></span><span class="line"><span class="cl">	...
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>仔細想想，我們構建TBN矩陣的目的是爲了統一計算時的坐標系，而以平面法向量為z軸，在切平面上構建局部坐標系是有無窮多組基的，所以之前介紹的TBN矩陣構建方式只是其中一種。現在再來看作業中的TBN矩陣構建方式。</p>
 <p>由於平面法向量是已知的，那麽最關鍵的一步是構建出T向量：我們將平面法向量$ \vec{\mathbf{N}} $在$xyz$坐標系中拆分成$ \vec{\mathbf{N}}_{xz} $和$\vec{\mathbf{N}}_{y}$兩個向量，可見下圖，這三個向量均在同一平面$\mathcal{S}$内，那麽只需要將該平面繞其軸（該平面的法向量）旋轉$90^{\circ}$即可，換個思路就是將$\vec{\mathbf{N}}_{xz}$向量旋轉到$\vec{\mathbf{N}}_{y}$向量処。</p>
@@ -536,7 +532,7 @@ $$
 <p>這裏$\mathbf{n} = \mathbf{N} / |\mathbf{N}|$。</p>
 <p>那麽添加擾動后，其法向量也發生相應改變，即：
 $$
-\mathbf{N}^{'} = \mathbf{P}^{'}_u \times \mathbf{P}^{'}_v
+\mathbf{N}^{&rsquo;} = \mathbf{P}^{&rsquo;}_u \times \mathbf{P}^{&rsquo;}_v
 $$</p>
 <p>其中,</p>
 <div>
@@ -550,11 +546,11 @@ $$
 </div>
 <p>假設，$b(u,v)$值非常小，那麽上式中最後一項可以被忽略。
 $$
-\mathbf{P}^{'}_u \approx \mathbf{P}_u + b_u \mathbf{n}
+\mathbf{P}^{&rsquo;}_u \approx \mathbf{P}_u + b_u \mathbf{n}
 $$</p>
 <p>同理可得：
 $$
-\mathbf{P}^{'}_v \approx \mathbf{P}_v + b_v \mathbf{n}
+\mathbf{P}^{&rsquo;}_v \approx \mathbf{P}_v + b_v \mathbf{n}
 $$</p>
 <p>這樣我們就可以知道經過擾動后的法向量為：</p>
 <div>
@@ -631,8 +627,12 @@ $$
           <a href="/tags/texture/">Texture</a>
           </div>
       <nav class="post-nav">
-        
-        <a class="next" href="/post/2021-11-17-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-ch15-curves-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+        <a class="prev" href="/post/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/2022-09-01-%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85/%E9%BB%9E%E6%98%AF%E5%90%A6%E5%9C%A8%E5%A4%9A%E9%82%8A%E5%BD%A2%E5%86%85.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">點是否在多邊形内</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2021-11-17-%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch15-Curves-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
             <span class="next-text nav-default">圖形學系列 Ch15-Curves-閲讀筆記</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
@@ -707,7 +707,7 @@ $$
 
 
 
-<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

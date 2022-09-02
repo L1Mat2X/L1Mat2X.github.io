@@ -6,10 +6,42 @@
     <description>Recent content in Tags on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 07 Jan 2022 10:32:35 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Sep 2022 09:52:51 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Algorithm</title>
+      <link>https://blog.matrixs.site/tags/algorithm/</link>
+      <pubDate>Thu, 01 Sep 2022 09:52:51 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/algorithm/</guid>
+      <description></description>
+    </item>
     
-	<atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Convex Polygon</title>
+      <link>https://blog.matrixs.site/tags/convex-polygon/</link>
+      <pubDate>Thu, 01 Sep 2022 09:52:51 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/convex-polygon/</guid>
+      <description></description>
+    </item>
     
+    <item>
+      <title>Point</title>
+      <link>https://blog.matrixs.site/tags/point/</link>
+      <pubDate>Thu, 01 Sep 2022 09:52:51 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/point/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Polygon</title>
+      <link>https://blog.matrixs.site/tags/polygon/</link>
+      <pubDate>Thu, 01 Sep 2022 09:52:51 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/polygon/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Bump Maps</title>
@@ -152,15 +184,6 @@
       <pubDate>Tue, 22 Jun 2021 09:37:16 +0800</pubDate>
       
       <guid>https://blog.matrixs.site/tags/specular-reflection/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Algorithm</title>
-      <link>https://blog.matrixs.site/tags/algorithm/</link>
-      <pubDate>Thu, 20 May 2021 11:13:35 +0800</pubDate>
-      
-      <guid>https://blog.matrixs.site/tags/algorithm/</guid>
       <description></description>
     </item>
     

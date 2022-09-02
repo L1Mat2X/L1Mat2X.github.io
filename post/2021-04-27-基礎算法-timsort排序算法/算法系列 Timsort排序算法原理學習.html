@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>算法系列 Timsort排序算法原理學習 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="最近在實際應用中頻繁遇到快速排序算法(qsort)最壞情況，其實際耗時遠超過想象。主要原因在於進行排序的數據并非完全無序的，因此借此機會瞭解了當下使用廣汎的排序算法Timsort，特此記錄。本文不涉及具體代碼實現，但是會結合自己實現過程給出僞代碼，如有錯誤歡迎指正。
+本文會從原理出發給出各個部分實現僞代碼，最後再討論細節。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="算法系列 Timsort排序算法原理學習" />
+<meta property="og:description" content="最近在實際應用中頻繁遇到快速排序算法(qsort)最壞情況，其實際耗時遠超過想象。主要原因在於進行排序的數據并非完全無序的，因此借此機會瞭解了當下使用廣汎的排序算法Timsort，特此記錄。本文不涉及具體代碼實現，但是會結合自己實現過程給出僞代碼，如有錯誤歡迎指正。
+本文會從原理出發給出各個部分實現僞代碼，最後再討論細節。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-04-27T14:16:53+08:00" />
+<meta property="article:modified_time" content="2021-04-27T14:16:53+08:00" />
+
+<meta itemprop="name" content="算法系列 Timsort排序算法原理學習">
+<meta itemprop="description" content="最近在實際應用中頻繁遇到快速排序算法(qsort)最壞情況，其實際耗時遠超過想象。主要原因在於進行排序的數據并非完全無序的，因此借此機會瞭解了當下使用廣汎的排序算法Timsort，特此記錄。本文不涉及具體代碼實現，但是會結合自己實現過程給出僞代碼，如有錯誤歡迎指正。
+本文會從原理出發給出各個部分實現僞代碼，最後再討論細節。"><meta itemprop="datePublished" content="2021-04-27T14:16:53+08:00" />
+<meta itemprop="dateModified" content="2021-04-27T14:16:53+08:00" />
+<meta itemprop="wordCount" content="4080">
+<meta itemprop="keywords" content="Algorithm,Sorting,Timsort,Binary sort,Merge sort," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="算法系列 Timsort排序算法原理學習"/>
+<meta name="twitter:description" content="最近在實際應用中頻繁遇到快速排序算法(qsort)最壞情況，其實際耗時遠超過想象。主要原因在於進行排序的數據并非完全無序的，因此借此機會瞭解了當下使用廣汎的排序算法Timsort，特此記錄。本文不涉及具體代碼實現，但是會結合自己實現過程給出僞代碼，如有錯誤歡迎指正。
+本文會從原理出發給出各個部分實現僞代碼，最後再討論細節。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">算法系列 Timsort排序算法原理學習</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-04-27 </span>
+        <div class="post-category">
+            <a href="/categories/algorithm/"> Algorithm </a>
+            <a href="/categories/sorting/"> Sorting </a>
+            <a href="/categories/%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95/"> 基礎算法 </a>
+            </div>
+          <span class="more-meta"> 4080 words </span>
+          <span class="more-meta"> 9 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#timsort原理介紹">Timsort原理介紹</a>
+      <ul>
+        <li><a href="#整體框架">整體框架</a></li>
+        <li><a href="#二分插入排序">二分插入排序</a></li>
+        <li><a href="#歸并排序">歸并排序</a></li>
+        <li><a href="#算法細節">算法細節</a>
+          <ul>
+            <li><a href="#galloping-mode">Galloping Mode</a></li>
+            <li><a href="#調整min_run_len">調整Min_Run_Len</a></li>
+            <li><a href="#預分配runs_stack的空間">預分配Runs_Stack的空間</a></li>
+          </ul>
+        </li>
+        <li><a href="#參考資料">參考資料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近在實際應用中頻繁遇到快速排序算法(<code>qsort</code>)最壞情況，其實際耗時遠超過想象。主要原因在於進行排序的數據并非完全無序的，因此借此機會瞭解了當下使用廣汎的排序算法<code>Timsort</code>，特此記錄。本文不涉及具體代碼實現，但是會結合自己實現過程給出僞代碼，如有錯誤歡迎指正。</p>
+<p>本文會從原理出發給出各個部分實現僞代碼，最後再討論細節。</p>
+<h1 id="timsort原理介紹">Timsort原理介紹</h1>
+<p>本文對<code>Timsort</code>背景就不多做介紹，網上有很多資料，想瞭解也可以<a href="https://en.wikipedia.org/wiki/Timsort#:~:text=Timsort%20is%20a%20hybrid%20stable,in%20the%20Python%20programming%20language.">Wiki</a><sup>[4]</sup>下。但是，用Wiki上的一句話介紹<code>Timsort</code>，就是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Timsort is a hybrid stable sorting algorithm, derived from merge sort and insertion sort, designed to perform well on many kinds of real-world data. 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Timsort是一種混合、穩定的排序算法，它是從歸并排序和插入排序衍生而來，是爲了在現實數據中獲得更好的性能。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="整體框架">整體框架</h2>
+<p>下面先説説<code>現實數據</code>有什麽特點：不會是完全隨機的，局部都會存在排好序的情況。<code>Timsort</code>作者稱這種局部自然形成的有序片段為<code>natural runs</code>。假設某一組數據都是由這些<code>natural runs</code>組成，那麽直覺上就能知道，使用歸并排序很快就能獲得最終結果。實際中，<code>Timsort</code>也是這麽做的。這樣，就能推出，我們要將輸入的數據切分成若干個<code>natural runs</code>，那麽如何切分？這是個人覺得<code>Timsort</code>算法第一個巧妙地地方。</p>
+<p>算法中設置了最小片段長度<code>MIN_RUN_LEN</code>，從頭開始掃描數據，記錄當前有遞增序或遞減序的數據長度，算法會根據應用提供的比較函數選擇一種序，如果是逆序則會翻轉成正序，再進行後續操作。</p>
+<div>
+$$
+\begin{array}{l}
+\text{升序：}\ data[i-1] \leq data[i] \leq data[i+1] \\
+\text{嚴格降序：}\ data[i-1] > data[i] > data[i+1]
+\end{array}
+$$
+</div>
+<p>如果滿足<code>MIN_RUN_LEN</code>，那麽將該片段壓棧；如果不滿足<code>MIN_RUN_LEN</code>，那麽用二分插入排序算法將長度凑到<code>MIN_RUN_LEN</code>。這裏爲什麽用二分插入排序，個人理解是，二分排序在數據量小的情況下效率高，而且不用消耗大量緩存空間，可以實現<code>Inplace insert</code>。到目前爲止，<code>Timsort</code>的整體框架已經可以搭建好，下面給出它的僞代碼。</p>
+<center><img src = "timsort_algo_1.png"></img></center>
+<h2 id="二分插入排序">二分插入排序</h2>
+<p>插入排序就是標準的方式進行，因爲是在已知序中插入新的元素，所以采用二分法插入，再加上<code>MIN_RUN_LEN</code>一般取值比較小，所以效率不會太差。下面給出這部分僞代碼。</p>
+<center><img src = "timsort_algo_2.png"></img></center>
+<h2 id="歸并排序">歸并排序</h2>
+<p><code>Timsort</code>中的合并<code>runs</code>本質上與歸并排序并沒有什麽區別，但是在性能上做了優化。在理想情況下，合并長度相近的<code>run</code>能提高效率。如果使用霍夫曼樹的歸并策略需要花費大量時間在選擇優先合并的<code>run</code>上，因此，<code>Timsort</code>選擇了一種折中的方案，它要求最右側的三個<code>run</code>長度滿足兩個條件<sup>[1]</sup>：</p>
+<div>
+$$
+\begin{cases}
+\begin{array}{l}
+len(runs[n-1]) > len(runs[n]) + len(runs[n+1]) \\[2ex]
+len(runs[n]) > len(runs[n+1])
+\end{array}
+\end{cases}
+$$
+</div>
+<p>換而言之，從<code>runs</code>長度從左到右是遞增的，這樣我們從右到左合并時，就能保證<code>runs</code>的長度<strong>大致</strong>相同，達到平衡。下面給出不同情況下如何合并。</p>
+<center><img src = "timsort_algo_3.1.png"></img></center>
+<p>實現框架如下：</p>
+<center><img src = "timsort_algo_4.1.png"></img></center>
+<p>注意，在框架下多了條件判斷</p>
+<div>
+$$
+n>1 \&\& \mathrm{Length}(runs[n-2]) \leq \mathrm{Length}(runs[n-1]) + \mathrm{Length}(runs[n])
+$$
+</div>
+<p>這是因爲有大神測出Timsort算法原始實現存在bug，并提供了修改建議，详细可参考[2]。</p>
+<p>下面説説歸并算法的實現：</p>
+<p>已知兩個已排好序的序列$S_i$和$S_j$，長度分別為$l_i$和$l_j$。</p>
+<blockquote>
+<p>Step1. 取出$S_j[0]$，從左到右在$S_i$中查找插入的位置，記爲$k_i$；</p>
+<p>Step2. 取出$S_i[l_i-1]$，從右到左在$S_j$中查找插入的位置，記爲$k_j$。</p>
+<p>Step3. 將剩餘的$S_i[k_i, l_i)$與$S_j[0,k_j]$進行歸并，其歸并要滿足將短的$run$向長的$run$插入的原則。</p>
+</blockquote>
+<p>另外仔細琢磨下可以發現，在剩餘的兩段數據$S_i[k_i, l_i)$和$S_j[0,k_j]$中</p>
+<div>
+$$
+\begin{array}{l}
+S_i[k_i] \geq S_j[0] \\
+S_i[l_i-1] \geq S_j[0,k_j]
+\end{array}
+$$
+</div>
+<p>這部分實現框架如下：</p>
+<center><img src = "timsort_algo_4.2.png"></img></center>
+<p>至此，其實Timsort已經可以完結。接下去的内容就是一些細節問題，例如，已經提供了<code>MIN_RUN_LEN</code>的設置，爲什麽還要根據輸入數據長度調整一次？什麽是<code>Galloping Mode</code>&hellip;有興趣的可以繼續往下看，也可直接翻看原作者的説明<sup>[3]</sup>。</p>
+<h2 id="算法細節">算法細節</h2>
+<h3 id="galloping-mode">Galloping Mode</h3>
+<p>先來説説什麽是<code>Galloping Mode</code>，簡單說，就是作者對最終歸并過程的一個優化，先進行粗略搜索，在進行精確定位。</p>
+<p>這裏不妨假設有兩個$runs$，$(run_1, run_2)$，長度分別爲$l_1$和$l_2$，且$l_1 &lt; l_2$。根據上面的分析可知，$run_1$和$run_2$都是有序的，且$run_1[0] \geq run_2[0]$，$run_1[l_1-1] \geq run_2[0, l_2)$。</p>
+<p>在<code>Galloping Mode</code>下，會將 $run_1[0]$ 與 $run_2[0],\  run_2[1],\  run_2[3],\ run_2[5],\  \cdots ,\  run_2[2^k -1],\  \cdots,$ 這些位置比較，直到滿足$run_2[2^{(k-1)} - 1] &lt; run_1[0] \leq run_2[2^k-1]$停止，這是<strong>粗略搜索</strong>部分。經過這步就可以把搜索範圍縮小到$2^{(k-1)}-1$個連續的數據内，再直接使用二分搜索就能在最多$k-1$次對比操作下得到結果。</p>
+<p>這裏會有一個疑問，爲什麽在粗略搜索部分不直接就使用二分搜索？作者也在文檔[3]給出了原因。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">If we did a straight binary search, we could find it in no more than ceiling(lg(N+1)) comparisons -- but straight binary search takes that many comparisons no matter where A[0] belongs.  Straight binary search thus loses to galloping unless the run is quite long, and we simply can&#39;t guess whether it is in advance.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Galloping Mode</code>這種方式加速也並不是沒有缺點的:</p>
+<blockquote>
+<ol>
+<li>
+<p>在比較時需要頻繁調用加速函數，這部分開銷可能無法接受；但是設計為inline函數，這部分結構又太冗長。</p>
+</li>
+<li>
+<p>有時加速結構的比較次數要大於直接的綫性比較。可以參考作者給出的比較表格。</p>
+</li>
+</ol>
+</blockquote>
+<center><img src = "timsort_algo_5.1.png"></img></center>
+<p>這樣，作者就設計了進入<code>Galloping Mode</code>的條件以及一些獎懲方式。下面簡單説明。</p>
+<p>算法一開始先進行綫性的歸并，此時記錄下連續歸并次數，例如，連續$n$次都是$run_1$中的元素填入歸并區，若$n &gt;= min\_gallop$時（初始$min\_gallop = MIN\_GALLOP$），我們就認爲之後的歸并操作可以啓用<code>Galloping Mode</code>。但是在綫性歸并過程中，如果發生變化都需要重置$n$值。作者將$MIN\_GALLOP$設爲$7$（應該是參考上面的表格得來的）。</p>
+<p>只要在<code>Galloping Mode</code>中，連續歸并次數都大於$MIN\_GALLOP = 7$，就一直保持在<code>Galloping Mode</code>下。每進行一次加速，$min\_gallop$都要減少$1$，這樣保證下次更容易進入加速模式。但是，一旦退出<code>Galloping Mode</code>，就要將$min\_gallop += 2$作爲懲罰。這樣保證在數據是在兩個序列閒交替填入歸并區時，不會或較難進入加速模式，而導致效率降低。</p>
+<p>下面給出這部分的僞代碼，這裏假設從$run_1$歸并到$run_2$中（從左到右歸并）；從$run_2$歸并到$run_1$中類似。</p>
+<center><img src = "timsort_algo_5.2.png"></img></center>
+<center><img src = "timsort_algo_5.3.png"></img></center>
+<h3 id="調整min_run_len">調整Min_Run_Len</h3>
+<p>最開始時，提到過儅數據長度若小於<code>MIN_RUN_LEN</code>時，直接進行二分插入排序。那麽這個值取多少合適？另外在$\mathit{Algorithm 1}$中有$AdjustMinRunLen()$的函數，這是如何根據輸入數據長度調整<code>MIN_RUN_LEN</code>的？爲什麽要調整？這些在作者提供的文檔[3]中依舊能找到答案。這裏也簡要説明下。</p>
+<p>首先，爲什麽要調整?之前提到的合并條件是爲了讓合并的兩個$runs$長度接近，這樣歸并效率才高。另外，因爲每次是兩個$runs$合并，所以，$runs$的個數最好是$2$的冪次方個。</p>
+<p>現在假設數據長度 $ L = 2112,  MIN\_RUN\_LEN = 32 $，那麽 $N_{runs} = \frac{L}{MIN\_RUN\_LEN} = 66 \backsim 0$，根據之前合并條件，能知道最後兩個$runs$的長度分別是$2048$和$64$，那麽這樣做合并顯然效率不高。如果我們將$MIN\_RUN\_LEN$調整爲$33$時， $N_{runs} = \frac{L}{MIN\_RUN\_LEN} = 64 \backsim 0$，這種情況顯然是我們希望看到的。所以，調整$MIN\_RUN\_LEN$是爲了讓$runs$數量等於或略小於2的冪次方，這樣有利於後面的合并。</p>
+<p>現在我們知道爲什麽要調整<code>MIN_RUN_LEN</code>值了，那接下來就是如何調整了。依舊假設$MIN\_RUN\_LEN = 32 = 2^5$，數據長度為$L$</p>
+<blockquote>
+<ol>
+<li>
+<p>取$L$的低$5$位(若$MIN\_RUN\_LEN = 64$則取低6位，以此類推)，這些bit中有被置位為$1$，則記$r = 1$，否則$r = 0$；</p>
+</li>
+<li>
+<p>不斷將$L$向右移位，直到恰好小於$MIN\_RUN\_LEN$，記爲$n$，其取值範圍為$[MIN\_RUN\_LEN / 2 ,  MIN\_RUN\_LEN - 1]$</p>
+</li>
+<li>
+<p>最後的取值為$n + r$</p>
+</li>
+</ol>
+</blockquote>
+<p>作者在文中建議，<code>MIN_RUN_LEN</code>的初始取值可以是$16,32,64,128$，其他不建議，如果選擇會損失其他部分的性能。建議取值$64$。</p>
+<h3 id="預分配runs_stack的空間">預分配Runs_Stack的空間</h3>
+<p>最後説下$Runs$的棧空間如何預分配，根據作者對與入棧<code>runs</code>的假設：</p>
+<div>
+$$
+\begin{cases}
+\begin{array}{l}
+len(runs[n-1]) > len(runs[n]) + len(runs[n+1]) \\[2ex]
+len(runs[n]) > len(runs[n+1])
+\end{array}
+\end{cases}
+$$
+</div>
+<p>可以看出，在棧中的<code>runs</code>形成了一個遞減序列，只要不滿足前面設定的歸并條件，那麽<code>run</code>是要一直入棧的，那麽這個棧最大值就可以按如下方式計算。</p>
+<p>假設棧長度為$s$，待排序元素長度為$n$，$MIN\_RUN\_LEN = m = 16$。<code>runs</code>的長度從左到右為遞減序列，那麽最右側的<code>run</code>的最小長度為$b[1] = 1$（爲什麽為$1$，因爲最後剩餘的元素個數最小值是$1$，這種情況也得入棧進行歸并），倒數第二個<code>run</code>最小長度為$b[2] = m$，這樣根據假設就能得到如下序列：
+$$
+1,\ m,\ m+2,\ 2 * m + 3,\ 3 * m + 6,\ \cdots,\
+$$</p>
+<p>序列可以表示爲：</p>
+<div>
+$$
+b[s] = \begin{cases}
+b[s-2] + b[s-1] + 1, & s > 1 \\
+m, & s = 1 \\
+1, & s = 0
+\end{cases}
+$$
+</div>
+<p>這些<code>runs</code>的長度總和為$n$，且$n$最大整型值為$2^{64}-1 = 18446744073709551615$，這樣就得到：
+$$
+n = B[s] = b[0] + b[1] + b[2] + \cdots + b[s] \leq (2^{64}-1)
+$$</p>
+<p>可以發現，這個序列本質就是<code>Fibonacci</code>數列，這樣就能計算出棧的最大長度$s$了，計算結果可參考下表。另外説明，$s$的取值與$m$取值相關，但是由於<code>Fibonacci</code>數列在後期增長非常快，$m$的大小對$s$影響并不明顯，所以按照$m=16$得到的最大長度值足夠使用。</p>
+<center><img src = "timsort_table_1.png"></img></center>
+<p>根據上表結果，<code>Runs</code>的棧大小取為$85$即可。</p>
+<h2 id="參考資料">參考資料</h2>
+<p>[1] <a href="https://sikasjc.github.io/2018/07/25/timsort/">Timsort原理学习</a></p>
+<p>[2] <a href="http://envisage-project.eu/proving-android-java-and-python-sorting-algorithm-is-broken-and-how-to-fix-it/">Proving that Android’s, Java’s and Python’s sorting algorithm is broken (and showing how to fix it)</a></p>
+<p>[3] <a href="https://hg.python.org/cpython/file/tip/Objects/listsort.txt">listsort</a></p>
+<p>[4] <a href="https://en.wikipedia.org/wiki/Timsort">Timsort - Wiki</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-04-27
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/algorithm/">Algorithm</a>
+          <a href="/tags/sorting/">Sorting</a>
+          <a href="/tags/timsort/">Timsort</a>
+          <a href="/tags/binary-sort/">Binary sort</a>
+          <a href="/tags/merge-sort/">Merge sort</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2021-05-15-%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B%E7%AE%97%E6%B3%95%E5%AD%B8%E7%BF%92.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">算法系列 Meijster距離變換算法學習</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2021-04-19-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch14-Sampling-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <span class="next-text nav-default">圖形學系列 Ch14-Sampling-閲讀筆記</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html" class="leancloud_visitors" data-flag-title="算法系列 Timsort排序算法原理學習">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vBdmTMoHIxDpTt5GOT8K28gO-9Nh9j0Va',
+        appKey: 'jFsG5CqfpQthJwdx9YEA2rn5',
+        notify:  false ,
+        verify:  true ,
+        avatar:'monsterid',
+        placeholder: '留下你的足跡...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

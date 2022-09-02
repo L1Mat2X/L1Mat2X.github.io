@@ -24,7 +24,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.81.0 with theme even" />
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
 
 
 <link rel="canonical" href="https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch7%20Viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" />
@@ -36,7 +36,7 @@
 
 
 
-<link href="/sass/main.min.a47348cbfbb450a514d730bda5a36b76112b5116e7078c92aa823a9110873edc.css" rel="stylesheet">
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
 
 
 
@@ -44,14 +44,14 @@
 <meta property="og:description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.matrixs.site/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch7%20Viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-08-31T14:41:33&#43;08:00" />
-<meta property="article:modified_time" content="2020-08-31T14:41:33&#43;08:00" />
+<meta property="article:published_time" content="2020-08-31T14:41:33+08:00" />
+<meta property="article:modified_time" content="2020-08-31T14:41:33+08:00" />
 
 <meta itemprop="name" content="圖形學系列-Ch7 Viewing-閲讀筆記">
-<meta itemprop="description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。"><meta itemprop="datePublished" content="2020-08-31T14:41:33&#43;08:00" />
-<meta itemprop="dateModified" content="2020-08-31T14:41:33&#43;08:00" />
-<meta itemprop="wordCount" content="3824">
-<meta itemprop="keywords" content="Computer Graphic,計算機圖形學,閲讀筆記,Games101," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。"><meta itemprop="datePublished" content="2020-08-31T14:41:33+08:00" />
+<meta itemprop="dateModified" content="2020-08-31T14:41:33+08:00" />
+<meta itemprop="wordCount" content="3832">
+<meta itemprop="keywords" content="Viewing Transformations,Projective Transformations,Perspective Projection,Field-of-View," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="圖形學系列-Ch7 Viewing-閲讀筆記"/>
 <meta name="twitter:description" content="從3D空間到2D空間中的映射稱爲viewing transformation。本章將學習如何利用矩陣運算，將已知的3D空間物體映射（可能是平行投影，也可能是透視投影）到2D空間（像平面）中。"/>
 
@@ -88,12 +88,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -108,6 +117,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -121,10 +131,12 @@
       <div class="post-meta">
         <span class="post-time"> 2020-08-31 </span>
         <div class="post-category">
-            <a href="/categories/%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 圖形學 </a>
+            <a href="/categories/computer-graphic/"> Computer Graphic </a>
+            <a href="/categories/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/"> 計算機圖形學 </a>
             <a href="/categories/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/"> 閲讀筆記 </a>
+            <a href="/categories/games101/"> Games101 </a>
             </div>
-          <span class="more-meta"> 3824 words </span>
+          <span class="more-meta"> 3832 words </span>
           <span class="more-meta"> 8 mins read </span>
         
       </div>
@@ -234,12 +246,14 @@ $$
 <p>有了這三個信息，就能夠在視點位置構造一個坐標系$\mathbf{uvw}$，也是用於描述相機空間的坐標系。</p>
 <div>
 $$
-\mathbf{w} = -\frac{\mathbf{g}}{||\mathbf{g}||}\\[4ex]
-\mathbf{u} = \frac{\mathbf{t}\times\mathbf{w}}{||\mathbf{t}\times\mathbf{w}||}\\[4ex]
-\mathbf{v} = \mathbf{w} \times \mathbf{u}
+\begin{align}
+\mathbf{w} &= -\frac{\mathbf{g}}{||\mathbf{g}||}\\[2ex]
+\mathbf{u} &= \frac{\mathbf{t}\times\mathbf{w}}{||\mathbf{t}\times\mathbf{w}||}\\[2ex]
+\mathbf{v} &= \mathbf{w} \times \mathbf{u}
+\end{align}
 $$
 </div>
-<p>被觀察物體改用坐標系$\mathbf{uvw}$表示，這樣，只需要變換視點位置$\mathbf{e}$和基坐標$\mathbf{uvw}$，就能將視點和被觀察物體從世界坐標系$\mathbf{o-xyz}$變換到相機坐標系$\mathbf{e-uvw}$中。</p>
+<p>被觀察物體改用坐標系$\mathbf{uvw}$表示，這樣，只需要變換視點位置$\mathbf{e}$和基坐標$\mathbf{uvw}$，就能將視點和被觀察物體從世界坐標系$\mathbf{o_{xyz}}$變換到相機坐標系$\mathbf{e_{uvw}}$中。</p>
 <center><img src = "figure7.7.png"></img></center>
 <p>坐標系閒的變換在第六章中做了詳細説明，這裏就不多説，直接上公式：</p>
 <div>
@@ -274,18 +288,20 @@ y_s = \frac{d}{z}y
 $$</p>
 <p>一般的仿射變換為：
 $$
-x' = ax + by + cz + d
+x&rsquo; = ax + by + cz + d
 $$</p>
 <p>這裏約束齊次坐標系最後一維$w = 1$；若取消這個約束，那麽可以擴展出更多變換，變換形式變化成如下形式：
 $$
-x' = \frac{ax+by+cz+d}{ex+fy+gz+h}
+x&rsquo; = \frac{ax+by+cz+d}{ex+fy+gz+h}
 $$</p>
 <p>這樣就可獲得關於$x$、$y$和$z$的三個變換函數：</p>
 <div>
 $$
-x' = \frac{a_1x + b_1y + c_1z + d_1}{ex+fy+gz+h}\\[4ex]
-y' = \frac{a_2x + b_2y + c_2z + d_2}{ex+fy+gz+h}\\[4ex]
-z' = \frac{a_3x + b_3y + c_3z + d_3}{ex+fy+gz+h}
+\begin{align}
+x' &= \frac{a_1x + b_1y + c_1z + d_1}{ex+fy+gz+h}\\[2ex]
+y' &= \frac{a_2x + b_2y + c_2z + d_2}{ex+fy+gz+h}\\[2ex]
+z' &= \frac{a_3x + b_3y + c_3z + d_3}{ex+fy+gz+h}
+\end{align}
 $$
 </div>
 <p>這三個變換函數的唯一約束就是分母是相同的。同樣也可使用矩陣形式表示：</p>
@@ -477,10 +493,12 @@ $$
 \end{bmatrix}
 $$
 </div>
-<p>這樣使用透視投影變換的<code>viewing transformation</code>矩陣可變爲：
+<p>這樣使用透視投影變換的<code>viewing transformation</code>矩陣可變爲：</p>
+<div>
 $$
-\mathbf{M} = \mathbf{M}<em>{vp}\mathbf{M}</em>{orth}\mathbf{P}\mathbf{M}_{cam}
-$$</p>
+\mathbf{M} = \mathbf{M}_{vp}\mathbf{M}_{orth}\mathbf{P}\mathbf{M}_{cam}
+$$
+</div>
 <p>算法框架為：</p>
 <center><img src = "ch7-7.1_line_segment_transformation_framework_3.png"></img></center>
 <h2 id="74-透視投影變換的一些特點">7.4 透視投影變換的一些特點</h2>
@@ -545,10 +563,10 @@ $$</p>
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/computer-graphic/">Computer Graphic</a>
-          <a href="/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E5%9C%96%E5%BD%A2%E5%AD%B8/">計算機圖形學</a>
-          <a href="/tags/%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/">閲讀筆記</a>
-          <a href="/tags/games101/">Games101</a>
+          <a href="/tags/viewing-transformations/">Viewing Transformations</a>
+          <a href="/tags/projective-transformations/">Projective Transformations</a>
+          <a href="/tags/perspective-projection/">Perspective Projection</a>
+          <a href="/tags/field-of-view/">Field-of-View</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/2020-09-03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E5%85%AB%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch8-the%20Graphic%20Pipeline-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
@@ -567,7 +585,26 @@ $$</p>
         </div>
         
 
-  
+  <span id="/post/2020-08-31-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E7%AC%AC%E4%B8%83%E7%AB%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97-Ch7%20Viewing-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html" class="leancloud_visitors" data-flag-title="圖形學系列-Ch7 Viewing-閲讀筆記">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vBdmTMoHIxDpTt5GOT8K28gO-9Nh9j0Va',
+        appKey: 'jFsG5CqfpQthJwdx9YEA2rn5',
+        notify:  false ,
+        verify:  true ,
+        avatar:'monsterid',
+        placeholder: '留下你的足跡...',
+        visitor:  true 
+    });
+  </script>
 
   
 
@@ -595,13 +632,10 @@ $$</p>
   <span class="copyright-year">
     &copy; 
     2016 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">L1Mat2X</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -615,15 +649,15 @@ $$</p>
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 
 

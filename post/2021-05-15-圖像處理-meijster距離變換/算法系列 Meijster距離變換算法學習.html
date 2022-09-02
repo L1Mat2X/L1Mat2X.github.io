@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>算法系列 Meijster距離變換算法學習 - L1Mat2X&#39;Blog - 學無止儘</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="L1Mat2X" /><meta name="description" content="論文《A General algorithm for computing distance transforms in linear time》閲讀筆記整理。 Introduction 距離變換本質是計算點到點的距離，如果在二維空間中，可以按如下方式描述。 假設$B$為尺寸為$" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.3 with theme even" />
+
+
+<link rel="canonical" href="https://blog.matrixs.site/post/2021-05-15-%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B%E7%AE%97%E6%B3%95%E5%AD%B8%E7%BF%92.html" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2ba8195a2d0efd25fa0e9afad28375120f64bc499aa37d0d2ba30683f460a524.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="算法系列 Meijster距離變換算法學習" />
+<meta property="og:description" content="論文《A General algorithm for computing distance transforms in linear time》閲讀筆記整理。 Introduction 距離變換本質是計算點到點的距離，如果在二維空間中，可以按如下方式描述。 假設$B$為尺寸為$" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.matrixs.site/post/2021-05-15-%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B%E7%AE%97%E6%B3%95%E5%AD%B8%E7%BF%92.html" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-20T11:13:35+08:00" />
+<meta property="article:modified_time" content="2021-05-20T11:13:35+08:00" />
+
+<meta itemprop="name" content="算法系列 Meijster距離變換算法學習">
+<meta itemprop="description" content="論文《A General algorithm for computing distance transforms in linear time》閲讀筆記整理。 Introduction 距離變換本質是計算點到點的距離，如果在二維空間中，可以按如下方式描述。 假設$B$為尺寸為$"><meta itemprop="datePublished" content="2021-05-20T11:13:35+08:00" />
+<meta itemprop="dateModified" content="2021-05-20T11:13:35+08:00" />
+<meta itemprop="wordCount" content="4350">
+<meta itemprop="keywords" content="Algorithm,Image Processing,Meijster,Distance Transformation," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="算法系列 Meijster距離變換算法學習"/>
+<meta name="twitter:description" content="論文《A General algorithm for computing distance transforms in linear time》閲讀筆記整理。 Introduction 距離變換本質是計算點到點的距離，如果在二維空間中，可以按如下方式描述。 假設$B$為尺寸為$"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">L1Mat2X&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">算法系列 Meijster距離變換算法學習</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-05-20 </span>
+        <div class="post-category">
+            <a href="/categories/algorithm/"> Algorithm </a>
+            <a href="/categories/image-processing/"> Image Processing </a>
+            </div>
+          <span class="more-meta"> 4350 words </span>
+          <span class="more-meta"> 9 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#the-first-phase">The first phase</a></li>
+        <li><a href="#the-second-phase">The Second phase</a></li>
+        <li><a href="#derivation-of-the-function-sep">Derivation of the Function Sep</a></li>
+        <li><a href="#parallelization-timing-results-and-conclusions">Parallelization, Timing Results, and Conclusions</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>論文《A General algorithm for computing distance transforms in linear time》閲讀筆記整理。</p>
+<h2 id="introduction">Introduction</h2>
+<p>距離變換本質是計算點到點的距離，如果在二維空間中，可以按如下方式描述。</p>
+<p>假設$B$為尺寸為$m \times n$點的集合，那麽距離變換所計算的就是$B$中某點$(x,y)$到集合$B$中最近點的距離（就是前景點到最近背景點的距離）。若$B$用二值矩陣$b[:, :]$表示（標記圖），且距離為標準歐式距離，那麽每個點$(x,y)$的距離可以表示為：
+$$
+dt[x,y] = \sqrt{EDT(x,y)}
+$$</p>
+<p>其中，</p>
+<div>
+$$
+EDT(x,y) = \min{(i, j : 0 \leq i < m \wedge 0 \leq j < n \wedge b[i,j] : (x -i)^2 + (y-j)^2)}
+$$
+</div>
+<p>解釋下$\min{(k:P(k):f(k))}$這種表示方式的含義：滿足函數$f(k)$最小值，且取值範圍在$P(k)$中的所有$k$的集合。</p>
+<p>除了上面提到的歐式距離，還可以采用其他距離計算方式，例如曼哈頓距離(Manhattan distance)、棋盤距離(Chessboard distance)等。</p>
+<div>
+$$
+\begin{array}{l}
+MDT(x,y) &=& \min{(i, j: 0 \leq i < m \wedge 0 \leq j < n \wedge b[i,j] : |x-i| + |y -j|)}\\[2ex]
+CDT(x,y) &=& \min{(i,j: 0 \leq i < m \wedge 0 \leq j < n \wedge b[i,j] : \max(|x-i|, |y-j|))}
+\end{array}
+$$
+</div>
+<p>本文就介紹在這三種距離函數下，如何在綫性時間内完成一幅圖像的距離變換，并且該算法可以并行計算。</p>
+<p>現在先將上面三種距離計算函數進行轉換。</p>
+<div>
+$$
+\begin{array}{l}
+EDT(x,y) &=& \min{(i, j : 0 \leq i < m \wedge 0 \leq j < n \wedge b[i,j] : (x -i)^2 + G(i,y)^2)}\\[2ex]
+MDT(x,y) &=& \min{(i, j: 0 \leq i < m \wedge 0 \leq j < n \wedge b[i,j] : |x-i| + G(i,y))}\\[2ex]
+CDT(x,y) &=& \min{(i,j: 0 \leq i < m \wedge 0 \leq j < n \wedge b[i,j] : \max(|x-i|, G(i,y)))}
+\end{array}
+$$
+</div>
+<p>其中，$G(i,y) = \min{(j : 0 \leq j &lt; n \wedge b[i,j]: |y-j|)}$，很明顯，這麽做轉換在程序上就能將行列操作分離，這樣該算法的整理框架就可以描述為：第一次全圖按列遍歷，即取$C_x$（$x$為固定列號），計算$C_x$中每個點$(x, j), 0\leq j &lt; n$與$C_x \wedge B$的最近距離$G(x,y)$。再進行第二次全圖遍歷，此時按行遍歷，此時再利用$EDT$、$MDT$或$CDT$計算每個點$(x,y)$的最終距離值。</p>
+<p>下面按兩次遍歷分別説明。</p>
+<h2 id="the-first-phase">The first phase</h2>
+<p>根據上面描述，第一階段就是計算$G(x,y)$，在細化$G(x,y)$可以把其分爲兩個階段：</p>
+<div>
+$$
+\begin{array}{l}
+GT(i,y) &=& \min{(j:0\leq j < y \wedge b[i,j] : y - j)} \\[2ex]
+GB(i,y) &=& \min{(j:y \leq j < n \wedge b[i,j] : j - y)}
+\end{array}
+$$
+</div>
+<p>若$b[i,y]$被標記，則$GT(i,y) = 0$(PS：這裏與個人理解是相反的，個人理解是$b[i,y]$未被標記，$GT(i,y) = 0$)；其他情況$GT(i,y) = GT(i, y-1)+1$。而$GB(i,y) = GB(i,y+1) + 1$。可以參考下圖理解。</p>
+<center><img src = "meijsterDT_G.png" style = "zoom:50%"></img></center>
+<p>這樣，每列$G(i,y)$的計算就要分爲兩輪遍歷進行，第一輪從上到下($0 \leq y &lt; n$)(<code>*scan 1*</code>)，計算每個點的$GT(i,y)$值；第二輪從下到上($n-2 \geq y \geq 0$)(<code>*scan 2*</code>)，計算每個點的$GB(i,y)$值，并於之前計算的$GT(i,y)$值比較取最小值記錄在緩存$g(i,y)$中。這樣第一階段的代碼框架已形成。如下圖。</p>
+<center><img src = "meijsterDT_1st_phase.png"></img></center>
+<p>另外説明，實際實現過程可將$\infty$取爲圖像的寬高和$(m+n)$。</p>
+<h2 id="the-second-phase">The Second phase</h2>
+<p>第二躺遍歷全圖是按行遍歷，此時<strong>假設$y$為常數，將$G(i,y)$表示為$ g(i)$</strong>。這次遍歷就需要計算<code>EDT</code>、<code>MDT</code>或<code>CDT</code>。先將這三種距離計算方式統一成如下形式。
+$$
+DT(x,y) = \min{(i:0\leq i &lt; m : f(x,i))} \tag{1}
+$$</p>
+<p>其中，</p>
+<div>
+$$
+f(x,i) = \begin{cases}
+(x-i)^2 + g(i)^2, & \text{EDT} \\
+|x-i| + g(i), & \text{MDT}\\
+\max{(|x-i|, g(i))}, & \text{CDT}
+\end{cases}
+$$
+</div>
+<p>另用$F_i = x \mapsto f(x,i)$表示儅取固定$i$值時關於$x$的函數。例如，對於<code>EDT</code>，$F_i$是一條頂點在$(i, g(i))$処的二次曲綫；對於<code>MDT</code>則是一條V-型折綫；對於<code>CDT</code>則是一條擁有最小值限定的V-型折綫。如下圖所示。</p>
+<center><img src = "meijsterDT_lower_envelope.png"></img></center>
+<p>從上圖可以看出，我們要求得的結果就是一簇$F_i,(0\leq i &lt; n)$組成的最低位包絡綫（圖中實綫部分）。這些包絡綫由許多小段曲綫構成，從左到右記爲$s[0], s[1], \cdots s[q]$。</p>
+<p>繼續抽象函數$DT(x,y)$，將其中$i$的上限$m$替換爲一個變量$u$。
+$$
+FL(x,u) = \min{(i:0 \leq i &lt; u:f(x,i))}
+$$</p>
+<p>明顯，$DT(x,y) = FL(x,m)$。</p>
+<p>再定義
+$$
+H(x,u)  = \min{(h: 0\leq h &lt; u \wedge \forall{(i:0\leq i &lt; u:f(x,h))}: h)}
+$$</p>
+<p>其含義是，固定列號為$x$時，從$0 \backsim u$列最小值位於第$h$列。這樣，$FL(x,u) = f(x, H(x,u))$，因此$DT(x,y) = f(x, H(x,m))$。這樣就把問題轉換為$H(x,m)$的計算。現在再定義兩個集合$S(u)$和$T(h,u)$。</p>
+<div>
+$$
+\begin{align}
+S(u) &= \{H(x,u)\mid 0\leq x < m\}\\
+T(h,u) &=\{x \mid 0 \leq x < m \wedge H(x,u) = h\}\ \text{if}\ 0\leq h < u 
+\end{align}
+$$
+</div>
+<p>$S(u)$表示在每行中，最小值在$0\backsim u$範圍内哪個位置。而$T(h,u)$表示最小值位置在$h$処的$x$取值有哪些。顯然，$S(u)$是個非空集合，且可改寫爲$S(u) =\{ h \mid T(h,u) \neq \emptyset\}$。</p>
+<p>説到這裏，已經輸入太多信息有點混亂了，整理下。前面提到當我們找到最低包絡綫時，就能確定最終結果了，那上面提到的這些函數或集合中，$S(u)$和$T(h,u)$就是我們要求得最低包絡綫的數學表示。其中$S(u)$表示哪個函數$F_i$在$T(h,u)$給出的$x$取值範圍下構成最低包絡綫。這樣第二階段的算法框架也差不多顯現出來。與第一階段類似，要進行兩趟遍歷，第一趟遍歷(<code>*scan 3*</code>)就是爲了確定最低包絡綫。第二趟遍歷(<code>*scan 4*</code>)就是計算最終結果了。下面是第二階段算法實現框架。</p>
+<center><img src = "meijsterDT_2nd_phase.png"></img></center>
+<p>下面詳細説説最低包絡綫實際如何獲得。計算最低包絡綫本質是一個不斷迭代更新的過程。假設最低包絡綫由$q+1$個片段構成，$S(u) = {s[0], s[1], \cdots, s[q]}$，其中$s[l]$表示第$l$段是由哪個$F_i$函數確定。儅新的$F_u$輸入進來時，會有下面三種情況，可參考圖片。</p>
+<blockquote>
+<p>a).  $F_u$完全位於之前所構成的最低包絡綫之上，此時更新$S(u+1) = S(u)$，$T(u,u+1) = \emptyset$；</p>
+<p>b).  $F_u$完全位於之前所構成的最低包絡綫之下，此時更新$S(u+1) = {u}$，$T(u,u+1)= [0,m)$，因爲此時之前的最低包絡綫完全被$F_u$取代；</p>
+<p>c).  $F_u$與之前所構成的最低包絡綫相交，計算交點，添加新的最低包絡綫到$T(u,u+1)$。</p>
+</blockquote>
+<center><img src = "meijsterDT_F_u_location.png"></img></center>
+<p>假設$t[l]$記錄了每段包絡綫的起始點位置，其中$l = q, q-1, \cdots$。從右至左遍歷最低包絡綫，直到找到滿足$F_u(t[l^{<em>}]) \geq F_{s[l^{</em>}]}(t[l^{<em>}])$的$l^{</em>}$，取$x^* = t[l^<em>]$或$x^</em>$為新交點的位置。如果$l^{<em>} = q$且$x^{</em>}\geq m$，則為情況a)；如果$l^* &lt; 0$，則為情況b)；其他則爲c)。</p>
+<p>下面説説情況c)中，$x^*$如何求。這裏引入$Sep(i,u)$函數用於$x^*$的計算，該函數計算得到第一個大於或等於$F_u$和$F_i$交點的整型值。
+$$
+F_i(x) \leq F_u(x) \Leftrightarrow x \leq Sep(i,u) \tag{2}
+$$</p>
+<p>根據上面信息可知，$x^* = Sep(s[l^*], u)$，這樣最終的問題都集中在函數$Sep(i,u)$的計算，而該函數與我們選擇哪種距離度量方式相關。下節中將詳細説明函數如何設計。</p>
+<p>在回過頭看代碼，其並不涉及浮點運算，而且利用兩個數組$s[\ ]$和$t[\ ]$就完成整個更新過程。其中數組$s[\ ]$就是用於記錄第$l$段最低包絡綫是由哪個$F_i$函數確定的；$t[\ ]$用於記錄每段最低包絡綫的位置；$q$用於記錄每次開始搜索的最低包絡綫序號。</p>
+<p><font color="red">（這裏有種情況一直沒想明白，假設已知$F_i$最低包絡綫，現添加$F_u$滿足其完全在$F_i$下方，這時代碼中更新$q = 0$，$s[0] = u$。假設添加$F_{u+1}$時，依然滿足條件$f(t[q], s[q]) &gt; f(t[q], u+1)$，那此時依然更新$q = 0$, $s[0] = u+1$，但是我不理解的是，如果$F_u$和$F_{u+1}$實際是有交點的呢？）</font></p>
+<h2 id="derivation-of-the-function-sep">Derivation of the Function Sep</h2>
+<p>下面説説$Sep$函數，它與你采用哪種距離度量函數相關。先來看最簡單的EDT度量函數。根據公式(2)可知：</p>
+<div>
+$$
+\begin{align}
+F_i(x) \leq F_u(x) &\Leftrightarrow (x-i)^2 + g(i)^2 \leq (x-u)^2 + g(u)^2 \\
+&\Leftrightarrow x\leq (u^2 - i^2 + g(u)^2 - g(i)^2)\ \mathbb{div}\ (2(u-i))
+\end{align}
+$$
+</div>
+<p>其中，$div$表示整除。這樣EDT的$Sep$函數為：
+$$
+Sep(i,u) = (u^2 - i^2 + g(u)^2 - g(i)^2)\ \mathbb{div}\ (2(u-i))
+$$</p>
+<p>接著看較複雜點的$Manhattan$度量函數。這裏需要分情況討論。如下圖。</p>
+<center><img src = "meijsterDT_MDT_Sep.png"></img></center>
+<p>根據前面分析和函數的性質的可知，$i &lt; u$，并且每條曲綫$F_i$都是在$(i, g(i))$処取到最小值點。那麽基於這兩點結合函數圖像：</p>
+<ul>
+<li>儅$F_u$完全在$F_i$上方時，此時$g(u) \geq F_i(u)$，這就得到$g(u) \geq g(i) + u-i$；</li>
+<li>儅$F_u$完全在$F_i$下方時，此時$g(i) &gt; F_u(i)$，這就得到$g(i) &gt; g(u) + u-i$；</li>
+<li>其他情況，$F_i$與$F_u$相交，且相交位置發生在$F_i=x-i + g(i)$與$F_u = u-x + g(u)$的地方。</li>
+</ul>
+<p>根據分析，我們可以定義，儅$F_u$完全在$F_i$上方時，$Sep$函數可以返回$+\infty$；儅$F_u$完全在$F_i$下方時，$Sep$函數可以返回$-\infty$；儅兩者相交，則：
+$$
+Sep(i,u) = (g(u)-g(i) + u+i)\ \mathbb{div}\ 2
+$$</p>
+<p>綜上，$Manhattan$度量的$Sep$函數如下：</p>
+<div>
+$$
+Sep(i,u) = \begin{cases}
+\infty, & \text{if }g(u) \geq g(i) + u - i\\
+-\infty, & \text{if }g(i) > g(u) + u - i\\
+(g(u) - g(i) + u + i)\ \mathbb{div}\ 2,& otherwise.
+\end{cases}
+$$
+</div>
+<p>最後討論最複雜的$Chessboard$度量函數，其也需要分情況討論。分爲兩個情況，每個情況又有三種子情況。可結合下圖分析討論。</p>
+<center><img src = "meijsterDT_CDT_Sep.png"></img></center>
+<p>這裏先説明下$Chessboard$的度量函數$f(i,y) = \max{(|x-i|, g(i))}$，這個函數限制了<strong>最小值</strong>為$g(i)$，因此在圖像中會有一段平坦的區域，并且該平坦區域以$u$為中點對稱。</p>
+<p>基於這些特點，我們將情況劃分為以下兩大類：</p>
+<ol>
+<li>$g(i) \leq g(u)$；</li>
+<li>$g(i) \geq g(u)$；</li>
+</ol>
+<p>而每個大類中又分爲三個子情況：</p>
+<blockquote>
+<p>a.  $F_i(x)$的增區域與$F_u(x)$的減區域相交;</p>
+<p>b.  $F_i(x)$的增區間與$F_u(x)$的平坦區相交，且與$F_u(x)$減區域的延長綫有交點；</p>
+<p>c.  $F_i(x)$的增區間與$F_u(x)$的平坦區間相交，且$F_i(x)$增區間延長綫與$F_u(x)$減區間延長綫有交點。</p>
+</blockquote>
+<p>這裏描述的情況可以對應上圖。</p>
+<p>現假設$\gamma$表示$i$與$u$中點的函數值，例如上圖圖(a)中
+$$
+F_i(\gamma) = F_u(\gamma) = F_u \left(\frac{i+u}{2}\right) = \frac{u-i}{2}
+$$</p>
+<p>結合圖(a)~圖(c)，交點位置左側均滿足$F_i(x) \leq F_u(x)$，圖(a)交點位置為$x^* = \frac{i+u}{2}$，圖(b)~圖(c)交點位置為$x^* = i + g(u)$。這樣結合起來，在$g(i) \leq g(u)$情況下，交點位置計算如下：
+$$
+g(i) \leq g(u) \Rightarrow (F_i(x) \leq F_u(x)) \Leftrightarrow x \leq \max{(\frac{i+u}{2}, i+g(u))}
+$$</p>
+<p>同理可得圖(d)~圖(f)中的交點位置為：
+$$
+g(i) &gt; g(u) \Rightarrow (F_i(x) &gt; F_u(x)) \Leftrightarrow x \geq \min{(\frac{i+u}{2}, u-g(i))}
+$$</p>
+<p>最終結合可得到$Chessboard$度量的$Sep$函數如下：</p>
+<div>
+$$
+Sep(i,u) = \begin{cases}
+\max{({(i+u)}\ \mathbb{div}\ {2}, i+g(u))},& \text{if }g(i) \leq g(u)\\
+\min{({(i+u)}\ \mathbb{div}\ {2}, u-g(i))},& \text{otherwise}
+\end{cases}
+$$
+</div>
+<p>這裏另外説明一個問題，爲什麽在CDT中，不會出現$F_i(x)$函數完全包含$F_u(x)$的情況，因爲如果出現這種情況，那麽不能滿足$i &lt;u$這個大前提了，所以只可能出現上面討論的這些情況。</p>
+<h2 id="parallelization-timing-results-and-conclusions">Parallelization, Timing Results, and Conclusions</h2>
+<p>文中作者也提到該算法可以并行計算，同樣給出了并行計算的時間對比表格，如下；</p>
+<center><img src = "meijsterDT_Timing.png"></img></center>
+<p>作者給出了該算法的時間複雜度為$\mathcal{O}(mn)$，如果并行其時間複雜度為$\mathcal{O}(mn/p)$，$p$為并行數。</p>
+<p>當然該算法也能很容易推廣到$d$維空間的距離變換下。</p>
+<p>至此，該論文閲讀完畢，實現細節請自行斟酌，并不複雜。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">L1Mat2X</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-05-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/algorithm/">Algorithm</a>
+          <a href="/tags/image-processing/">Image Processing</a>
+          <a href="/tags/meijster/">Meijster</a>
+          <a href="/tags/distance-transformation/">Distance Transformation</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2021-06-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9C%96%E5%BD%A2%E5%AD%B8-%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98/%E5%9C%96%E5%BD%A2%E5%AD%B8%E7%B3%BB%E5%88%97%20Ch24-Reflection%20Models-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">圖形學系列 Ch24-Reflection Models-閲讀筆記</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2021-04-27-%E5%9F%BA%E7%A4%8E%E7%AE%97%E6%B3%95-Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Timsort%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%AD%B8%E7%BF%92.html">
+            <span class="next-text nav-default">算法系列 Timsort排序算法原理學習</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/2021-05-15-%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86-meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B/%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%20Meijster%E8%B7%9D%E9%9B%A2%E8%AE%8A%E6%8F%9B%E7%AE%97%E6%B3%95%E5%AD%B8%E7%BF%92.html" class="leancloud_visitors" data-flag-title="算法系列 Meijster距離變換算法學習">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vBdmTMoHIxDpTt5GOT8K28gO-9Nh9j0Va',
+        appKey: 'jFsG5CqfpQthJwdx9YEA2rn5',
+        notify:  false ,
+        verify:  true ,
+        avatar:'monsterid',
+        placeholder: '留下你的足跡...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:uninitmatrix@gmail.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://blog.matrixs.site/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>L1Mat2X</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
