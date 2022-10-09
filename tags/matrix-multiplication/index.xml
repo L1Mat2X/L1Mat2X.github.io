@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Matrix Multiplication on L1Mat2X&#39;Blog - 學無止儘</title>
+    <link>https://blog.matrixs.site/tags/matrix-multiplication/</link>
+    <description>Recent content in Matrix Multiplication on L1Mat2X&#39;Blog - 學無止儘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 09 Oct 2022 16:24:10 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/matrix-multiplication/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《Anatomy of High-Performance Matrix Multiplication》-閲讀筆記</title>
+      <link>https://blog.matrixs.site/post/2022-10-09-%E7%9F%A9%E9%99%A3%E4%B9%98%E6%B3%95/Anatomy%20of%20High-Performance%20Matrix%20Multiplication-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</link>
+      <pubDate>Sun, 09 Oct 2022 16:24:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/post/2022-10-09-%E7%9F%A9%E9%99%A3%E4%B9%98%E6%B3%95/Anatomy%20of%20High-Performance%20Matrix%20Multiplication-%E9%96%B2%E8%AE%80%E7%AD%86%E8%A8%98.html</guid>
+      <description>&lt;p&gt;該論文介紹了實現&lt;strong&gt;高性能矩陣乘法&lt;/strong&gt;的基本準則。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

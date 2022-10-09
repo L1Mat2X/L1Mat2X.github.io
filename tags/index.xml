@@ -6,7 +6,34 @@
     <description>Recent content in Tags on L1Mat2X&#39;Blog - 學無止儘</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 01 Sep 2022 09:52:51 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Oct 2022 16:24:10 +0800</lastBuildDate><atom:link href="https://blog.matrixs.site/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BLAS</title>
+      <link>https://blog.matrixs.site/tags/blas/</link>
+      <pubDate>Sun, 09 Oct 2022 16:24:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/blas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GEMM</title>
+      <link>https://blog.matrixs.site/tags/gemm/</link>
+      <pubDate>Sun, 09 Oct 2022 16:24:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/gemm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Matrix Multiplication</title>
+      <link>https://blog.matrixs.site/tags/matrix-multiplication/</link>
+      <pubDate>Sun, 09 Oct 2022 16:24:10 +0800</pubDate>
+      
+      <guid>https://blog.matrixs.site/tags/matrix-multiplication/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Algorithm</title>
       <link>https://blog.matrixs.site/tags/algorithm/</link>
